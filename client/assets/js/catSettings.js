@@ -19,21 +19,30 @@ var defaultDNA = {
 
 // when page load
 $( document ).ready(function() {
+  defaultPage()
+});
+
+
+// Default DNA value
+function defaultPage() {
   $('#dnabody').html(defaultDNA.bodyColor);
   $('#dnamouth').html(defaultDNA.mouthColor);
   $('#dnapaws').html(defaultDNA.pawsColor);
   $('#dnaeyes').html(defaultDNA.eyesColor);
   $('#dnacollar').html(defaultDNA.collarColor)
- 
   $('#dnashape').html(defaultDNA.eyesShape)
   $('#dnadecoration').html(defaultDNA.decorationPattern)
   $('#dnadecorationCollor').html(defaultDNA.decorationColor)
   $('#dnaanimation').html(defaultDNA.animation)
+  
+  $(".tab.cattributesBtn").hide();
+  $(".tab.catColorsBtn").show();
 
   $('#dnaspecial').html(defaultDNA.lastNum)
-  
+
   renderCat(defaultDNA)
-});
+}
+
 
 function getDna(){
     var dna = ''
@@ -45,9 +54,7 @@ function getDna(){
     dna += $('#dnashape').html()
     dna += $('#dnadecoration').html()
     dna += $('#dnadecorationCollor').html()
-    
     dna += $('#dnaanimation').html()
-
     dna += $('#dnaspecial').html()
 
     return parseInt(dna)
@@ -74,6 +81,51 @@ function renderCat(dna){
     animationVariation(dna.animation)
     $('#animation').val(dna.animation)
 }
+
+
+/*Tabs settings in Cattributes:
+*******************************/
+
+$(".btn.catColorsBtn").click(()=>{
+  $(".tab.cattributesBtn").hide();
+  $(".tab.catColorsBtn").show();
+})
+
+$(".btn.cattributesBtn").click(()=>{
+  $(".tab.catColorsBtn").hide();
+  $(".tab.cattributesBtn").show();
+})
+
+$(".btn.default").click(()=>{
+  defaultPage();
+})
+
+$(".btn.random").click(()=>{
+  var randomDNA = {
+    "bodyColor" : Math.floor(Math.random() * 89) + 10,
+    "mouthColor" : Math.floor(Math.random() * 89) + 10,
+    "pawsColor" : Math.floor(Math.random() * 89) + 10,
+    "eyesColor" : Math.floor(Math.random() * 89) + 10,
+    "collarColor" : Math.floor(Math.random() * 89) + 10,
+    "eyesShape" : Math.floor(Math.random() * 6) + 1,
+    "decorationPattern" : Math.floor(Math.random() * 5) + 1,
+    "decorationColor" : Math.floor(Math.random() * 89) + 10,
+    "animation" : Math.floor(Math.random() * 6) + 1,
+    "lastNum" : 1
+  }
+  $('#dnabody').html(randomDNA.bodyColor);
+  $('#dnamouth').html(randomDNA.mouthColor);
+  $('#dnapaws').html(randomDNA.pawsColor);
+  $('#dnaeyes').html(randomDNA.eyesColor);
+  $('#dnacollar').html(randomDNA.collarColor);
+  $('#dnashape').html(randomDNA.eyesShape);
+  $('#dnadecoration').html(randomDNA.decorationPattern);
+  $('#dnadecorationCollor').html(randomDNA.decorationColor);
+  $('#dnaanimation').html(randomDNA.animation);
+  renderCat(randomDNA)
+})
+
+
 
 
 /*Colors listeners:

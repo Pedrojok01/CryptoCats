@@ -25,7 +25,7 @@
         </div>
 
         <div class="row">
-            <div class="col-lg-6 catBox m-2 light-b-shadow">
+            <div class="col-lg-5 catBox m-2 light-b-shadow">
                 <div class="cat"> 
                     <div class="head">
                         <div class="head_background"></div> 
@@ -111,10 +111,18 @@
                 </div>
             </div>
 
-            <div class="col-lg-5 cattributes m-2 light-b-shadow">
+            <div class="col-lg-6 cattributes m-2 light-b-shadow">
+
+                <!-- Tabs -->
+                <div align="center">
+                    <div class="tabs">
+                        <button type="button" class="btn btn-primary catColorsBtn">Cat Colors</button>
+                        <button type="button" class="btn btn-primary cattributesBtn">Cattributes</button>
+                    </div>
+                </div>
 
                 <!-- Cat colors -->
-                <div id="catColors">
+                <div class="tab catColorsBtn">
                     <div class="form-group">
                         <label for="formControlRange"><b>Head and body color</b><span class="badge badge-dark ml-2" id="bodycode"></span></label>
                         <input type="range" min="10" max="98" class="form-control-range" id="bodycolor">
@@ -135,6 +143,10 @@
                         <label for="formControlRange"><b>Collar color</b><span class="badge badge-dark ml-2" id="collarcode"></span></label>
                         <input type="range" min="10" max="98" class="form-control-range" id="collarcolor">
                     </div>
+                </div>
+
+                <!-- Cattributes -->
+                <div class="tab cattributesBtn">
                     <div class="form-group">
                         <label for="formControlRange"><b>Eyes shape</b><span class="badge badge-dark ml-2" id="eyeName"></span></label>
                         <input type="range" min="1" max="6" class="form-control-range" id="eyeshape">
@@ -155,7 +167,18 @@
             </div>
         </div>
         <br>
+        <div class="row">
+            <div align="center" class="col-lg-6 catBox m-2 light-b-shadow">
+                <button type="button" class="btn btn-primary default btn-lg">Default DNA</button>
+                <button type="button" class="btn btn-warning random btn-lg">Random DNA</button>
+            </div>
+            <div align="center" class="col-lg-5 catBox m-2 light-b-shadow">
+                <button type="button" class="btn btn-success btn-lg btn-block createCat">CREATE</button>
+            </div>
+        </div>
+        <br>
     </div>
+        
 
     <footer align="center">
         <p>

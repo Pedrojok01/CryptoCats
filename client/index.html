@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <script src="assets/bootstrap/js/popper.js"></script>
   <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./abi.js"></script>
 
   <link rel="stylesheet" href="assets/css/mystyle.css">
   <link rel="stylesheet" href="assets/css/cats.css">
@@ -173,10 +174,13 @@
                 <button type="button" class="btn btn-warning random btn-lg">Random DNA</button>
             </div>
             <div align="center" class="col-lg-5 catBox m-2 light-b-shadow">
-                <button type="button" class="btn btn-success btn-lg btn-block createCat">CREATE</button>
+                <button type="button" class="btn btn-success btn-lg btn-block createCatBtn">CREATE</button>
             </div>
         </div>
         <br>
+
+        <div class="alert alert-success" role="alert" id="notification"></div>
+
     </div>
         
 
@@ -190,8 +194,10 @@
 
 </body>
 
+<script type="module" src="./index.js"></script>
 <script src="assets/js/colors.js"></script>
 <script src="assets/js/catSettings.js"></script>
 <script src="assets/js/catFactory.js"></script>
+<script src="assets/js/web3.min.js"></script>
 
 </html>

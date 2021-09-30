@@ -11,7 +11,7 @@ contract Catcontract is  IERC721, Ownable {
 **********/
 
     uint256 public maxCatsSupply; // Max cats supply
-    uint256 public CatsSupplyCount; // Actual cats supply
+    uint256 public catsSupplyCount; // Actual cats supply
 
     uint256 public CREATION_LIMIT_GEN0; // Max Gen0 cats
     uint256 public gen0Count = 0; // Actual Gen0 cats
@@ -30,6 +30,8 @@ contract Catcontract is  IERC721, Ownable {
     Cat[] cats; // Cat storage array
     mapping(uint256 => address) private catOwner;  // Map from token ID to owner address
     mapping(address => uint256) catTokenCount; //Map cats number by owner == get cats per address
+    mapping (uint256 => address) public catIndexToApproved;
+    mapping (address => mapping ( address => bool)) private _operatorApprovals; // Check if there is an approval for another address (true or false)
 
 
 
@@ -57,7 +59,7 @@ contract Catcontract is  IERC721, Ownable {
 
     // Create Gen0 cats (to be placed in the constructor)
     function createCatGen0 (uint256 _genes) public onlyOwner returns (uint256) {
-        require(CatsSupplyCount <= maxCatsSupply);
+        require(catsSupplyCount <= maxCatsSupply);
 
         gen0Count++;
         
@@ -78,6 +80,7 @@ contract Catcontract is  IERC721, Ownable {
         
         cats.push(_cat);
         uint256 newCatId = cats.length;
+        catsSupplyCount++;
 
         emit Birth(_owner, newCatId, _dadId, _mumId, _genes);
         _transfer(address(0), _owner, newCatId);
@@ -112,15 +115,14 @@ contract Catcontract is  IERC721, Ownable {
         return catTokenCount[owner];
     }
 
-    //Returns the max number of tokens in circulation
-    function totalSupply() external override view returns (uint256 total) {
-        return maxCatsSupply;
+    //Returns the actual number of tokens in circulation
+    function totalSupply() external override view returns (uint256) {
+        return cats.length;
     }
 
-    //Returns the actual number of tokens in circulation
-    function nowSupply() external returns (uint256) {
-        CatsSupplyCount = cats.length;
-        return CatsSupplyCount;
+    //Returns the max number of tokens in circulation
+    function maxSupply() external view returns (uint256) {
+        return maxCatsSupply;
     }
 
     //Returns the name of the token
@@ -152,12 +154,55 @@ contract Catcontract is  IERC721, Ownable {
         require(ownerOf(_tokenId) == _from, "You're not the owner of this cat!");
 
         if (_from != address(0)) {
-          catTokenCount[_from]  -= 1;
+          catTokenCount[_from] -= 1;
+          deleteApproval(_tokenId);
         }
         catTokenCount[_to] += 1;
         catOwner[_tokenId] = _to;
 
         emit Transfer(_from, _to, _tokenId);
+    }
+
+
+    // Change or reaffirm the approved address for an NFT
+    function approve(address _approved, uint256 _tokenId) onlyOwner external {
+        require(ownerOf(_tokenId) == msg.sender || _operatorApprovals[msg.sender][_approved] == true, "You do not have the required approvals!");
+        _approve(_approved, _tokenId);
+        emit Approval(msg.sender, _approved, _tokenId);
+    }
+
+    function _approve(address _approved, uint256 _tokenId) internal {
+        catIndexToApproved[_tokenId] = _approved;
+    }
+
+
+    ///Enable or disable approval for a third party ("operator") to manage all of `msg.sender`'s assets
+    function setApprovalForAll(address _operator, bool _approved) onlyOwner external {
+        require(_operator != msg.sender, "There is no point in approving yourself!");
+        _setApprovalForAll(_operator,_approved);
+        emit ApprovalForAll(msg.sender, _operator, _approved);
+    }
+
+    function _setApprovalForAll(address _operator, bool _approved) internal {
+        _operatorApprovals[msg.sender][_operator] = _approved;
+    }
+
+
+    // Get the approved address for a single NFT
+    function getApproved(uint256 _tokenId) external view returns (address) {
+        require(_tokenId < cats.length, "This cat doesn't exist!");
+        return catIndexToApproved[_tokenId];
+    }
+
+    // Query if an address is an authorized operator for another address
+    function isApprovedForAll(address _owner, address _operator) external view returns (bool) {
+        return _operatorApprovals[_owner][_operator];
+    }
+
+    //Delete approval for a token
+    function deleteApproval(uint256 _tokenId) internal {
+      require(ownerOf(_tokenId) == msg.sender, "You're not the owner of this cat!");
+      delete catIndexToApproved[_tokenId];
     }
 
 }

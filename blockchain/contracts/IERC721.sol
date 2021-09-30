@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity = 0.8.7;
+pragma solidity = 0.8.8;
 /**
  * @dev Required interface of an ERC721 compliant contract.
  */

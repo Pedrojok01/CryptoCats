@@ -4,7 +4,8 @@ pragma solidity = 0.8.8;
 import "./IERC721.sol";
 import "./Ownable.sol";
 
-contract Catcontract is  IERC721, Ownable {
+
+contract Catcontract is ERC721, Ownable {
 
 
 /*Storage:
@@ -12,13 +13,17 @@ contract Catcontract is  IERC721, Ownable {
 
     uint256 public maxCatsSupply; // Max cats supply
     uint256 public catsSupplyCount; // Actual cats supply
-
     uint256 public CREATION_LIMIT_GEN0; // Max Gen0 cats
     uint256 public gen0Count = 0; // Actual Gen0 cats
-    
+
     string public tokenName; // Token name
     string public tokenSymbol; // Token symbol
-    
+
+    bytes4 internal constant MAGIC_ERC721_RECEIVED = bytes4(keccak256("onERC721Received(address,address,uint256,bytes)")); // To check if contract is ERC721 compliant
+    bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
+    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
+
+
     struct Cat {
         uint16 generation;
         uint32 dadId;
@@ -33,7 +38,7 @@ contract Catcontract is  IERC721, Ownable {
     mapping (uint256 => address) public catIndexToApproved;
     mapping (address => mapping ( address => bool)) private _operatorApprovals; // Check if there is an approval for another address (true or false)
 
-
+    
 
 /*Events:
 *********/
@@ -56,6 +61,11 @@ contract Catcontract is  IERC721, Ownable {
 
 /*Functions:
 ************/
+
+    // Check is this contract support ERC721 or ERC165 standart
+    function supportsInterface(bytes4 _interfaceId) external pure returns (bool) {
+        return (_interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165);
+    }
 
     // Create Gen0 cats (to be placed in the constructor)
     function createCatGen0 (uint256 _genes) public onlyOwner returns (uint256) {
@@ -110,9 +120,16 @@ contract Catcontract is  IERC721, Ownable {
     }
 */
 
-    //Returns the number of tokens in ``owner``'s account
-    function balanceOf(address owner) external override view returns (uint256 balance) {
-        return catTokenCount[owner];
+    //Returns the name of the token
+    function name() external override view returns (string memory _name) {
+        _name = tokenName;
+        return tokenName;
+    }
+
+    //Returns the symbole of the token
+    function symbol() external override view returns (string memory _symbol) {
+        _symbol = tokenSymbol;
+        return tokenSymbol;
     }
 
     //Returns the actual number of tokens in circulation
@@ -125,25 +142,68 @@ contract Catcontract is  IERC721, Ownable {
         return maxCatsSupply;
     }
 
-    //Returns the name of the token
-    function name() external override view returns (string memory _tokenName) {
-        return tokenName;
-    }
-
-    //Returns the symbole of the token
-    function symbol() external override view returns (string memory _tokenSymbol) {
-        return tokenSymbol;
-    }
-
     //Returns the owner of the `tokenId` token
     function ownerOf(uint256 _tokenId) public view override returns (address _owner) {
         address owner = catOwner[_tokenId];
-        //require(_owner != address(0), "ERC721: owner query for nonexistent token");
         return owner;
     }
 
+    //Returns the number of tokens in ``owner``'s account
+    function balanceOf(address owner) external override view returns (uint256 balance) {
+        return catTokenCount[owner];
+    }
+
+
+
+/* APPROVE FUNCTIONS:
+=====================*/
+
+    // Change or reaffirm the approved address for an NFT
+    function approve(address _approved, uint256 _tokenId) onlyOwner external {
+        require(ownerOf(_tokenId) == msg.sender || _operatorApprovals[msg.sender][_approved] == true || catIndexToApproved[_tokenId] == _approved, "You do not have the required approvals for this action!");
+        _approve(_approved, _tokenId);
+        emit Approval(msg.sender, _approved, _tokenId);
+    }
+
+    function _approve(address _approved, uint256 _tokenId) internal {
+        catIndexToApproved[_tokenId] = _approved;
+    }
+
+    ///Enable or disable approval for a third party ("operator") to manage all of `msg.sender`'s assets
+    function setApprovalForAll(address _operator, bool _approved) onlyOwner external {
+        require(_operator != msg.sender, "There is no point in approving yourself!");
+        _setApprovalForAll(_operator,_approved);
+        emit ApprovalForAll(msg.sender, _operator, _approved);
+    }
+
+    function _setApprovalForAll(address _operator, bool _approved) internal {
+        _operatorApprovals[msg.sender][_operator] = _approved;
+    }
+
+    // Get the approved address for a single NFT
+    function getApproved(uint256 _tokenId) external view returns (address) {
+        require(_tokenId < cats.length, "This cat doesn't exist!");
+        return catIndexToApproved[_tokenId];
+    }
+
+    // Query if an address is an authorized operator for another address
+    function isApprovedForAll(address _owner, address _operator) external view returns (bool) {
+        return _operatorApprovals[_owner][_operator];
+    }
+
+    //Delete approval for a token
+    function deleteApproval(uint256 _tokenId) internal {
+      require(ownerOf(_tokenId) == msg.sender, "You're not the owner of this cat!");
+      delete catIndexToApproved[_tokenId];
+    }
+
+
+
+/* TRANSFER FUNCTIONS:
+======================*/
+
     //Transfers `tokenId` token from `msg.sender` to `to`.
-    function transfer(address _to, uint256 _tokenId) external override { 
+    function transfer(address _to, uint256 _tokenId) external { 
         require(_to != address(0), "ERC721: transfer to the zero address");
         require(_to != address(this), "ERC721: transfer to the contract address");
 
@@ -163,46 +223,61 @@ contract Catcontract is  IERC721, Ownable {
         emit Transfer(_from, _to, _tokenId);
     }
 
-
-    // Change or reaffirm the approved address for an NFT
-    function approve(address _approved, uint256 _tokenId) onlyOwner external {
-        require(ownerOf(_tokenId) == msg.sender || _operatorApprovals[msg.sender][_approved] == true, "You do not have the required approvals!");
-        _approve(_approved, _tokenId);
-        emit Approval(msg.sender, _approved, _tokenId);
+    function safeTransfer(address _from, address _to, uint256 _tokenId, bytes memory _data) internal {
+        _transfer(_from, _to, _tokenId);
+        require(_checkERC721Support(_from, _to, _tokenId, _data));
     }
-
-    function _approve(address _approved, uint256 _tokenId) internal {
-        catIndexToApproved[_tokenId] = _approved;
-    }
-
-
-    ///Enable or disable approval for a third party ("operator") to manage all of `msg.sender`'s assets
-    function setApprovalForAll(address _operator, bool _approved) onlyOwner external {
-        require(_operator != msg.sender, "There is no point in approving yourself!");
-        _setApprovalForAll(_operator,_approved);
-        emit ApprovalForAll(msg.sender, _operator, _approved);
-    }
-
-    function _setApprovalForAll(address _operator, bool _approved) internal {
-        _operatorApprovals[msg.sender][_operator] = _approved;
+    
+    function _safeTransfer(address _from, address _to, uint256 _tokenId, bytes memory _data) internal {
+        _transfer(_from, _to, _tokenId);
+        require(_checkERC721Support(_from, _to, _tokenId, _data));
     }
 
 
-    // Get the approved address for a single NFT
-    function getApproved(uint256 _tokenId) external view returns (address) {
+    // Transfer ownership of an NFT
+    function transferFrom(address _from, address _to, uint256 _tokenId) external {
+        require(_isOwnerOrApproved(_from, _to, _tokenId));
+        _transfer(_from, _to, _tokenId);
+    }
+
+    // Transfers the ownership of an NFT from one address to a smart-contract
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId, bytes memory _data) public {
+        require(_isOwnerOrApproved(_from, _to, _tokenId));
+        _safeTransfer(_from, _to, _tokenId, _data);
+    }
+
+    // Transfers the ownership of an NFT from one address to another address
+    function safeTransferFrom(address _from, address _to, uint256 _tokenId) public {
+        safeTransferFrom(_from, _to, _tokenId, "");
+    }
+
+
+    function _checkERC721Support(address _from, address _to, uint256 _tokenId, bytes memory _data) internal returns(bool) {
+        if (!_isContract(_to)) {
+            return true;
+        } 
+
+        //Call onERC721Received in the _to contract
+        bytes4 returnData = IERC721TokenReceiver(_to).onERC721Received(msg.sender, _from, _tokenId, _data);
+        
+        // Check the return value (in IERC interface)
+        return returnData == MAGIC_ERC721_RECEIVED;
+    }
+
+    function _isContract(address _to) internal view returns (bool) {
+        uint32 size;
+        assembly{
+            size := extcodesize(_to)
+        }
+        return size > 0;
+    }
+
+    function _isOwnerOrApproved(address _from, address _to, uint256 _tokenId) internal view returns (bool) {
+        require(ownerOf(_tokenId) == _from, "the sender address do not own this token");
+        require(_to != address(0), "ERC721: transfer to the zero address");
         require(_tokenId < cats.length, "This cat doesn't exist!");
-        return catIndexToApproved[_tokenId];
-    }
 
-    // Query if an address is an authorized operator for another address
-    function isApprovedForAll(address _owner, address _operator) external view returns (bool) {
-        return _operatorApprovals[_owner][_operator];
-    }
-
-    //Delete approval for a token
-    function deleteApproval(uint256 _tokenId) internal {
-      require(ownerOf(_tokenId) == msg.sender, "You're not the owner of this cat!");
-      delete catIndexToApproved[_tokenId];
+        return (msg.sender == _from || _operatorApprovals[_from][msg.sender] == true || catIndexToApproved[_tokenId] == msg.sender);
     }
 
 }

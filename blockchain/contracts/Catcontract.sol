@@ -62,63 +62,45 @@ contract Catcontract is ERC721, Ownable {
 /*Functions:
 ************/
 
+/* CHECK FUNCTIONS:
+===================*/
+
     // Check is this contract support ERC721 or ERC165 standart
     function supportsInterface(bytes4 _interfaceId) external pure returns (bool) {
         return (_interfaceId == _INTERFACE_ID_ERC721 || _interfaceId == _INTERFACE_ID_ERC165);
     }
 
-    // Create Gen0 cats (to be placed in the constructor)
-    function createCatGen0 (uint256 _genes) public onlyOwner returns (uint256) {
-        require(catsSupplyCount <= maxCatsSupply);
-
-        gen0Count++;
-        
-        return _creatKitty(0, 0, 0, _genes, msg.sender);   
+    function _checkERC721Support(address _from, address _to, uint256 _tokenId, bytes memory _data) internal returns(bool) {
+        if (!_isContract(_to)) {
+            return true;
+        } 
+        //Call onERC721Received in the _to contract
+        bytes4 returnData = IERC721TokenReceiver(_to).onERC721Received(msg.sender, _from, _tokenId, _data);
+        // Check the return value (in IERC interface)
+        return returnData == MAGIC_ERC721_RECEIVED;
     }
 
-    // Create cats
-    function _creatKitty(uint256 _generation, uint256 _dadId, uint256 _mumId, uint256 _genes, address _owner) private returns(uint256) {
-        Cat memory _cat = Cat({
-            generation: uint16(_generation),
-            dadId: uint32(_dadId),
-            mumId:  uint32(_mumId),
-            birthTime: uint64(block.timestamp),
-            genes: _genes
-        });
-
-        require(gen0Count < CREATION_LIMIT_GEN0);
-        
-        cats.push(_cat);
-        uint256 newCatId = cats.length;
-        catsSupplyCount++;
-
-        emit Birth(_owner, newCatId, _dadId, _mumId, _genes);
-        _transfer(address(0), _owner, newCatId);
-        return newCatId;
-    }
-    
-    //Get Cat genes per Id
-    function getCatGenes(uint256 _catId) external view returns (uint256 generation, uint256 dadId, uint256 mumId, uint256 birthTime, uint256 genes) {
-        generation = cats[_catId].generation;
-        dadId = cats[_catId].dadId; 
-        mumId = cats[_catId].mumId; 
-        birthTime = cats[_catId].birthTime;
-        genes = cats[_catId].genes;
+    function _isContract(address _to) internal view returns (bool) {
+        uint32 size;
+        assembly{
+            size := extcodesize(_to)
+        }
+        return size > 0;
     }
 
-/*    
-    //Get Cat genes per Id
-    function getCatGenes(uint256 _catId) external view returns (uint256 generation, uint256 dadId, uint256 mumId, uint256 birthTime, uint256 genes) {
-        
-        Cat storage cat = cats[_catId]; // pointer to storage in order to save GAS
+    function _isOwnerOrApproved(address _from, address _to, uint256 _tokenId) internal view returns (bool) {
+        require(ownerOf(_tokenId) == _from, "the sender address do not own this token");
+        require(_to != address(0), "ERC721: transfer to the zero address");
+        require(_tokenId < cats.length, "This cat doesn't exist!");
 
-        generation = uint256(cat.generation);
-        dadId = uint256(cat.dadId); 
-        mumId = uint256(cat.mumId); 
-        birthTime = uint256(cat.birthTime);
-        genes = uint256(cat.genes);
+        return (msg.sender == _from || _operatorApprovals[_from][msg.sender] == true || catIndexToApproved[_tokenId] == msg.sender);
     }
-*/
+
+
+
+
+/* BASIC FUNCTIONS:
+===================*/
 
     //Returns the name of the token
     function name() external override view returns (string memory _name) {
@@ -143,14 +125,13 @@ contract Catcontract is ERC721, Ownable {
     }
 
     //Returns the owner of the `tokenId` token
-    function ownerOf(uint256 _tokenId) public view override returns (address _owner) {
-        address owner = catOwner[_tokenId];
-        return owner;
+    function ownerOf(uint256 _tokenId) public view override returns (address) {
+        return catOwner[_tokenId];
     }
 
     //Returns the number of tokens in ``owner``'s account
-    function balanceOf(address owner) external override view returns (uint256 balance) {
-        return catTokenCount[owner];
+    function balanceOf(address _owner) external override view returns (uint256) {
+        return catTokenCount[_owner];
     }
 
 
@@ -252,32 +233,96 @@ contract Catcontract is ERC721, Ownable {
     }
 
 
-    function _checkERC721Support(address _from, address _to, uint256 _tokenId, bytes memory _data) internal returns(bool) {
-        if (!_isContract(_to)) {
-            return true;
-        } 
 
-        //Call onERC721Received in the _to contract
-        bytes4 returnData = IERC721TokenReceiver(_to).onERC721Received(msg.sender, _from, _tokenId, _data);
+
+/* CREATE CAT FUNCTIONS:
+========================*/
+
+// Create Gen0 cats (to be placed in the constructor)
+    function createCatGen0 (uint256 _genes) public onlyOwner returns (uint256) {
+        require(catsSupplyCount <= maxCatsSupply);
+
+        gen0Count++;
         
-        // Check the return value (in IERC interface)
-        return returnData == MAGIC_ERC721_RECEIVED;
+        return _creatKitty(0, 0, 0, _genes, msg.sender);   
     }
 
-    function _isContract(address _to) internal view returns (bool) {
-        uint32 size;
-        assembly{
-            size := extcodesize(_to)
+    // Create cats
+    function _creatKitty(uint256 _generation, uint256 _dadId, uint256 _mumId, uint256 _genes, address _owner) private returns(uint256) {
+        Cat memory _cat = Cat({
+            generation: uint16(_generation),
+            dadId: uint32(_dadId),
+            mumId:  uint32(_mumId),
+            birthTime: uint64(block.timestamp),
+            genes: _genes
+        });
+
+        require(gen0Count < CREATION_LIMIT_GEN0);
+        
+        cats.push(_cat);
+        uint256 newCatId = cats.length;
+        catsSupplyCount++;
+
+        emit Birth(_owner, newCatId, _dadId, _mumId, _genes);
+        _transfer(address(0), _owner, newCatId);
+        return newCatId;
+    }
+    
+    //Get Cat genes per Id
+    function getCatGenes(uint256 _catId) public view returns (uint256 generation, uint256 dadId, uint256 mumId, uint256 birthTime, uint256 genes) {
+        generation = cats[_catId].generation;
+        dadId = cats[_catId].dadId; 
+        mumId = cats[_catId].mumId; 
+        birthTime = cats[_catId].birthTime;
+        genes = cats[_catId].genes;
+    }
+
+/*    
+    //Get Cat genes per Id
+    function getCatGenes(uint256 _catId) external view returns (uint256 generation, uint256 dadId, uint256 mumId, uint256 birthTime, uint256 genes) {
+        
+        Cat storage cat = cats[_catId]; // pointer to storage in order to save GAS
+
+        generation = uint256(cat.generation);
+        dadId = uint256(cat.dadId); 
+        mumId = uint256(cat.mumId); 
+        birthTime = uint256(cat.birthTime);
+        genes = uint256(cat.genes);
+    }
+*/
+
+
+
+
+/* BREED CAT FUNCTIONS:
+=======================*/
+
+    function breed(uint256 _dadId, uint256 _mumId) public returns (uint256) {
+        require (ownerOf(_dadId) == msg.sender && ownerOf(_mumId) == msg.sender, "You do not own those cats!");
+        uint256 dadDna = cats[_dadId].genes;
+        uint256 mumDna = cats[_mumId].genes;
+        uint256 kidDna = _mixDna(dadDna, mumDna);
+        
+        uint16 _generation = 0; 
+        if (cats[_mumId].generation >= cats[_dadId].generation) {
+            _generation = cats[_mumId].generation++;
+        } else {
+            _generation = cats[_dadId].generation++;
         }
-        return size > 0;
+        
+        return _creatKitty(_generation, _dadId, _mumId, kidDna, msg.sender);
     }
 
-    function _isOwnerOrApproved(address _from, address _to, uint256 _tokenId) internal view returns (bool) {
-        require(ownerOf(_tokenId) == _from, "the sender address do not own this token");
-        require(_to != address(0), "ERC721: transfer to the zero address");
-        require(_tokenId < cats.length, "This cat doesn't exist!");
 
-        return (msg.sender == _from || _operatorApprovals[_from][msg.sender] == true || catIndexToApproved[_tokenId] == msg.sender);
+    function _mixDna(uint256 _dadDna, uint256 _mumDna) internal pure returns (uint256) {
+        uint256 firstHalf = _dadDna / 100000000;
+        uint256 secondHalf = _mumDna % 100000000;
+
+        return (firstHalf*100000000) + secondHalf;
     }
+
 
 }
+
+
+

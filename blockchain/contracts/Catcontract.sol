@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity = 0.8.8;
+pragma solidity = 0.8.9;
 
-import "./IERC721.sol";
+import "./interface/IERC721.sol";
 import "./Ownable.sol";
 
 
@@ -11,10 +11,10 @@ contract Catcontract is ERC721, Ownable {
 /*Storage:
 **********/
 
-    uint256 public maxCatsSupply; // Max cats supply
+    uint256 public CREATION_LIMIT_GEN0; // Max Gen0 supply definied in constructor
+    uint256 public gen0Count; // Track the number of Gen0 cats
+    uint256 public maxCatsSupply; // Max cats supply definied in constructor
     uint256 public catsSupplyCount; // Actual cats supply
-    uint256 public CREATION_LIMIT_GEN0; // Max Gen0 cats
-    uint256 public gen0Count = 0; // Actual Gen0 cats
 
     string public tokenName; // Token name
     string public tokenSymbol; // Token symbol
@@ -51,11 +51,11 @@ contract Catcontract is ERC721, Ownable {
 **************/
 
     constructor(string memory _name, string memory _symbol, uint256 _maxCatsSupply, uint256 _CREATION_LIMIT_GEN0) {
-            tokenName = _name;
-            tokenSymbol = _symbol;
-            maxCatsSupply = _maxCatsSupply;
-            CREATION_LIMIT_GEN0 = _CREATION_LIMIT_GEN0;
-        }
+        tokenName = _name;
+        tokenSymbol = _symbol;
+        maxCatsSupply = _maxCatsSupply;
+        CREATION_LIMIT_GEN0 = _CREATION_LIMIT_GEN0;  
+    }
 
 
 
@@ -115,8 +115,13 @@ contract Catcontract is ERC721, Ownable {
     }
 
     //Returns the actual number of tokens in circulation
-    function totalSupply() external override view returns (uint256) {
+    function totalSupply() public override view returns (uint256) {
         return cats.length;
+    }
+
+    //Returns the acutal number of Gen0 cats in circulation
+    function Gen0Count() external view returns (uint256) {
+        return gen0Count;
     }
 
     //Returns the max number of tokens in circulation
@@ -130,10 +135,46 @@ contract Catcontract is ERC721, Ownable {
     }
 
     //Returns the number of tokens in ``owner``'s account
-    function balanceOf(address _owner) external override view returns (uint256) {
+    function balanceOf(address _owner) public override view returns (uint256) {
         return catTokenCount[_owner];
     }
 
+
+    function tokensPerOwner(address _owner) public view returns(uint256[] memory tokensOwned) {
+        uint256 tokenCount = balanceOf(_owner);
+        uint256 tokenId;
+
+        if (tokenCount == 0) {
+            tokensOwned = new uint256[](0);
+        } else {
+            tokensOwned = new uint256[](tokenCount);
+            for (tokenId = 0; tokenId <= totalSupply(); tokenId++) {
+                if (ownerOf(tokenId) == _owner) {
+                    tokensOwned[tokenId-1] = tokenId;
+                }
+            }
+            return tokensOwned;
+        }
+    }
+
+
+    function getCat(uint256 _tokenId) public view returns (
+      uint256 generation,
+      uint256 dadId,
+      uint256 mumId,
+      uint256 birthTime,
+      uint256 genes      
+    )
+  {
+    require(_tokenId < cats.length, "This cat doesn't exist!");
+    Cat storage cat = cats[_tokenId];
+
+    generation = cat.generation;
+    dadId = cat.dadId;
+    mumId = cat.mumId;
+    birthTime = cat.birthTime;
+    genes = cat.genes;
+  }
 
 
 /* APPROVE FUNCTIONS:
@@ -238,14 +279,16 @@ contract Catcontract is ERC721, Ownable {
 /* CREATE CAT FUNCTIONS:
 ========================*/
 
-// Create Gen0 cats (to be placed in the constructor)
-    function createCatGen0 (uint256 _genes) public onlyOwner returns (uint256) {
-        require(catsSupplyCount <= maxCatsSupply);
+
+    // Create Gen0 cats (to be placed in the constructor)
+    function createCatGen0 (uint256 _genes) public onlyOwner returns (uint256 _tokenId) {
+        require(gen0Count < CREATION_LIMIT_GEN0);
 
         gen0Count++;
         
-        return _creatKitty(0, 0, 0, _genes, msg.sender);   
+        return _tokenId =  _creatKitty(0, 0, 0, _genes, msg.sender);   
     }
+
 
     // Create cats
     function _creatKitty(uint256 _generation, uint256 _dadId, uint256 _mumId, uint256 _genes, address _owner) private returns(uint256) {
@@ -314,13 +357,41 @@ contract Catcontract is ERC721, Ownable {
     }
 
 
-    function _mixDna(uint256 _dadDna, uint256 _mumDna) internal pure returns (uint256) {
+    function _mixDna(uint256 _dadDna, uint256 _mumDna) internal view returns (uint256) {
+        uint256[8] memory geneArray;
+        uint8 random = uint8 ( block.timestamp % 255 ); // binary between 00000000-11111111
+        uint256 index =7;
+        uint256 newGene;
+        
+        for (uint256 i = 1; i <= 128; i=i*2) {
+            if (random & i != 0) {
+                geneArray[index] = uint8( _mumDna % 100);
+            } else {
+                geneArray[index] = uint8( _dadDna % 100);
+            }
+
+            _mumDna = _mumDna /100;
+            _dadDna = _dadDna /100;
+
+            index--;
+
+            for (i = 0; i < 8; i++) {
+                newGene = newGene + geneArray[i];
+                if (i !=7) {
+                    newGene = newGene * 100;
+                }
+            }
+        }
+        
+        return newGene;
+        
+        /*
         uint256 firstHalf = _dadDna / 100000000;
         uint256 secondHalf = _mumDna % 100000000;
 
         return (firstHalf*100000000) + secondHalf;
+        */
     }
-
 
 }
 

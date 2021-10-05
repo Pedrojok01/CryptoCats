@@ -10,7 +10,6 @@ body {
   letter-spacing: 1px; 
 }
 
-
 .navbar-light {
   background: #ffffff;
 }
@@ -44,10 +43,10 @@ p {
 }
 
 .pointer {
-
   cursor: pointer;
-
 }
+
+
 
 /*  Alignment */
 
@@ -100,6 +99,8 @@ th {
 .show-block {
   display: inline-block;
 }
+
+
 
 /* SIZING */
 

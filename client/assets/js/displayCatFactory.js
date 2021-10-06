@@ -1,23 +1,26 @@
-const factoryTab = $("#nav-factory-tab");
-factoryTab.addEventListener("click", factory);
+//const factoryTab = document.querySelector("nav-factory-tab");
 
+// when page load
+$( document ).ready(function() {
+    factory()
+});
 
 
 function factory() {
 
     var factory =
 
-        `<div class="factory container p-5" style="margin-top: 12vh; margin-bottom: 10vh;">
-            <div class="factoryTitle" align="center">
-                <h1 class="c-white">Cats-Factory</h1>
-                <p class="c-white">Create your custom NFT Cat from scratch!
+        `<div class="container p-6">
+            <div align="center" class="mb-4">
+                <h1>Cats-Factory</h1>
+                <p>Create your custom NFT Cat from scratch! <br />
                     <span id="gen0CountText" class="hidden">(<span id="gen0Count">?</span> out of 50!)</span>
                 </p>
             </div>
 
 
             <div class="row justify-content-center mt-5">
-                <div class="col-lg-4 catBox m-2 light-b-shadow position-relative d-flex justify-content-center">
+                <div class="col-lg-4 catBox m-2 light-b-shadow d-flex justify-content-center">
                     <div class="cat">
                         <div class="head">
                             <div class="head_background"></div>
@@ -80,29 +83,30 @@ function factory() {
                         </div>
                     </div>
 
-                    <br>
+                    </ br>
 
                     <div class ="dnaDiv" id="catDNA">
-                    <b>
-                    DNA:
-                    <!--Colors-->
-                    <span id="dnabody"></span>
-                    <span id="dnamouth"></span>
-                    <span id="dnapaws"></span>
-                    <span id="dnaeyes"></span>
-                    <span id="dnacollar"></span>
+                        <b>
+                            DNA:
+                            <!--Colors-->
+                            <span id="dnabody"></span>
+                            <span id="dnamouth"></span>
+                            <span id="dnapaws"></span>
+                            <span id="dnaeyes"></span>
+                            <span id="dnacollar"></span>
 
-                    <!--Cattributes-->
-                    <span id="dnashape"></span>
-                    <span id="dnadecoration"></span>
-                    <span id="dnadecorationColor"></span>
-                    <span id="dnaanimation"></span>
+                            <!--Cattributes-->
+                            <span id="dnashape"></span>
+                            <span id="dnadecoration"></span>
+                            <span id="dnadecorationColor"></span>
+                            <span id="dnaanimation"></span>
 
-                    <span id="dnaspecial"></span>
-                    </b>
+                            <span id="dnaspecial"></span>
+                        </b>
                     </div>
                 </div>
-
+                
+                
                 <div class="col-lg-6 cattributes m-2 light-b-shadow">
 
                     <!-- Tabs -->
@@ -145,42 +149,42 @@ function factory() {
                     <!-- Cattributes -->
                     <div class="tab cattributesBtn">
                         <div class="form-group">
-                            <label for="formControlRange"><b>Eyes shape</b><span class="badge badge-dark ml-2"
-                                id="eyeName"></span></label>
+                            <label for="formControlRange"><b>Eyes shape</b><span class="badge badge-dark ml-2" id="eyeName"></span></label>
                             <input type="range" min="1" max="6" class="form-control-range" id="eyeshape">
                         </div>
                         <div class="form-group">
-                            <label for="formControlRange"><b>Forehead shape</b><span class="badge badge-dark ml-2"
-                                id="decorationName"></span></label>
+                            <label for="formControlRange"><b>Forehead shape</b><span class="badge badge-dark ml-2" id="decorationName"></span></label>
                             <input type="range" min="1" max="5" class="form-control-range" id="decorationshape">
                         </div>
                         <div class="form-group">
-                            <label for="formControlRange"><b>Forehead's color</b><span class="badge badge-dark ml-2"
-                                id="decorationcode"></span></label>
+                            <label for="formControlRange"><b>Forehead's color</b><span class="badge badge-dark ml-2" id="decorationcode"></span></label>
                             <input type="range" min="10" max="98" class="form-control-range" id="decorationcolor">
                         </div>
                         <div class="form-group">
-                            <label for="formControlRange"><b>Animation</b><span class="badge badge-dark ml-2"
-                                id="animationName"></span></label>
+                            <label for="formControlRange"><b>Animation</b><span class="badge badge-dark ml-2" id="animationName"></span></label>
                             <input type="range" min="1" max="6" class="form-control-range" id="animation">
                         </div>
                     </div>
+
+                </div>
+            
+            </div>
+
+            <div class="row">
+                <div align="center" class="col-lg-6 ButtonRaw m-2">
+                    <button type="button" class="btn btn-primary default btn-lg">Default DNA</button>
+                    <button type="button" class="btn btn-warning random btn-lg">Random DNA</button>
+                </div>
+                <div align="center" class="col-lg-5 ButtonRaw m-3">
+                    <button type="button" class="btn btn-success btn-lg btn-block createCatBtn">CREATE</button>
                 </div>
             </div>
-            <br>
-                <div class="row">
-                    <div align="center" class="col-lg-6 catBox m-2 light-b-shadow">
-                        <button type="button" class="btn btn-primary default btn-lg">Default DNA</button>
-                        <button type="button" class="btn btn-warning random btn-lg">Random DNA</button>
-                    </div>
-                    <div align="center" class="col-lg-5 catBox m-2 light-b-shadow">
-                        <button type="button" class="btn btn-success btn-lg btn-block createCatBtn">CREATE</button>
-                    </div>
-                </div>
-                <br>
 
-                <div class="alert alert-success" role="alert" id="notification"></div>
+            </ br>
+            </ br>
         </div>`
+
+        
 
     $('#nav-factory').html(factory)
 }

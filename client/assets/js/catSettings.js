@@ -13,9 +13,9 @@ var defaultDNA = {
     "decorationPattern" : 2,
     "decorationColor" : 67,
     "animation" :  1,
-
     "lastNum" :  1
     }
+
 
 // when page load
 $( document ).ready(function() {

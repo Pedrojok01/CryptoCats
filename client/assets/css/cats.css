@@ -17,8 +17,8 @@ body {
     position: inherit;
     width: 300px;
     height: 350px;
-    transform: scale(1.2, 1.2);
-    margin: 23% 0% 8% 17%;
+    transform: scale(80%);
+    padding-top: 30px;
 }
 
 
@@ -81,7 +81,7 @@ body {
     border-radius: 100% 0% 100% 0%;
     width: 90px;
     height: 90px;
-    position: absolute;
+    position: relative;
     top: 11px;
     left: -0.5px;
     z-index: -500;
@@ -156,7 +156,7 @@ body {
 
 .pupils.left {
     top: 3px;
-    left: 6px; 
+    left: 6px;
 }
 
 .pupils.right {
@@ -199,6 +199,7 @@ body {
     top: 17px;
     left: 13px;
 }
+
 
 
 /**FACE BODY**/

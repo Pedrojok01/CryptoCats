@@ -1,8 +1,15 @@
 .catBox {
-    background-color: #e2efff;
+    background-color: #e2efff !important;
     position: relative;
     border-radius: 10px;
     padding: 20px 20px 20px 20px;
+    object-fit: contain;
+    z-index: 0;
+}
+
+.ButtonRaw {
+    position: relative;
+    border-radius: 10px;
     object-fit: contain;
 }
 

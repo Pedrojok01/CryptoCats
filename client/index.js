@@ -17,9 +17,8 @@ let lastMarketTransactionEvent = "";
 $(document).ready(async function () {
     const menu = document.getElementById("menu");
     menu.addEventListener("hide.bs.tab", function (event) {
-        $("#notification").empty();
-    });
-
+        $("#notification").css({'visibility': 'hidden'})
+      });
     toggleButton()
 
     ethereum.on("accountsChanged", function (accounts) {

@@ -5,22 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CryptoCat</title>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
     <!-- Latest compiled and minified CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/mystyle.css">
-    <link rel="stylesheet" href="assets/css/cats.css">
+    <link rel="stylesheet" href="assets/css/factory.css">
     <link rel="stylesheet" href="assets/css/colors.css">
     <link rel="stylesheet" href="assets/css/frontend.css">
+    <link rel="stylesheet" href="assets/css/cats.css">
     <link rel="stylesheet" href="assets/css/animations.css">
-
-    <script src="assets/js/web3.min.js"></script>
+    
+    <script src="assets/js/colors.js"></script>
+    <script src="assets/bootstrap/js/popper.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+   <!--  <script type="text/javascript" src="assets/js/displayCatFactory.js"></script>-->
     <script src="assets/js/abi.js"></script>
 </head>
 
@@ -54,8 +61,8 @@
                                 data-bs-toggle="pill" data-bs-target="#nav-marketplace" type="button" role="tab">
                                 <b>Marketplace</b>
                             </button>
-                            <button onclick="factory()" class="nav-link" id="nav-factory-tab"
-                                data-bs-toggle="pill" data-bs-target="#nav-factory" type="button" role="tab">
+                            <button onclick="factory()" class="nav-link" id="nav-factory-tab" data-bs-toggle="pill"
+                                data-bs-target="#nav-factory" type="button" role="tab">
                                 <b>Factory</b>
                             </button>
                             <button id="loginButton" class="btn dark-btn ml-4">Connect MetaMask</button>
@@ -69,12 +76,13 @@
 
 
     <div class="tab-content frontend" align="center">
+        <!-- Display Notifications / default = hidden -->
+        <div class="topBar alert alert-success" style="visibility: hidden" role="alert" id="notification"></div>
 
         <!-- Home page Tab -->
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel">
             <div class="container p-5">
 
-                <div class="topBar alert alert-success" style="visibility: hidden" role="alert" id="notification"></div>
                 <img src="assets/images/homeCatsGroup.png" class="catGroup" style="max-width: 60%; height: auto">
                 <div class="container">
                     <div class="banner">
@@ -94,7 +102,7 @@
 
         <!-- Marketplace Tab -->
         <div class="tab-pane fade" id="nav-marketplace" role="tabpanel">
-            <div class="container p-5 mt-5">
+            <div class="container">
                 <div align="center">
                     <h1>Marketplace</h1>
                     <p class="mb-0">
@@ -109,10 +117,10 @@
 
         <!-- My cats Tab -->
         <div class="tab-pane fade" id="nav-my-cats" role="tabpanel">
-            <div class="container p-5 mt-5">
+            <div class="container">
                 <div align="center" class="mb-4">
-                    <h1>Kitties-Collection</h1>
-                    <p>Interact with your kitty NFTs</p>
+                    <h1>Cats Inventory</h1>
+                    <p>Interact with your cats NFTs</p>
                 </div>
                 <div align="center" class="text-dark mt-5">
                     <nav id="menu-my-kitties" class="pt-2">
@@ -241,21 +249,199 @@
 
 
         <!-- factory Tab -->
-        <div class="tab-pane fade" id="nav-factory" role="tabpanel">
-            <div class="container p-5 mt-5">
+        <div class="tab-pane fade" style="height: 800px" id="nav-factory" role="tabpanel">
+            
+            
+
+            <div class="container p-6">
+                <div align="center" class="mb-4">
+                    <h1>Cats-Factory</h1>
+                    <p>Create your custom NFT Cat from scratch! <br />
+                        <span id="gen0CountText" class="hidden">(<span id="gen0Count">?</span> out of 50!)</span>
+                    </p>
+                </div>
+    
+    
+                <div class="row justify-content-center mt-5">
+                    <div class="col-lg-4 catBox m-2 light-b-shadow d-flex justify-content-center">
+                        <div class="cat">
+                            <div class="head">
+                                <div class="head_background"></div>
+                                <div class="ears">
+                                    <div class="ear_left">
+                                        <div class="inner_ear_left"></div>
+                                    </div>
+                                    <div class="ear_right">
+                                        <div class="inner_ear_right"></div>
+                                    </div>
+                                </div>
+                                <div class="forehead">
+                                    <div class="forehead line_left"></div>
+                                    <div class="forehead line_right"></div>
+                                </div>
+                                <div class="eyes">
+                                    <div class="eyes_left">
+                                        <div class="pupils left"></div>
+                                        <div class="inner_pupil left"></div>
+                                        <div class="smaller_inner_pupil left"></div>
+                                    </div>
+                                    <div class="eyes_right">
+                                        <div class="pupils right"></div>
+                                        <div class="inner_pupil right"></div>
+                                        <div class="smaller_inner_pupil right"></div>
+                                    </div>
+                                </div>
+                                <div class="face_body">
+                                    <div class="nose"></div>
+                                    <div class="mouth">
+                                        <div class="mouth_upper"></div>
+                                        <div class="mouth_lower_right"></div>
+                                        <div class="mouth_lower_left"></div>
+                                    </div>
+                                    <div class="hairs">
+                                        <div class="hair left top"></div>
+                                        <div class="hair left middle"></div>
+                                        <div class="hair left bottom"></div>
+                                        <div class="hair right top"></div>
+                                        <div class="hair right middle"></div>
+                                        <div class="hair right bottom"></div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="catBody">
+                                <div class="collar"></div>
+                                <div class="core_body">
+                                    <div class="inner_body"></div>
+                                </div>
+                                <div class="feet">
+                                    <div class="foot front left"></div>
+                                    <div class="foot front right"></div>
+                                    <div class="foot back left"></div>
+                                    <div class="foot back right"></div>
+                                </div>
+                                <div class="tail">
+                                    <div class="tail_ball"></div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        </ br>
+    
+                        <div class ="dnaDiv" id="catDNA">
+                            <b>
+                                DNA:
+                                <!--Colors-->
+                                <span id="dnabody"></span>
+                                <span id="dnamouth"></span>
+                                <span id="dnapaws"></span>
+                                <span id="dnaeyes"></span>
+                                <span id="dnacollar"></span>
+    
+                                <!--Cattributes-->
+                                <span id="dnashape"></span>
+                                <span id="dnadecoration"></span>
+                                <span id="dnadecorationColor"></span>
+                                <span id="dnaanimation"></span>
+    
+                                <span id="dnaspecial"></span>
+                            </b>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="col-lg-6 cattributes m-2 light-b-shadow">
+    
+                        <!-- Tabs -->
+                        <div align="center">
+                            <div class="tabs">
+                                <button type="button" class="btn btn-primary catColorsBtn">Cat Colors</button>
+                                <button type="button" class="btn btn-primary cattributesBtn">Cattributes</button>
+                            </div>
+                        </div>
+    
+                        <!-- Cat colors -->
+                        <div class="tab catColorsBtn">
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Head and body color</b><span class="badge badge-dark ml-2"
+                                    id="bodycode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="bodycolor">
+                            </div>
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Mouth and belly color</b><span class="badge badge-dark ml-2"
+                                    id="mouthcode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="mouthcolor">
+                            </div>
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Paws, ears and tail color</b><span class="badge badge-dark ml-2"
+                                    id="pawscode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="pawscolor">
+                            </div>
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Eyes and tail-ball color</b><span class="badge badge-dark ml-2"
+                                    id="eyescode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="eyescolor">
+                            </div>
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Collar color</b><span class="badge badge-dark ml-2"
+                                    id="collarcode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="collarcolor">
+                            </div>
+                        </div>
+    
+                        <!-- Cattributes -->
+                        <div class="tab cattributesBtn">
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Eyes shape</b><span class="badge badge-dark ml-2" id="eyeName"></span></label>
+                                <input type="range" min="1" max="6" class="form-control-range" id="eyeshape">
+                            </div>
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Forehead shape</b><span class="badge badge-dark ml-2" id="decorationName"></span></label>
+                                <input type="range" min="1" max="5" class="form-control-range" id="decorationshape">
+                            </div>
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Forehead's color</b><span class="badge badge-dark ml-2" id="decorationcode"></span></label>
+                                <input type="range" min="10" max="98" class="form-control-range" id="decorationcolor">
+                            </div>
+                            <div class="form-group">
+                                <label for="formControlRange"><b>Animation</b><span class="badge badge-dark ml-2" id="animationName"></span></label>
+                                <input type="range" min="1" max="6" class="form-control-range" id="animation">
+                            </div>
+                        </div>
+    
+                    </div>
                 
-                    <div id="factory"></div>
-
-
-
-
-                
+                </div>
+    
+                <div class="row">
+                    <div align="center" class="col-lg-6 ButtonRaw m-2">
+                        <button type="button" class="btn btn-primary default btn-lg">Default DNA</button>
+                        <button type="button" class="btn btn-warning random btn-lg">Random DNA</button>
+                    </div>
+                    <div align="center" class="col-lg-5 ButtonRaw m-3">
+                        <button type="button" class="btn btn-success btn-lg btn-block createCatBtn">CREATE</button>
+                    </div>
+                </div>
+    
+                <br>
+                <br>
             </div>
+
+
+
+
+
+
+
+
+
+
+
         </div>
 
 
-
     </div>
+
 
     <footer align="center">
         <p>
@@ -265,13 +451,11 @@
         </p>
     </footer>
 
+
 </body>
 
-<script type="text/javascript" src="./index.js"></script>
-<script src="assets/js/colors.js"></script>
-<script src="assets/js/catSettings.js"></script>
 <script src="assets/js/catFactory.js"></script>
-<script src="assets/js/displayCatFactory.js"></script>
-
+<script src="assets/js/catSettings.js"></script>
+<script src="./index.js"></script>
 
 </html>

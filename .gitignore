@@ -11,7 +11,3 @@
 # netlify
 /client/build
 .netlify
-
-
-/blockchain/package-lock.json
-package-lock.json

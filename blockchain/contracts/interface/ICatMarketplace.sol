@@ -1,8 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
-
-import "../Catcontract.sol";
-import "../Ownable.sol";
+pragma solidity  = 0.8.9;
 
 /*
  * Market place to trade kitties (should **in theory** be used for any ERC721 token)

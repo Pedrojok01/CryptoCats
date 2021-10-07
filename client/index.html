@@ -19,10 +19,10 @@
     <link rel="stylesheet" href="assets/css/cats.css">
     <link rel="stylesheet" href="assets/css/animations.css">
 
-    <script src="assets/js/colors.js"></script>
+    <script src="assets/js/utils/colors.js"></script>
     <script src="assets/bootstrap/js/popper.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/abi.js"></script>
+    <script src="assets/js/utils/abi.js"></script>
 </head>
 
 
@@ -56,7 +56,7 @@
                                 data-bs-toggle="pill" data-bs-target="#nav-marketplace" type="button" role="tab">
                                 <b>Marketplace</b>
                             </button>
-                            <button onclick="factory()" class="nav-link" id="nav-factory-tab" data-bs-toggle="pill"
+                            <button class="nav-link" id="nav-factory-tab" data-bs-toggle="pill"
                                 data-bs-target="#nav-factory" type="button" role="tab">
                                 <b>Factory</b>
                             </button>
@@ -137,7 +137,7 @@
                     <div class="tab-content">
                         <!-- Show -->
                         <div class="tab-pane fade active show" id="nav-show" role="tabpanel">
-                            <div id="kitties-collection" class="row g-5 justify-content-center m-2"></div>
+                            <div id="cats-collection" class="row g-5 justify-content-center m-2"></div>
                         </div>
                         <!-- Breed -->
                         <div class="tab-pane fade" id="nav-breed" role="tabpanel">
@@ -439,8 +439,8 @@
 
 </body>
 
-<script src="assets/js/catFactory.js"></script>
-<script src="assets/js/catSettings.js"></script>
+<script src="assets/js/factory/catFactory.js"></script>
+<script src="assets/js/factory/catSettings.js"></script>
 <script src="./index.js"></script>
 
 </html>

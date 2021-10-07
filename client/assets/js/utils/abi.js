@@ -332,6 +332,20 @@ var abi = [
   },
   {
     "inputs": [],
+    "name": "Gen0Count",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "maxSupply",
     "outputs": [
       {
@@ -398,6 +412,46 @@ var abi = [
         "internalType": "uint256[]",
         "name": "tokensOwned",
         "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getCat",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "generation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "dadId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "mumId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "birthTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "genes",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

@@ -1,6 +1,6 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const CAT_CONTRACT_ADD = "0xA7B05d00fcFA9FA334005F9CBeF2C4C59B257B2f";
+const CAT_CONTRACT_ADD = "0xE8c845172788F360C5044D08Ea944D90D9f12EDA";
 const MARKETPLACE_CONTRACT_ADD = "";
 const connectButton = document.querySelector('#loginButton');
 
@@ -17,8 +17,8 @@ let lastMarketTransactionEvent = "";
 $(document).ready(async function () {
     const menu = document.getElementById("menu");
     menu.addEventListener("hide.bs.tab", function (event) {
-        $("#notification").css({'visibility': 'hidden'})
-      });
+        $("#notification").css({ 'visibility': 'hidden' })
+    });
     toggleButton()
 
     ethereum.on("accountsChanged", function (accounts) {
@@ -80,7 +80,7 @@ async function loginWithMetaMask() {
         //Update userCat, myCat, breed
         const cat = getCat(catId);
         userCats.push(catId);
-        //appendCat(cat.catId, cat.generation, cat.genes);
+        appendNewCat(cat.catId, cat.generation, cat.genes);
     })
 
 
@@ -104,8 +104,6 @@ async function loginWithMetaMask() {
 }
 
 
-
-
 // Disconnect from Metamask:
 function logoutOfMetaMask() {
     userAddress = undefined;
@@ -115,6 +113,13 @@ function logoutOfMetaMask() {
     setTimeout(() => {
         connectButton.addEventListener('click', loginWithMetaMask)
     }, 200)
+}
+
+function notConnected() {
+    if (userAddress === undefined) {
+        showNotifications("Metamask not connected!");
+        return;
+    }
 }
 
 
@@ -131,8 +136,10 @@ function restartApp() {
 
 //Create Cat NFT when the button is clicked
 function createCat() {
+    notConnected();
+
     var dnaStr = getDna();
-    instance.methods.createCatGen0(dnaStr).send({}, function (error, txHash) {
+    instanceCatContract.methods.createCatGen0(dnaStr).send({}, function (error, txHash) {
         if (error)
             console.log(error);
         else
@@ -154,15 +161,16 @@ function showNotifications(message) {
     $("#notification").css({ visibility: 'visible' });
     $("#notification").html(message);
     setTimeout(function () {
-        $("#notification").css({ visibility: 'hidden' });
+        $("#notification").css({ visibility: 'hidden', size: 'initial' });
     }, 5000);
 }
 
 
 function pendingNotification() {
-    const msg = `<div class="spinner-border spinner-border-sm text-dark" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>`;
+    const msg = 
+        `<div class="spinner-border spinner-border-sm text-dark" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>`;
     showNotifications(msg);
 }
 
@@ -211,26 +219,11 @@ async function loadMyCats() {
     await loadCats();
 }
 
-async function updateGen0Count() {
-    if (userAddress === undefined) {
-        return;
-    }
-
-    try {
-        const count = await instanceCatContract.methods.Gen0Count().call();
-        $("#gen0Count").html(count);
-    } catch (err) {
-        errorNotification(err);
-    }
-}
-
 
 async function loadMarketplace() {
     $("#marketplace-collection").empty();
 
-    if (userAddress === undefined) {
-        return;
-    }
+    notConnected();
 
     pendingNotification();
     /*
@@ -269,10 +262,45 @@ async function loadMarketplace() {
 
 
 
+async function loadCats() {
+    notConnected();
+    pendingNotification();
+
+    // Get cats: 
+    let userCatsToLoad = [];
+
+    try {
+        userCatsToLoad = await instanceCatContract.methods.tokensPerOwner(userAddress).call();
+    } catch (err) {
+        errorNotification(err);
+        return;
+    }
+
+    // Load cats to -My cats- tab:
+    userCatsToLoad.forEach((cat) => {
+        appendCat(cat.catId, cat.generation, cat.genes);
+    });
+    userCats = userCatsToLoad;
+
+    console.log("User kitties updated.");
+}
+
 
 
 /* VARIOUS UTILS:
 *****************/
+
+
+async function updateGen0Count() {
+    notConnected();
+
+    try {
+        const count = await instanceCatContract.methods.Gen0Count().call();
+        $("#gen0Count").html(count);
+    } catch (err) {
+        errorNotification(err);
+    }
+}
 
 
 // work around for web3 bug firing duplicated events

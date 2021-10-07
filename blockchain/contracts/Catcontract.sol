@@ -38,7 +38,7 @@ contract Catcontract is ERC721, Ownable {
     mapping (uint256 => address) public catIndexToApproved;
     mapping (address => mapping ( address => bool)) private _operatorApprovals; // Check if there is an approval for another address (true or false)
 
-    
+
 
 /*Events:
 *********/
@@ -139,42 +139,6 @@ contract Catcontract is ERC721, Ownable {
         return catTokenCount[_owner];
     }
 
-
-    function tokensPerOwner(address _owner) public view returns(uint256[] memory tokensOwned) {
-        uint256 tokenCount = balanceOf(_owner);
-        uint256 tokenId;
-
-        if (tokenCount == 0) {
-            tokensOwned = new uint256[](0);
-        } else {
-            tokensOwned = new uint256[](tokenCount);
-            for (tokenId = 0; tokenId <= totalSupply(); tokenId++) {
-                if (ownerOf(tokenId) == _owner) {
-                    tokensOwned[tokenId-1] = tokenId;
-                }
-            }
-            return tokensOwned;
-        }
-    }
-
-
-    function getCat(uint256 _tokenId) public view returns (
-      uint256 generation,
-      uint256 dadId,
-      uint256 mumId,
-      uint256 birthTime,
-      uint256 genes      
-    )
-  {
-    require(_tokenId < cats.length, "This cat doesn't exist!");
-    Cat storage cat = cats[_tokenId];
-
-    generation = cat.generation;
-    dadId = cat.dadId;
-    mumId = cat.mumId;
-    birthTime = cat.birthTime;
-    genes = cat.genes;
-  }
 
 
 /* APPROVE FUNCTIONS:
@@ -282,10 +246,19 @@ contract Catcontract is ERC721, Ownable {
 
     // Create Gen0 cats (to be placed in the constructor)
     function createCatGen0 (uint256 _genes) public onlyOwner returns (uint256 _tokenId) {
-        require(gen0Count < CREATION_LIMIT_GEN0);
-
-        gen0Count++;
+        require(gen0Count < CREATION_LIMIT_GEN0, "All gen-0 cats are already in circulation!");
         
+        uint[] memory genOCats = getCatsPerGeneration(0);
+
+        for (uint256 i = 1; i <= gen0Count; i++) {
+            //Cat memory catGeneToCheck = getCat(i);  
+            //if (_genes == catGenePerId[genOCats[i]].genes) {
+            if (_genes == cats[genOCats[i]].genes) {
+                revert();
+            }
+        }
+        gen0Count++;
+
         return _tokenId =  _creatKitty(0, 0, 0, _genes, msg.sender);   
     }
 
@@ -310,30 +283,59 @@ contract Catcontract is ERC721, Ownable {
         _transfer(address(0), _owner, newCatId);
         return newCatId;
     }
+
+
+
+/* GET CAT FUNCTIONS:
+======================*/
+
+    //Display all cats per generation:
+    function getCatsPerGeneration(uint16 _generation) public view returns (uint256[] memory catsPerGen) {
+        for (uint256 tokenId = 1; tokenId <= totalSupply(); tokenId++) {
+            if (cats[tokenId].generation == _generation) {
+                catsPerGen[tokenId] = tokenId;
+            }
+        }
+        return catsPerGen;
+    }
     
-    //Get Cat genes per Id
-    function getCatGenes(uint256 _catId) public view returns (uint256 generation, uint256 dadId, uint256 mumId, uint256 birthTime, uint256 genes) {
-        generation = cats[_catId].generation;
-        dadId = cats[_catId].dadId; 
-        mumId = cats[_catId].mumId; 
-        birthTime = cats[_catId].birthTime;
-        genes = cats[_catId].genes;
+    
+    // Get all cats per owner:
+    function tokensPerOwner(address _owner) public view returns(uint256[] memory tokensOwned) {
+        uint256 tokenCount = balanceOf(_owner);
+        uint256 tokenId;
+
+        if (tokenCount == 0) {
+            tokensOwned = new uint256[](0);
+        } else {
+            tokensOwned = new uint256[](tokenCount);
+            for (tokenId = 1; tokenId <= totalSupply(); tokenId++) {
+                if (ownerOf(tokenId) == _owner) {
+                    tokensOwned[tokenId] = tokenId;
+                }
+            }
+            return tokensOwned;
+        }
     }
 
-/*    
-    //Get Cat genes per Id
-    function getCatGenes(uint256 _catId) external view returns (uint256 generation, uint256 dadId, uint256 mumId, uint256 birthTime, uint256 genes) {
-        
-        Cat storage cat = cats[_catId]; // pointer to storage in order to save GAS
+    //Get cat genes per cat id:
+    function getCat(uint256 _tokenId) public view returns (
+      uint256 generation,
+      uint256 dadId,
+      uint256 mumId,
+      uint256 birthTime,
+      uint256 genes      
+    )
+  {
+    require(_tokenId < cats.length, "This cat doesn't exist!");
+    Cat storage cat = cats[_tokenId];
 
-        generation = uint256(cat.generation);
-        dadId = uint256(cat.dadId); 
-        mumId = uint256(cat.mumId); 
-        birthTime = uint256(cat.birthTime);
-        genes = uint256(cat.genes);
-    }
-*/
-
+    generation = cat.generation;
+    dadId = cat.dadId;
+    mumId = cat.mumId;
+    birthTime = cat.birthTime;
+    genes = cat.genes;
+  }
 
 
 
@@ -393,7 +395,7 @@ contract Catcontract is ERC721, Ownable {
         */
     }
 
-}
 
+}
 
 

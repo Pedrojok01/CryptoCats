@@ -111,7 +111,6 @@ function eyeVariation(num) {
 
 
 function normalEyes() { //NORMAL
-    $('.eye').css('background-color', 'white')
     $('.eyes_right').css({'visibility': 'visible'})
     $('.eyes_left').css({'transform': 'rotate(0deg)', 'width': '50px', 'height': '41px', 'top': '0px', 'left': '0px'})
     $('.eyes_right').css('transform', 'rotate(0deg)')

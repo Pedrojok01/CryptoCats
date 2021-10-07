@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity = 0.8.9;
 
+import "./interface/ICatMarketplace.sol";
 import "./Catcontract.sol";
 import "./Ownable.sol";
-import "./interface/ICatMarketplace.sol";
 
 
-contract CatMarketplace is Ownable, ICatMarketPlace {
+abstract contract CatMarketplace is ICatMarketPlace, Ownable {
     Catcontract private _catContract;
 
     struct Offer {
@@ -20,9 +20,6 @@ contract CatMarketplace is Ownable, ICatMarketPlace {
     Offer[] offers;
 
     mapping(uint256 => Offer) tokenIdTOffer;
-
-    
-
 
 
 

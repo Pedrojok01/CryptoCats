@@ -1,6 +1,6 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const CAT_CONTRACT_ADD = "0xE8c845172788F360C5044D08Ea944D90D9f12EDA";
+const CAT_CONTRACT_ADD = "0xde55e5C652F6cbf0e0fF3451F9cE25A6F799e198";
 const MARKETPLACE_CONTRACT_ADD = "";
 const connectButton = document.querySelector('#loginButton');
 
@@ -117,7 +117,7 @@ function logoutOfMetaMask() {
 
 function notConnected() {
     if (userAddress === undefined) {
-        showNotifications("Metamask not connected!");
+        errorNotification("Metamask not connected!");
         return;
     }
 }
@@ -160,8 +160,9 @@ $(".btn.createCatBtn").click(() => {
 function showNotifications(message) {
     $("#notification").css({ visibility: 'visible' });
     $("#notification").html(message);
+    resetMessage = '';
     setTimeout(function () {
-        $("#notification").css({ visibility: 'hidden', size: 'initial' });
+        $("#notification").css({ visibility: 'hidden'}).html(resetMessage)
     }, 5000);
 }
 
@@ -175,7 +176,8 @@ function pendingNotification() {
 }
 
 function errorNotification(error) {
-    if (error.message === undefined) {
+    if (error.message == undefined) {
+        showNotifications(error);
         console.error(error);
     } else {
         showNotifications(error.message);

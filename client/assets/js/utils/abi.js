@@ -402,66 +402,6 @@ var abi = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "_owner",
-        "type": "address"
-      }
-    ],
-    "name": "tokensPerOwner",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "tokensOwned",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_tokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "getCat",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "generation",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "dadId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "mumId",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "birthTime",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "genes",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "_approved",
         "type": "address"
       },
@@ -653,12 +593,52 @@ var abi = [
   {
     "inputs": [
       {
+        "internalType": "uint16",
+        "name": "_generation",
+        "type": "uint16"
+      }
+    ],
+    "name": "getCatsPerGeneration",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "catsPerGen",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      }
+    ],
+    "name": "tokensPerOwner",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "tokensOwned",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
         "internalType": "uint256",
-        "name": "_catId",
+        "name": "_tokenId",
         "type": "uint256"
       }
     ],
-    "name": "getCatGenes",
+    "name": "getCat",
     "outputs": [
       {
         "internalType": "uint256",

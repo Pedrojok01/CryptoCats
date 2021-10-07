@@ -250,9 +250,7 @@ contract Catcontract is ERC721, Ownable {
         
         uint[] memory genOCats = getCatsPerGeneration(0);
 
-        for (uint256 i = 1; i <= gen0Count; i++) {
-            //Cat memory catGeneToCheck = getCat(i);  
-            //if (_genes == catGenePerId[genOCats[i]].genes) {
+        for (uint256 i = 0; i <= gen0Count - 1; i++) {
             if (_genes == cats[genOCats[i]].genes) {
                 revert();
             }

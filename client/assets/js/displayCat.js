@@ -12,24 +12,16 @@ function appendCat(dna, id, gen) {
 
     //3 Render the cats CSS style depending on DNA string
     renderCat(catDnaToAppend, id);
-}
 
-
-
-//Append each Cat card as a catalog
-function appendCat(dna, id, gen) {
-    //1 return DNA cat into readable string 
-    var KittyDna = catDna(dna)
-    //2 build the catCard into HTML
-    catCard(id)
-    //3 Render the cats CSS style depending on DNA string
-    renderCat(KittyDna, id)
+    /*
     $('#catview' + id).attr('onclick', 'go_to("catDetails.html?catId=' + id + '")')
     $('#catDNA' + id).html(`
     <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>`+ gen + `</h4></span>
     <br>
     <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>DNA:</b>`+ dna + `</h4></span>`)
+    */
 }
+
 
 
 

@@ -46,6 +46,7 @@ module.exports = {
       host: "127.0.0.1",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
+      blockTime: 5,          // amount of seconds it takes testrpc to mine a new block
      },
     // Another network with more advanced options...
     // advanced: {

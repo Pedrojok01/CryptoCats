@@ -1,7 +1,7 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const CAT_CONTRACT_ADD = "0xde55e5C652F6cbf0e0fF3451F9cE25A6F799e198";
-const MARKETPLACE_CONTRACT_ADD = "";
+const CAT_CONTRACT_ADD = "0x53C6219B2CD48F896BD5fe57014de186B383CC14";
+const MARKETPLACE_CONTRACT_ADD = "0xACD98EF5aaa1C534Ecd566a85Bda06303c3B7063";
 const connectButton = document.querySelector('#loginButton');
 
 var userAddress = undefined;
@@ -21,10 +21,10 @@ $(document).ready(async function () {
     });
     toggleButton()
 
-    ethereum.on("accountsChanged", function (accounts) {
+    window.ethereum.on("accountsChanged", function (accounts) {
         restartApp();
     });
-    ethereum.on("chainChanged", function (accounts) {
+    window.ethereum.on("chainChanged", function (accounts) {
         restartApp();
     });
 })
@@ -53,34 +53,32 @@ async function loginWithMetaMask() {
     connectButton.innerText = diplayAcc;
 
     //Initiate contracts instances:
-    instanceCatContract = await new web3.eth.Contract(abi, CAT_CONTRACT_ADD, { from: userAddress })
-    instanceMarketplaceContract = undefined;
+    instanceCatContract = await new web3.eth.Contract(abi.Catcontract, CAT_CONTRACT_ADD, { from: userAddress })
+    instanceMarketplaceContract = await new web3.eth.Contract(abi.CatMarketplace, MARKETPLACE_CONTRACT_ADD, { from: userAddress })
 
 
     //Contract Event Listeners:
-    await instanceCatContract.events.Birth({ filter: { owner: userAddress }, fromBlock: "latest" },).on('data', (error, event) => {
-        if (error) {
-            showNotifications(error);
+    await instanceCatContract.events.Birth({ filter: { owner: userAddress }, fromBlock: "latest" }).on('data', (event) => {
+        /*if (isDuplicatedContractEvent("Birth", event.transactionHash)) {
             return;
         }
-        if (isDuplicatedContractEvent("Birth", event.transactionHash)) {
-            return;
-        }
+        */
+        let owner = event.returnValues.owner;
+        let catId = event.returnValues.catId;
+        let dadId = event.returnValues.dadId;
+        let mumId = event.returnValues.mumId;
+        let genes = event.returnValues.genes;
+        let transactionHash = event.transactionHash;
 
-        const owner = event.returnValues.owner;
-        const catId = event.returnValues.catId;
-        const dadId = event.returnValues.dadId;
-        const mumId = event.returnValues.mumId;
-        const genes = event.returnValues.genes;
-        const transactionHash = event.transactionHash;
-
-        let message1 = "<b>Your cat has been succesfully created!</b>" + "<br/>" + "owner: " + owner + "<br/>" + "catId: " + catId + " dadId: " + dadId + " mumId: " + mumId + " genes: " + genes + "<br/>" + transactionHash;
+        let message1 = "<b>Your cat has been succesfully created!</b>" + "<br/>" + "<b>owner:</b> " + owner + "<br/>" + "<b>Cat Id:</b> " + catId + " <b>Dad Id:</b> " + dadId + " <b>Mum Id:</b> " + mumId + " <b>Genes:</b> " + genes + "<br/>" + " <b>Tx hash:</b> " + transactionHash;
         showNotifications(message1);
 
+        /*
         //Update userCat, myCat, breed
-        const cat = getCat(catId);
-        userCats.push(catId);
-        appendNewCat(cat.catId, cat.generation, cat.genes);
+        var cat = instanceCatContract.methods.getCat(catId).call();
+        //userCats.push(catId);
+        appendCat(cat.genes, cat.catId, cat.generation);
+        */
     })
 
 
@@ -115,9 +113,10 @@ function logoutOfMetaMask() {
     }, 200)
 }
 
+
 function notConnected() {
-    if (userAddress === undefined) {
-        errorNotification("Metamask not connected!");
+    if (userAddress == undefined) {
+        showNotifications("Metamask not connected!");
         return;
     }
 }
@@ -131,19 +130,17 @@ function restartApp() {
 }
 
 
-
-
-
 //Create Cat NFT when the button is clicked
 function createCat() {
     notConnected();
 
     var dnaStr = getDna();
     instanceCatContract.methods.createCatGen0(dnaStr).send({}, function (error, txHash) {
+        let msg= "Tx: " + txHash;
         if (error)
-            console.log(error);
+            errorNotification(error);
         else
-            console.log(txHash);
+            showNotifications(msg);
     })
 }
 
@@ -163,7 +160,7 @@ function showNotifications(message) {
     resetMessage = '';
     setTimeout(function () {
         $("#notification").css({ visibility: 'hidden'}).html(resetMessage)
-    }, 5000);
+    }, 10000);
 }
 
 
@@ -259,7 +256,6 @@ async function loadMarketplace() {
             );
         }
     */
-    $("#notification").empty();
 }
 
 
@@ -268,24 +264,31 @@ async function loadCats() {
     notConnected();
     pendingNotification();
 
-    // Get cats: 
-    let userCatsToLoad = [];
+    var catsToLoad = [];
 
     try {
-        userCatsToLoad = await instanceCatContract.methods.tokensPerOwner(userAddress).call();
+        catsToLoad = await instanceCatContract.methods.tokensPerOwner(userAddress).call();
     } catch (err) {
         errorNotification(err);
         return;
     }
 
-    // Load cats to -My cats- tab:
-    userCatsToLoad.forEach((cat) => {
-        appendCat(cat.catId, cat.generation, cat.genes);
-    });
-    userCats = userCatsToLoad;
+    for (i = 0; i < catsToLoad.length; i++) {
+        appendCatToShow(catsToLoad[i])
+      }
 
-    console.log("User kitties updated.");
+    userCats = catsToLoad;
+
+    showNotifications("Your cats have been updated.");
 }
+
+
+//Appending cats for catalog
+async function appendCatToShow(id) {
+    var cat = await instanceCatContract.methods.getCat(id).call()
+    appendCat(cat[4], id, cat['generation'])
+  }  
+
 
 
 

@@ -34,51 +34,49 @@ function defaultPage() {
   $('#dnadecoration').html(defaultDNA.decorationPattern)
   $('#dnadecorationCollor').html(defaultDNA.decorationColor)
   $('#dnaanimation').html(defaultDNA.animation)
-
   $(".tab.cattributesBtn").hide();
   $(".tab.catColorsBtn").show();
-
   $('#dnaspecial').html(defaultDNA.lastNum)
 
-  renderCat(defaultDNA)
+  renderCatFactory(defaultDNA)
 }
 
 
 function getDna() {
-  var dna = ''
-  dna += $('#dnabody').html()
-  dna += $('#dnamouth').html()
-  dna += $('#dnapaws').html()
-  dna += $('#dnaeyes').html()
-  dna += $('#dnacollar').html()
-  dna += $('#dnashape').html()
-  dna += $('#dnadecoration').html()
-  dna += $('#dnadecorationCollor').html()
-  dna += $('#dnaanimation').html()
-  dna += $('#dnaspecial').html()
+  let dna = "";
+  dna += $('#dnabody').html();
+  dna += $('#dnamouth').html();
+  dna += $('#dnapaws').html();
+  dna += $('#dnaeyes').html();
+  dna += $('#dnacollar').html();
+  dna += $('#dnashape').html();
+  dna += $('#dnadecoration').html();
+  dna += $('#dnadecorationCollor').html();
+  dna += $('#dnaanimation').html();
+  dna += $('#dnaspecial').html();
 
-  return parseInt(dna)
+  return parseInt(dna);
 }
 
 
-function renderCat(dna) {
-  bodyColor(colors[dna.bodyColor], dna.bodyColor)
+function renderCatFactory(dna) {
+  bodyColorFactory(colors[dna.bodyColor], dna.bodyColor)
   $('#bodycolor').val(dna.bodyColor)
-  mouthColor(colors[dna.mouthColor], dna.mouthColor)
+  mouthColorFactory(colors[dna.mouthColor], dna.mouthColor)
   $('#mouthcolor').val(dna.mouthColor)
-  pawsColor(colors[dna.pawsColor], dna.pawsColor)
+  pawsColorFactory(colors[dna.pawsColor], dna.pawsColor)
   $('#pawscolor').val(dna.pawsColor)
-  eyesColor(colors[dna.eyesColor], dna.eyesColor)
+  eyesColorFactory(colors[dna.eyesColor], dna.eyesColor)
   $('#eyescolor').val(dna.eyesColor)
-  collarColor(colors[dna.collarColor], dna.collarColor)
+  collarColorFactory(colors[dna.collarColor], dna.collarColor)
   $('#collarcolor').val(dna.collarColor)
-  eyeVariation(dna.eyesShape)
+  eyeVariationFactory(dna.eyesShape)
   $('#eyeshape').val(dna.eyesShape)
-  decorationVariation(dna.decorationPattern)
+  decorationVariationFactory(dna.decorationPattern)
   $('#decorationshape').val(dna.decorationPattern)
-  decorationColor(colors[dna.decorationColor], dna.decorationColor)
+  decorationColorFactory(colors[dna.decorationColor], dna.decorationColor)
   $('#decorationcolor').val(dna.decorationColor)
-  animationVariation(dna.animation)
+  animationVariationFactory(dna.animation)
   $('#animation').val(dna.animation)
 }
 
@@ -122,7 +120,7 @@ $(".btn.random").click(() => {
   $('#dnadecoration').html(randomDNA.decorationPattern);
   $('#dnadecorationCollor').html(randomDNA.decorationColor);
   $('#dnaanimation').html(randomDNA.animation);
-  renderCat(randomDNA)
+  renderCatFactory(randomDNA)
 })
 
 
@@ -134,31 +132,31 @@ $(".btn.random").click(() => {
 //Face and body
 $('#bodycolor').change(() => {
   var colorVal = $('#bodycolor').val()
-  bodyColor(colors[colorVal], colorVal)
+  bodyColorFactory(colors[colorVal], colorVal)
 })
 
 //Mouth and belly
 $('#mouthcolor').change(() => {
   var colorVal = $('#mouthcolor').val()
-  mouthColor(colors[colorVal], colorVal)
+  mouthColorFactory(colors[colorVal], colorVal)
 })
 
 //Paws, ears and tail
 $('#pawscolor').change(() => {
   var colorVal = $('#pawscolor').val()
-  pawsColor(colors[colorVal], colorVal)
+  pawsColorFactory(colors[colorVal], colorVal)
 })
 
 //Eyes, collar and tail-ball
 $('#eyescolor').change(() => {
   var colorVal = $('#eyescolor').val()
-  eyesColor(colors[colorVal], colorVal)
+  eyesColorFactory(colors[colorVal], colorVal)
 })
 
 //Collar color
 $('#collarcolor').change(() => {
   var colorVal = $('#collarcolor').val()
-  collarColor(colors[colorVal], colorVal)
+  collarColorFactory(colors[colorVal], colorVal)
 })
 
 
@@ -169,23 +167,23 @@ $('#collarcolor').change(() => {
 //Eyes shape
 $('#eyeshape').change(() => {
   var shape = parseInt($('#eyeshape').val())
-  eyeVariation(shape)
+  eyeVariationFactory(shape)
 })
 
 //Decorations
 $('#decorationshape').change(() => {
   var decoShape = parseInt($('#decorationshape').val())
-  decorationVariation(decoShape)
+  decorationVariationFactory(decoShape)
 })
 
 //Decorations color
 $('#decorationcolor').change(() => {
   var colorVal = $('#decorationcolor').val()
-  decorationColor(colors[colorVal], colorVal)
+  decorationColorFactory(colors[colorVal], colorVal)
 })
 
 //Animations
 $('#animation').change(() => {
   var animationVal = parseInt($('#animation').val())
-  animationVariation(animationVal)
+  animationVariationFactory(animationVal)
 })

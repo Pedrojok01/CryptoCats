@@ -112,12 +112,12 @@
 
         <!-- My cats Tab -->
         <div class="tab-pane fade" id="nav-my-cats" role="tabpanel">
-            <div class="container">
+            <div class="container" style="max-width: none;">
                 <div align="center" class="mb-4">
                     <h1>Cats Inventory</h1>
                     <p>Interact with your cats NFTs</p>
                 </div>
-                <div align="center" class="text-dark mt-5">
+                <div align="center" class="text-dark mt-6">
                     <nav id="menu-my-kitties" class="pt-2">
                         <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-show-tab" data-bs-toggle="tab"
@@ -135,13 +135,15 @@
                         </div>
                     </nav>
                     <div class="tab-content">
+
                         <!-- Show -->
                         <div class="tab-pane fade active show" id="nav-show" role="tabpanel">
-                            <div id="cats-collection" class="row g-5 justify-content-center m-2"></div>
+                            <div id="cats-collection" class="container"></div>
                         </div>
+
                         <!-- Breed -->
                         <div class="tab-pane fade" id="nav-breed" role="tabpanel">
-                            <div class="row g-5 justify-content-center m-2">
+                            <div class="row g-6 justify-content-center m-2">
                                 <div class="col">
                                     <div class="card catCard bg-light text-dark" style="width: 18rem">
                                         <div id="breedFemale" class="catContainer catBackground paw pointer"
@@ -182,6 +184,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <!-- Sell -->
                         <div class="tab-pane fade" id="nav-sell" role="tabpanel">
                             <div class="row g-5 justify-content-center m-2 mb-0">
@@ -227,6 +230,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Select Cat Modal -->
         <div class="modal text-dark" id="selectCatModal" tabindex="-1">
             <div class="modal-dialog modal-xl">
@@ -334,7 +338,7 @@
                                 <!--Cattributes-->
                                 <span id="dnashape"></span>
                                 <span id="dnadecoration"></span>
-                                <span id="dnadecorationColor"></span>
+                                <span id="dnadecorationCollor"></span>
                                 <span id="dnaanimation"></span>
 
                                 <span id="dnaspecial"></span>
@@ -386,22 +390,22 @@
                         <div class="tab cattributesBtn">
                             <div class="form-group">
                                 <label for="formControlRange"><b>Eyes shape</b><span class="badge badge-dark ml-2"
-                                        id="eyeName"></span></label>
+                                        id="eyeNameFactory"></span></label>
                                 <input type="range" min="1" max="6" class="form-control-range" id="eyeshape">
                             </div>
                             <div class="form-group">
                                 <label for="formControlRange"><b>Forehead shape</b><span class="badge badge-dark ml-2"
-                                        id="decorationName"></span></label>
+                                        id="decorationNameFactory"></span></label>
                                 <input type="range" min="1" max="5" class="form-control-range" id="decorationshape">
                             </div>
                             <div class="form-group">
                                 <label for="formControlRange"><b>Forehead's color</b><span class="badge badge-dark ml-2"
-                                        id="decorationcode"></span></label>
+                                        id="decorationcodeFactory"></span></label>
                                 <input type="range" min="10" max="98" class="form-control-range" id="decorationcolor">
                             </div>
                             <div class="form-group">
                                 <label for="formControlRange"><b>Animation</b><span class="badge badge-dark ml-2"
-                                        id="animationName"></span></label>
+                                        id="animationNameFactory"></span></label>
                                 <input type="range" min="1" max="6" class="form-control-range" id="animation">
                             </div>
                         </div>
@@ -441,6 +445,8 @@
 
 <script src="assets/js/factory/catFactory.js"></script>
 <script src="assets/js/factory/catSettings.js"></script>
+<script src="assets/js/buildCat.js"></script>
+<script src="assets/js/displayCat.js"></script>
 <script src="./index.js"></script>
 
 </html>

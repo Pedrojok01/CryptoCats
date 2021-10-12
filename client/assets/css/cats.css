@@ -60,10 +60,10 @@ body {
 .inner_ear_left {
     position: absolute;
     border-radius: 100% 0% 100% 0%;
-    width: 90px;
-    height: 90px;
-    top: -0.5px;
-    left: 11px; 
+    width: 80px;
+    height: 80px;
+    top: 11.5px;
+    left: 8px; 
     z-index: -50;
 }
 
@@ -79,10 +79,10 @@ body {
 
 .inner_ear_right {
     border-radius: 100% 0% 100% 0%;
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     position: relative;
-    top: 11px;
+    top: 10px;
     left: -0.5px;
     z-index: -500;
 }

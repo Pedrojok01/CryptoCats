@@ -4,11 +4,11 @@ function getColor() {
     return randomColor
 }
 
-function genColors(){
+function genColors() {
     var colors = []
-    for(var i = 10; i < 99; i ++){
-      var color = getColor()
-      colors[i] = color
+    for (var i = 10; i < 99; i++) {
+        var color = getColor()
+        colors[i] = color
     }
     return colors
 }
@@ -18,46 +18,46 @@ function genColors(){
 /*Body color variations:
 ************************/
 
-function bodyColor(color,code) {
-    $('.head_background, .ear_right, .ear_left, .core_body').css('background-color', '#' + color)  //This changes the color of the cat
-    $('#bodycode').html('code: '+code) //This updates text of the badge next to the slider
-    $('#dnabody').html(code) //This updates the body color part of the DNA that is displayed below the cat
+function bodyColorFactory(color, code) {
+    $('.head_background, .ear_right, .ear_left, .core_body').css('background-color', '#' + color)  //Changes the color of the cat
+    $('#bodycode').html('code: ' + code) //Updates text of the badge next to the slider
+    $('#dnabody').html(code) //Updates the body color part of the DNA that is displayed below the cat
 }
 
-function mouthColor(color,code) {
-    $('.face_body, .inner_body').css('background-color', '#' + color) 
-    $('#mouthcode').html('code: '+code)
+function mouthColorFactory(color, code) {
+    $('.face_body, .inner_body').css('background-color', '#' + color)
+    $('#mouthcode').html('code: ' + code)
     $('#dnamouth').html(code)
 }
 
-function pawsColor(color,code) {
-    $('.inner_ear_right, .inner_ear_left, .foot, .tail').css('background-color', '#' + color)  //This changes the color of the cat
-    $('#pawscode').html('code: '+code)
+function pawsColorFactory(color, code) {
+    $('.inner_ear_right, .inner_ear_left, .foot, .tail').css('background-color', '#' + color)
+    $('#pawscode').html('code: ' + code)
     $('#dnapaws').html(code)
 }
 
-function eyesColor(color,code) {
+function eyesColorFactory(color, code) {
     $('.pupils, .tail_ball').css('background-color', '#' + color)
-    $('#eyescode').html('code: '+code)
+    $('#eyescode').html('code: ' + code)
     $('#dnaeyes').html(code)
 }
 
-function decorationColor(color,code) {
+function decorationColorFactory(color, code) {
     let temp = $('#decorationshape').val()
-        if (temp == 5) {
-            $('.forehead').css('background-color', '#' + color)
-            $('.forehead.line_left').css('background-color', 'black')
-            $('.forehead.line_right').css('background-color', 'white')    
-        } else {
-            $('.forehead').css('background-color', '#' + color)
-        }
-    $('#decorationcode').html('code: '+code)
+    if (temp == 5) {
+        $('.forehead').css('background-color', '#' + color)
+        $('.forehead.line_left').css('background-color', 'black')
+        $('.forehead.line_right').css('background-color', 'white')
+    } else {
+        $('.forehead').css('background-color', '#' + color)
+    }
+    $('#decorationcodeFactory').html('code: ' + code)
     $('#dnadecorationColor').html(code)
 }
 
-function collarColor(color,code) {
+function collarColorFactory(color, code) {
     $('.collar').css('background-color', '#' + color)
-    $('#collarcode').html('code: '+code)
+    $('#collarcode').html('code: ' + code)
     $('#dnacollar').html(code)
 }
 
@@ -69,120 +69,120 @@ function collarColor(color,code) {
 /*Eyes variations:
 ******************/
 
-function switchEyes(num) { 
+function switchEyesFactory(num) {
     switch (num) {
         case 1:
-            $('#eyeName').html('Basic') 
-            break 
-        case 2:                
-            $('#eyeName').html('Chill') 
-            eyesType1()                
+            $('#eyeNameFactory').html('Basic')
+            break
+        case 2:
+            $('#eyeNameFactory').html('Chill')
+            eyesType1Factory()
             break
         case 3:
-            $('#eyeName').html('Tired')
-            eyesType2()
+            $('#eyeNameFactory').html('Tired')
+            eyesType2Factory()
             break
         case 4:
-            $('#eyeName').html('Cyclope')
-            eyesType3()
+            $('#eyeNameFactory').html('Cyclope')
+            eyesType3Factory()
             break
         case 5:
-            $('#eyeName').html('Asean')
-            eyesType4()
+            $('#eyeNameFactory').html('Asean')
+            eyesType4Factory()
             break
         case 6:
-            $('#eyeName').html('Surprised')
-            eyesType5()
+            $('#eyeNameFactory').html('Surprised')
+            eyesType5Factory()
             break
     }
 }
 
-function eyeVariation(num) {
+function eyeVariationFactory(num) {
     $('#dnashape').html(num)
-    resetEyes()
-    normalEyes()
-    switchEyes(num)
+    resetEyesFactory()
+    normalEyesFactory()
+    switchEyesFactory(num)
 
     let eyeAnim = parseInt($('#animation').val());
     if (eyeAnim == 5 || eyeAnim == 6) {
-        animationType4(eyeAnim)
+        animationType4Factory(eyeAnim)
     }
 }
 
 
-function normalEyes() { //NORMAL
-    $('.eyes_right').css({'visibility': 'visible'})
-    $('.eyes_left').css({'transform': 'rotate(0deg)', 'width': '50px', 'height': '41px', 'top': '0px', 'left': '0px'})
+function normalEyesFactory() { //NORMAL
+    $('.eyes_right').css({ 'visibility': 'visible' })
+    $('.eyes_left').css({ 'transform': 'rotate(0deg)', 'width': '50px', 'height': '41px', 'top': '0px', 'left': '0px' })
     $('.eyes_right').css('transform', 'rotate(0deg)')
 
-    $('.pupils').css({'border-radius': '50%', 'width': '40px', 'height': '36px'})
-    $('.pupils.left, .pupils.right').css({'border': 'none', 'transform': 'rotate(0deg)'})
-    $('.pupils.left').css({'top': '3px', 'left': '6px'})
-    $('.pupils.right').css({'top': '3px', 'left': '4px'})
+    $('.pupils').css({ 'border-radius': '50%', 'width': '40px', 'height': '36px' })
+    $('.pupils.left, .pupils.right').css({ 'border': 'none', 'transform': 'rotate(0deg)' })
+    $('.pupils.left').css({ 'top': '3px', 'left': '6px' })
+    $('.pupils.right').css({ 'top': '3px', 'left': '4px' })
 
-    $('.inner_pupil.left').css({'top': '11px', 'left': '14px'})
-    $('.smaller_inner_pupil.left').css({'top': '17px', 'left': '14px'})
-    $('.inner_pupil.right').css({'top': '11px', 'left': '14px'})
-    $('.smaller_inner_pupil.right').css({'top': '17px', 'left': '13px'})
+    $('.inner_pupil.left').css({ 'top': '11px', 'left': '14px' })
+    $('.smaller_inner_pupil.left').css({ 'top': '17px', 'left': '14px' })
+    $('.inner_pupil.right').css({ 'top': '11px', 'left': '14px' })
+    $('.smaller_inner_pupil.right').css({ 'top': '17px', 'left': '13px' })
 }
 
-function eyesType1() { //CHILL
-    $('.pupils.left, .pupils.right').css({'border-top': '12px solid'})
+function eyesType1Factory() { //CHILL
+    $('.pupils.left, .pupils.right').css({ 'border-top': '12px solid' })
     $('.pupils').css('border-color', '#464343')
-    
-    $('.inner_pupil.left').css({'top': '24px', 'left': '15px'})
-    $('.smaller_inner_pupil.left').css({'top': '30px', 'left': '13px'})
-    
-    $('.inner_pupil.right').css({'top': '24px', 'left': '14px'})
-    $('.smaller_inner_pupil.right').css({'top': '31px', 'left': '12px'})
+
+    $('.inner_pupil.left').css({ 'top': '24px', 'left': '15px' })
+    $('.smaller_inner_pupil.left').css({ 'top': '30px', 'left': '13px' })
+
+    $('.inner_pupil.right').css({ 'top': '24px', 'left': '14px' })
+    $('.smaller_inner_pupil.right').css({ 'top': '31px', 'left': '12px' })
 }
 
-function eyesType2() { //TIRED
-    $('.pupils.left, .pupils.right').css({'border-top': '12px solid', 'border-bottom': '12px solid'})
-    $('.pupils').css({'border-color': '#464343', 'width': '48px', 'height': '35px'})
-    
-    $('.pupils.left').css({'top': '2px', 'left': '0px'})
-    $('.pupils.right').css({'top': '2px', 'left': '0px'})
+function eyesType2Factory() { //TIRED
+    $('.pupils.left, .pupils.right').css({ 'border-top': '12px solid', 'border-bottom': '12px solid' })
+    $('.pupils').css({ 'border-color': '#464343', 'width': '48px', 'height': '35px' })
 
-    $('.inner_pupil.left').css({'top': '15px', 'left': '16px'})
-    $('.smaller_inner_pupil.left').css({'top': '20px', 'left': '14px'})
+    $('.pupils.left').css({ 'top': '2px', 'left': '0px' })
+    $('.pupils.right').css({ 'top': '2px', 'left': '0px' })
 
-    $('.inner_pupil.right').css({'top': '15px', 'left': '11px'})
-    $('.smaller_inner_pupil.right').css({'top': '20px', 'left': '9px'})
+    $('.inner_pupil.left').css({ 'top': '15px', 'left': '16px' })
+    $('.smaller_inner_pupil.left').css({ 'top': '20px', 'left': '14px' })
+
+    $('.inner_pupil.right').css({ 'top': '15px', 'left': '11px' })
+    $('.smaller_inner_pupil.right').css({ 'top': '20px', 'left': '9px' })
 }
 
-function eyesType3() { //CYCLOPE
-    $('.eyes_right').css({'visibility': 'hidden'})
-    $('.eyes_left').css({'width': '45px', 'height': '45px', 'top': '-10px', 'left': '50px'})
+function eyesType3Factory() { //CYCLOPE
+    $('.eyes_right').css({ 'visibility': 'hidden' })
+    $('.eyes_left').css({ 'width': '45px', 'height': '45px', 'top': '-10px', 'left': '50px' })
 
-    $('.pupils.left').css({'width': '41px', 'height': '41px', 'top': '2px', 'left': '2px'})
-    $('.inner_pupil.left').css({'top': '13px', 'left': '19px'})
-    $('.smaller_inner_pupil.left').css({'top': '20px', 'left': '18px'})
+    $('.pupils.left').css({ 'width': '41px', 'height': '41px', 'top': '2px', 'left': '2px' })
+    $('.inner_pupil.left').css({ 'top': '13px', 'left': '19px' })
+    $('.smaller_inner_pupil.left').css({ 'top': '20px', 'left': '18px' })
 }
 
-function eyesType4() { //ASEAN
-    $('.eyes_left').css({'transform': 'rotate(15deg)'})
+function eyesType4Factory() { //ASEAN
+    $('.eyes_left').css({ 'transform': 'rotate(15deg)' })
     $('.eyes_right').css('transform', 'rotate(-15deg)')
 
     $('.pupils .left').css('transform', 'rotate(-15deg)')
     $('.pupils .right').css('transform', 'rotate(15deg)')
 
-    $('.inner_pupil.left').css({'top': '16px', 'left': '14px'})
-    $('.smaller_inner_pupil.left').css({'top': '23px', 'left': '15px'})
+    $('.inner_pupil.left').css({ 'top': '16px', 'left': '14px' })
+    $('.smaller_inner_pupil.left').css({ 'top': '23px', 'left': '15px' })
 }
 
-function eyesType5() { //SURPRISED
-    $('.eyes_left').css({"transform": "rotate(-90deg)"})
+function eyesType5Factory() { //SURPRISED
+    $('.eyes_left').css({ "transform": "rotate(-90deg)" })
     $('.eyes_right').css('transform', 'rotate(-90deg)')
 
-    $('.pupils.left').css({'transform': 'rotate(-90deg)', 'width': '27px', 'height': '36px', 'top': '4px', 'left': '6px'})
-    $('.pupils.right').css({'transform': 'rotate(-90deg)', 'width': '27px', 'height': '36px', 'top': '3px', 'left': '8px'})
+    $('.pupils.left').css({ 'transform': 'rotate(-90deg)', 'width': '27px', 'height': '36px', 'top': '4px', 'left': '6px' })
+    $('.pupils.right').css({ 'transform': 'rotate(-90deg)', 'width': '27px', 'height': '36px', 'top': '3px', 'left': '8px' })
 
-    $('.inner_pupil.left').css({'top': '14px', 'left': '19px'})
-    $('.smaller_inner_pupil.left').css({'top': '14px', 'left': '26px'})
+    $('.inner_pupil.left').css({ 'top': '14px', 'left': '19px' })
+    $('.smaller_inner_pupil.left').css({ 'top': '14px', 'left': '26px' })
 
-    $('.inner_pupil.right').css({'top': '14px', 'left': '20px'})
-    $('.smaller_inner_pupil.right').css({'top': '13px', 'left': '27px'})
+    $('.inner_pupil.right').css({ 'top': '14px', 'left': '20px' })
+    $('.smaller_inner_pupil.right').css({ 'top': '13px', 'left': '27px' })
 }
 
 
@@ -191,60 +191,60 @@ function eyesType5() { //SURPRISED
 /*Decorations variations:
 *************************/
 
-function decorationVariation(num) {
+function decorationVariationFactory(num) {
     $('#dnadecoration').html(num)
     switch (num) {
         case 1:
-            normalDecoration()
-            $('#decorationName').html('None') //no forehaed deco
-            noDecoration()
+            normalDecorationFactory()
+            $('#decorationNameFactory').html('None') //no forehaed deco
+            noDecorationFactory()
             break
         case 2:
-            normalDecoration()    
-            $('#decorationName').html('Basic')
+            normalDecorationFactory()
+            $('#decorationNameFactory').html('Basic')
             break
         case 3:
-            normalDecoration()
-            $('#decorationName').html('Wild')
-            wildDecoration()
+            normalDecorationFactory()
+            $('#decorationNameFactory').html('Wild')
+            wildDecorationFactory()
             break
         case 4:
-            normalDecoration()
-            $('#decorationName').html('Crescendo')
-            crescendoDecoration()
+            normalDecorationFactory()
+            $('#decorationNameFactory').html('Crescendo')
+            crescendoDecorationFactory()
             break
         case 5:
-            normalDecoration()
-            $('#decorationName').html('Third eye')
-            thirdEyeDecoration()
-        break
+            normalDecorationFactory()
+            $('#decorationNameFactory').html('Third eye')
+            thirdEyeDecorationFactory()
+            break
     }
 }
 
-function normalDecoration() {   //Remove all style from other decorations
-    $('.forehead').css({'display': 'block'})
+function normalDecorationFactory() {   //Remove all style from other decorations
+    $('.forehead').css({ 'display': 'block' })
     $('.forehead').css({ "transform": "rotate(0deg)", "height": "50px", "width": "15px", "top": "-3px", "left": "91px", "border-radius": "40% 40% 40% 40%", "background-color": "#DDD0C9" })
     $('.forehead.line_left').css({ "transform": "rotate(2deg)", "height": "33px", "width": "13px", "top": "5px", "left": "-17px", "border-radius": "40% 40% 40% 40%", "background-color": "#DDD0C9" })
     $('.forehead.line_right').css({ "transform": "rotate(-2deg)", "height": "33px", "width": "13px", "top": "5px", "left": "19px", "border-radius": "40% 40% 40% 40%", "background-color": "#DDD0C9" })
 }
 
-function noDecoration() { //NONE
-    $('.forehead').css({'display': 'none'})
+function noDecorationFactory() { //NONE
+    $('.forehead').css({ 'display': 'none' })
 }
 
-function wildDecoration() { //WILD
+function wildDecorationFactory() { //WILD
     $('.forehead').css({ "transform": "rotate(0deg)", "height": "55px", "width": "15px", "top": "-3px", "left": "92px", "border-radius": "50% 50% 50% 50%" })
     $('.forehead.line_left').css({ "transform": "rotate(30deg)", "height": "40px", "width": "10px", "top": "2px", "left": "-27px", "border-radius": "50% 50% 50% 50%" })
     $('.forehead.line_right').css({ "transform": "rotate(-30deg)", "height": "40px", "width": "10px", "top": "2px", "left": "33px", "border-radius": "50% 50% 50% 50%" })
 }
 
-function crescendoDecoration() {   //CRESCENDO
+function crescendoDecorationFactory() {   //CRESCENDO
     $('.forehead').css({ "transform": "rotate(0deg)", "height": "43px", "width": "14px", "top": "-15px", "border-radius": "0 0 50% 50%" })
     $('.forehead.line_left').css({ "transform": "rotate(0deg)", "height": "31px", "width": "14px", "top": "1px", "border-radius": "6% 0 50% 50%" })
     $('.forehead.line_right').css({ "transform": "rotate(0deg)", "height": "55px", "width": "14px", "top": "0px", "left": "18px", "border-radius": "0% 40% 50% 50%" })
 }
 
-function thirdEyeDecoration() { //THIRD EYE
+function thirdEyeDecorationFactory() { //THIRD EYE
     $('.forehead').css({ "transform": "rotate(0deg)", "height": "35px", "width": "55px", "top": "6px", "left": "72px", "border-radius": "50%", "background-color": "#b0cff5" })
     $('.forehead.line_left').css({ "transform": "rotate(0deg)", "height": "30px", "width": "30px", "top": "3px", "left": "13px", "border-radius": "50%", "background-color": "black" })
     $('.forehead.line_right').css({ "transform": "rotate(0deg)", "height": "5px", "width": "5px", "top": "14px", "left": "25px", "border-radius": "50%", "background-color": "white" })
@@ -257,58 +257,58 @@ function thirdEyeDecoration() { //THIRD EYE
 /*Animations:
 **************/
 
-function animationVariation(num) {
+function animationVariationFactory(num) {
     $('#dnaanimation').html(num)
     switch (num) {
         case 1:
-            resetAnimation();
-            $('#animationName').html('None')
+            resetAnimationFactory();
+            $('#animationNameFactory').html('None')
             break;
         case 2:
-            resetAnimation();
-            $('#animationName').html('Head')
-            animationType1();
+            resetAnimationFactory();
+            $('#animationNameFactory').html('Head')
+            animationType1Factory();
             break;
         case 3:
-            resetAnimation();
-            $('#animationName').html('Tail')
-            animationType2();
+            resetAnimationFactory();
+            $('#animationNameFactory').html('Tail')
+            animationType2Factory();
             break;
         case 4:
-            resetAnimation();
-            $('#animationName').html('Paws')
-            animationType3();
+            resetAnimationFactory();
+            $('#animationNameFactory').html('Paws')
+            animationType3Factory();
             break;
         case 5:
-            resetAnimation();
-            $('#animationName').html('Eyes')
-            animationType4();
+            resetAnimationFactory();
+            $('#animationNameFactory').html('Eyes')
+            animationType4Factory();
             break;
         case 6:
-            resetAnimation();
-            $('#animationName').html('All')
-            animationType5();
+            resetAnimationFactory();
+            $('#animationNameFactory').html('All')
+            animationType5Factory();
             break;
     }
 }
 
 
-function animationType1() { //HEAD MOVING
+function animationType1Factory() { //HEAD MOVING
     $('.head').addClass('movingHead');
 }
 
-function animationType2() { //TAIL MOVING
+function animationType2Factory() { //TAIL MOVING
     $('.tail').addClass('movingTail');
 }
 
-function animationType3() { //PAWS MOVING
+function animationType3Factory() { //PAWS MOVING
     $('.foot.front.left, .foot.back.left').addClass('movingPawsLeft');
     $('.foot.front.right, .foot.back.right').addClass('movingPawsRight');
 }
 
-function animationType4() { //EYES MOVING
+function animationType4Factory() { //EYES MOVING
     let temp = parseInt($('#eyeshape').val());
-    resetEyes()
+    resetEyesFactory()
     if (temp == 3 || temp == 4 || temp == 6) {
         $('.inner_pupil.left, .smaller_inner_pupil.left, .inner_pupil.right, .smaller_inner_pupil.right').addClass('movingInnerEyes');
     } else {
@@ -317,22 +317,22 @@ function animationType4() { //EYES MOVING
     }
 }
 
-function animationType5() { //MOVING ALL
-    animationType1()
-    animationType2()
-    animationType3()
-    animationType4()
+function animationType5Factory() { //MOVING ALL
+    animationType1Factory()
+    animationType2Factory()
+    animationType3Factory()
+    animationType4Factory()
 }
 
-function resetEyes() { //RESET EYES ANIM ONLY
+function resetEyesFactory() { //RESET EYES ANIM ONLY
     $('.pupils.left, .pupils.right').removeClass('movingEyes');
     $('.inner_pupil.left, .smaller_inner_pupil.left, .inner_pupil.right, .smaller_inner_pupil.right').removeClass('movingInnerEyes');
 }
 
-function resetAnimation() { //RESET ALL ANIMS
+function resetAnimationFactory() { //RESET ALL ANIMS
     $('.head').removeClass('movingHead');
     $('.tail').removeClass('movingTail');
     $('.foot.front.left, .foot.back.left').removeClass('movingPawsLeft');
     $('.foot.front.right, .foot.back.right').removeClass('movingPawsRight');
-    resetEyes();
+    resetEyesFactory();
 }

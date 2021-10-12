@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity  = 0.8.9;
+pragma solidity ^0.8.6;
 
 /*
- * Market place to trade kitties (should **in theory** be used for any ERC721 token)
- * It needs an existing Kitty contract to interact with
- * Note: it does not inherit from the kitty contracts
+ * Market place to trade cats (should **in theory** be used for any ERC721 token)
+ * It needs an existing Cat contract to interact with
+ * Note: it does not inherit from the cat contracts
  * Note: The contract needs to be an operator for everyone who is selling through this contract.
  */
 interface ICatMarketPlace {
@@ -12,7 +12,7 @@ interface ICatMarketPlace {
     event MarketTransaction(string TxType, address owner, uint256 tokenId);
 
     /**
-    * Set the current KittyContract address and initialize the instance of Kittycontract.
+    * Set the current CatContract address and initialize the instance of Catcontract.
     * Requirement: Only the contract owner can call.
      */
     function setCatContract(address _catContractAddress) external;
@@ -45,7 +45,7 @@ interface ICatMarketPlace {
 
     /**
     * Executes the purchase of _tokenId.
-    * Sends the funds to the seller and transfers the token using transferFrom in Kittycontract.
+    * Sends the funds to the seller and transfers the token using transferFrom in Catcontract.
     * Emits the MarketTransaction event with txType "Buy".
     * Requirement: The msg.value needs to equal the price of _tokenId
     * Requirement: There must be an active offer for _tokenId

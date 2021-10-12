@@ -12,7 +12,8 @@ function bodyColor(code, id) {
 
 function mouthColor(code, id) {
     var color = colors[code];
-    $('#face' + id + ', #innerBody' + id).css('background-color', '#' + color)
+    $('#face' + id).css('background-color', '#' + color)
+    $('#bellyCol' + id).css('background-color', '#' + color)
 }
 
 function pawsColor(code, id) {

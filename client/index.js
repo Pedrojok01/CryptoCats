@@ -1,7 +1,7 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const CAT_CONTRACT_ADD = "0x53C6219B2CD48F896BD5fe57014de186B383CC14";
-const MARKETPLACE_CONTRACT_ADD = "0xACD98EF5aaa1C534Ecd566a85Bda06303c3B7063";
+const CAT_CONTRACT_ADD = "0xAaF4fabAc48b7D4DBdBe3a5813F86D15b8765355";
+const MARKETPLACE_CONTRACT_ADD = "0x1ea3aF7344651DD0aAF53703b516A58868e3d990";
 const connectButton = document.querySelector('#loginButton');
 
 var userAddress = undefined;

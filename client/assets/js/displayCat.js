@@ -207,7 +207,7 @@ function catCard(id) {
 //HTML Render per CatId:
 function catBody(id) {
 
-    var single =
+    var catHTML =
         `<div id="wholeHead` + id + `" class="head">
             <div id="head`+ id + `" class="head_background"></div>
                 <div class="ears">
@@ -255,7 +255,7 @@ function catBody(id) {
         <div class="catBody">
             <div id="collarCol`+ id + `" class="collar"></div>
             <div id="mainBody`+ id + `" class="core_body">
-                <div id="innerBody`+ id + `" class="inner_body"></div>
+                <div id="bellyCol`+ id + `" class="inner_body"></div>
             </div>
             <div id="footColor`+ id + `" class="feet">
                 <div id="footFrontLeft`+ id + `" class="foot front left"></div>
@@ -268,6 +268,6 @@ function catBody(id) {
             </div>
         </div>`
 
-    return single
+    return catHTML;
 }
 

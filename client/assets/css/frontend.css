@@ -43,8 +43,8 @@
 
 
 .catGroup { 
-    margin-top: 0px;
-    width: 100%;    
+    max-width: 70%;
+    padding-bottom: 9%;
 }
 
 #canvas {

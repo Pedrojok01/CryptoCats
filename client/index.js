@@ -105,20 +105,21 @@ function logoutOfMetaMask() {
     setTimeout(() => {
         connectButton.addEventListener('click', loginWithMetaMask)
     }, 200)
+    window.location.reload();
 }
 
 
 function notConnected() {
     if (userAddress == undefined) {
         showNotifications("Metamask not connected!");
-        return;
+        return true;
     }
 }
 
 
 function restartApp() {
     if (userAddress !== undefined) {
-        // reload website
+        userAddress = undefined;
         window.location.reload();
     }
 }
@@ -126,16 +127,17 @@ function restartApp() {
 
 //Create Cat NFT when the button is clicked
 function createCat() {
-    notConnected();
 
-    var dnaStr = getDna();
-    instanceCatContract.methods.createCatGen0(dnaStr).send({}, function (error, txHash) {
-        let msg= "Tx: " + txHash;
-        if (error)
-            errorNotification(error);
-        else
-            showNotifications(msg);
-    })
+    if (!notConnected()) {
+        var dnaStr = getDna();
+        instanceCatContract.methods.createCatGen0(dnaStr).send({}, function (error, txHash) {
+            let msg = "Tx: " + txHash;
+            if (error)
+                errorNotification(error);
+            else
+                showNotifications(msg);
+        })
+    };
 }
 
 $(".btn.createCatBtn").click(() => {
@@ -153,13 +155,13 @@ function showNotifications(message) {
     $("#notification").html(message);
     resetMessage = '';
     setTimeout(function () {
-        $("#notification").css({ visibility: 'hidden'}).html(resetMessage)
+        $("#notification").css({ visibility: 'hidden' }).html(resetMessage)
     }, 10000);
 }
 
 
 function pendingNotification() {
-    const msg = 
+    const msg =
         `<div class="spinner-border spinner-border-sm text-dark" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>`;
@@ -177,7 +179,6 @@ function errorNotification(error) {
 
 
 
-
 /* MENU TABS DISPLAY:
 *********************/
 
@@ -187,29 +188,26 @@ function showHomeTab() {
     tab.show();
 }
 
-async function showNavMyKittiesTab() {
-    const tabToDisplay = document.querySelector("#nav-my-cats-tab");
+// Load -My Cats- tab
+async function loadMyCats() {
+    $("#nav-breed").removeClass("active show");
+    $("#nav-show").addClass("active show");
+    const tabToDisplay = document.querySelector("#nav-show-tab");
     const tab = new bootstrap.Tab(tabToDisplay);
     tab.show();
-
-    await loadMyCats();
+    if (!notConnected()) {
+        await loadCats($('#cats-collection'));
+    };
 }
 
+// Load -MarketPlace- tab
 async function showNavMarketplaceTab() {
     const tabToDisplay = document.querySelector("#nav-marketplace-tab");
     const tab = new bootstrap.Tab(tabToDisplay);
     tab.show();
-
-    await loadMarketplace();
-}
-
-// Cat interactions
-async function loadMyCats() {
-    const tabToDisplay = document.querySelector("#nav-show-tab");
-    const tab = new bootstrap.Tab(tabToDisplay);
-    tab.show();
-
-    await loadCats( $('#cats-collection') );
+    if (!notConnected()) {
+        await loadMarketplace();
+    };
 }
 
 

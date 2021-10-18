@@ -78,7 +78,7 @@
         <!-- Home page Tab -->
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel">
             <div class="container p-5">
-                <img src="assets/images/homeCatsGroup.png" class="catGroup" style="max-width: 60%; height: auto">
+                <img src="assets/images/homeCatsGroup.png" class="catGroup">
                 <div class="container">
                     <div class="banner">
                         <h3 class="c-white m-2">Collect and breed...<br>...some funny looking cats!</h3>
@@ -145,28 +145,31 @@
                         <div class="tab-pane fade" id="nav-breed" role="tabpanel" style="height: 950px;">
                             <div class="row g-6 justify-content-center m-2">
                                 <div class="col">
-                                    <div class="bg-light text-dark" style="width: 40vh; padding: 5%;">
+                                    <div class="bg-light text-dark" style="width: 40vh; padding: 5%; border-radius: 10px;">
                                         <div id="breedFemale" class="btn dark-btn" data-bs-toggle="modal"
                                             data-bs-target="#selectCatModal" onclick="fillSelectionModal(this.id)">
                                             Select Mummy</div>
+                                        <p class="card-body" style="visibility: hidden;">You've choosen <span class="selectedId">x</span> as the mother!</p>
                                     </div>
+                                    
                                 </div>
                                 <div class="col">
-                                    <div class="bg-light text-dark" style="width: 40vh; padding: 5%;">
+                                    <div class="bg-light text-dark" style="width: 40vh; padding: 5%; border-radius: 10px;">
                                         <div id="breedMale" class="btn dark-btn" data-bs-toggle="modal"
                                             data-bs-target="#selectCatModal" onclick="fillSelectionModal(this.id)">
                                             Select Daddy</div>
+                                        <p class="card-body" style="visibility: hidden;">You've choosen <span class="selectedId">x</span> as the father!</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row g-5 justify-content-center m-2">
+                            <div class="row g-5 justify-content-center">
                                 <div class="col d-flex justify-content-center">
-                                    <button id="resetBreedBtn" type="button"
-                                        class="btn btn-secondary light-b-shadow m-2">
+                                    <button id="resetBreedBtn" type="button" style="margin: 5%; width: 20vh;"
+                                        class="btn btn-danger btn-lg">
                                         <b>Reset</b>
                                     </button>
-                                    <button id="breedBtn" type="button"
-                                        class="btn btn-primary light-b-shadow m-2 disabled" onclick="breedKitty()">
+                                    <button id="breedBtn" type="button" style="margin: 5%; width: 20vh;"
+                                        class="btn btn-success btn-lg disabled" onclick="breedKitty()">
                                         <b>Breed</b>
                                     </button>
                                 </div>
@@ -177,7 +180,7 @@
                         <div class="tab-pane fade" id="nav-sell" role="tabpanel">
                             <div class="row g-5 justify-content-center m-2 mb-0">
                                 <div class="col">
-                                    <div class="card catCard bg-light text-dark" style="width: 40vh; padding: 5%;">
+                                    <div class="card catCard bg-light text-dark" style="width: 40vh; padding: 5%; border-radius: 10px;">
                                         <button id="sellCat" class="btn dark-btn" data-bs-toggle="modal"
                                             data-bs-target="#selectCatModal"
                                             onclick="fillSelectionModal(this.id)">Select a cat to sell</button>
@@ -201,13 +204,13 @@
                             </div>
                             <div class="row g-5 justify-content-center m-2">
                                 <div class="col d-flex justify-content-center">
-                                    <div>
-                                        <button type="button" class="btn btn-secondary light-b-shadow m-2"
+                                    <div style="display: flex;">
+                                        <button type="button" class="btn btn-danger btn-lg" style="margin: 5%; width: 20vh;"
                                             onclick="resetSell()">
                                             <b>Reset</b>
                                         </button>
                                         <button id="sellBtn" type="button"
-                                            class="btn btn-primary light-b-shadow m-2 disabled" onclick="sellKitty()">
+                                        class="btn btn-success btn-lg disabled" style="margin: 5%; width: 20vh;" onclick="sellKitty()">
                                             <b>Create Offer</b>
                                         </button>
                                     </div>

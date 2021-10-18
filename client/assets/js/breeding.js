@@ -11,30 +11,37 @@ function fillSelectionModal(domId) {
   const sellCatId = $("#sellCat ~ * .selectedId").html();
 
   for (id = 0; id < userCats.length; id++) {
+
+    const catCopy = $("#catview" + id).clone();
+    catCopy.addClass("pointer");
+
+    let functionName = "selectForBreeding";
+    if (domId == "sellCat") {
+      functionName = "selectForSale";
+    }
+
     if (id != dadId && id != mumId && id != sellCatId) {
-      const catCopy = $("#catview" + id).clone();
       catCopy.addClass("pointer");
-
-      let functionName = "selectForBreeding";
-      if (domId == "sellCat") {
-        functionName = "selectForSale";
-      }
-
       catCopy.attr("onclick", `${functionName}("${domId}", "${id}")`);
       catCopy.appendTo("#catSelection");
     }
   }
 }
 
+
 // Select one parent for breeding:
 function selectForBreeding(domId, id) {
+
   showSelectedCat(domId, id);
 
   $("#selectCatModal").modal("hide");
+  $(`#${domId} ~ * .selectedId`).html(id);
+  $(".card-body").css({ "visibility": "visible" });
 
   if ($("#breedFemale").html() != "" && $("#breedMale").html() != "") {
     $("#breedBtn").removeClass("disabled");
   }
+
 }
 
 
@@ -42,13 +49,14 @@ function selectForBreeding(domId, id) {
 function showSelectedCat(domId, id) {
 
   let div = $("#catview" + id).clone();
+
   $("#" + domId).empty();
   $("#" + domId).removeClass("btn");
   $("#" + domId).removeClass("dark-btn");
-
   $("#" + domId).append(div);
-
+  
 }
+
 
 
 
@@ -59,7 +67,7 @@ function resetModal() {
 
 
 function resetBreed() {
-  
+
   $("#breedFemale").html("Select Mummy");
   $("#breedFemale").addClass("btn");
   $("#breedFemale").addClass("dark-btn");
@@ -68,6 +76,8 @@ function resetBreed() {
   $("#breedMale").addClass("btn");
   $("#breedMale").addClass("dark-btn");
 
+  $(".selectedId").html("");
+  $(".card-body").css({ "visibility": "hidden" });
   $("#breedBtn").addClass("disabled");
 
   $("#breedFemale").addClass("pointer");

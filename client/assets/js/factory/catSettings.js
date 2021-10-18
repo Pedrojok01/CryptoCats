@@ -25,6 +25,14 @@ $(document).ready(function () {
 
 // Default DNA value
 function defaultPage() {
+  resetCatToDefault();
+  $(".tab.cattributesBtn").hide();
+  $(".tab.catColorsBtn").show();
+  renderCatFactory(defaultDNA)
+}
+
+
+function resetCatToDefault() {
   $('#dnabody').html(defaultDNA.bodyColor);
   $('#dnamouth').html(defaultDNA.mouthColor);
   $('#dnapaws').html(defaultDNA.pawsColor);
@@ -34,11 +42,7 @@ function defaultPage() {
   $('#dnadecoration').html(defaultDNA.decorationPattern)
   $('#dnadecorationCollor').html(defaultDNA.decorationColor)
   $('#dnaanimation').html(defaultDNA.animation)
-  $(".tab.cattributesBtn").hide();
-  $(".tab.catColorsBtn").show();
   $('#dnaspecial').html(defaultDNA.lastNum)
-
-  renderCatFactory(defaultDNA)
 }
 
 

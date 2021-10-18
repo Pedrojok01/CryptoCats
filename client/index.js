@@ -1,11 +1,12 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const CAT_CONTRACT_ADD = "0xAaF4fabAc48b7D4DBdBe3a5813F86D15b8765355";
-const MARKETPLACE_CONTRACT_ADD = "0x1ea3aF7344651DD0aAF53703b516A58868e3d990";
+const CAT_CONTRACT_ADD = "0x723149fBDfF4B1f2a7B5f9c80CB0BfA449154eC4";
+const MARKETPLACE_CONTRACT_ADD = "0x587Ab46502Ee3F6F08df3b6F217e1b252Adf2e4b";
 const connectButton = document.querySelector('#loginButton');
 
 var userAddress = undefined;
-let userCats = [];
+let userCats = []; //cat object
+var userCatsArr = []; //cat Id array
 var instanceCatContract;
 var instanceMarketplaceContract;
 
@@ -70,15 +71,8 @@ async function loginWithMetaMask() {
         let genes = event.returnValues.genes;
         let transactionHash = event.transactionHash;
 
-        let message1 = "<b>Your cat has been succesfully created!</b>" + "<br/>" + "<b>owner:</b> " + owner + "<br/>" + "<b>Cat Id:</b> " + catId + " <b>Dad Id:</b> " + dadId + " <b>Mum Id:</b> " + mumId + " <b>Genes:</b> " + genes + "<br/>" + " <b>Tx hash:</b> " + transactionHash;
+        let message1 = `<b>Your cat has been succesfully created!</b><br/><b>owner:</b> ${owner}<br/><b>Cat Id:</b> ${catId} <b>Dad Id:</b> ${dadId} <b>Mum Id:</b> ${mumId} <b>Genes:</b> ${genes}<br/> <b>Tx hash:</b> ${transactionHash}`;
         showNotifications(message1);
-
-        /*
-        //Update userCat, myCat, breed
-        var cat = instanceCatContract.methods.getCat(catId).call();
-        //userCats.push(catId);
-        appendCat(cat.genes, cat.catId, cat.generation);
-        */
     })
 
 
@@ -215,7 +209,7 @@ async function loadMyCats() {
     const tab = new bootstrap.Tab(tabToDisplay);
     tab.show();
 
-    await loadCats();
+    await loadCats( $('#cats-collection') );
 }
 
 
@@ -257,39 +251,6 @@ async function loadMarketplace() {
         }
     */
 }
-
-
-
-async function loadCats() {
-    notConnected();
-    pendingNotification();
-
-    var catsToLoad = [];
-
-    try {
-        catsToLoad = await instanceCatContract.methods.tokensPerOwner(userAddress).call();
-    } catch (err) {
-        errorNotification(err);
-        return;
-    }
-
-    for (i = 0; i < catsToLoad.length; i++) {
-        appendCatToShow(catsToLoad[i])
-      }
-
-    userCats = catsToLoad;
-
-    showNotifications("Your cats have been updated.");
-}
-
-
-//Appending cats for catalog
-async function appendCatToShow(id) {
-    var cat = await instanceCatContract.methods.getCat(id).call()
-    appendCat(cat[4], id, cat['generation'])
-  }  
-
-
 
 
 /* VARIOUS UTILS:

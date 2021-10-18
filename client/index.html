@@ -118,7 +118,7 @@
                     <p>Interact with your cats NFTs</p>
                 </div>
                 <div align="center" class="text-dark mt-6">
-                    <nav id="menu-my-kitties" class="pt-2">
+                    <nav id="menu-my-cats" class="pt-2">
                         <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-show-tab" data-bs-toggle="tab"
                                 data-bs-target="#nav-show" type="button" role="tab">
@@ -138,43 +138,31 @@
 
                         <!-- Show -->
                         <div class="tab-pane fade active show" id="nav-show" role="tabpanel">
-                            <div id="cats-collection" class="container"></div>
+                            <div id="cats-collection" class="catGrid container"></div>
                         </div>
 
                         <!-- Breed -->
-                        <div class="tab-pane fade" id="nav-breed" role="tabpanel">
+                        <div class="tab-pane fade" id="nav-breed" role="tabpanel" style="height: 950px;">
                             <div class="row g-6 justify-content-center m-2">
                                 <div class="col">
-                                    <div class="card catCard bg-light text-dark" style="width: 18rem">
-                                        <div id="breedFemale" class="catContainer catBackground paw pointer"
-                                            data-bs-toggle="modal" data-bs-target="#selectCatModal"
-                                            onclick="fillSelectCatModal(this.id)"></div>
-                                        <div class="card-body">
-                                            ID: <span class="catId"></span> GEN:
-                                            <span class="catGen"></span>
-                                            <br />
-                                            DNA: <span class="catDna"></span>
-                                        </div>
+                                    <div class="bg-light text-dark" style="width: 40vh; padding: 5%;">
+                                        <div id="breedFemale" class="btn dark-btn" data-bs-toggle="modal"
+                                            data-bs-target="#selectCatModal" onclick="fillSelectionModal(this.id)">
+                                            Select Mummy</div>
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <div class="card catCard bg-light text-dark" style="width: 18rem">
-                                        <div id="breedMale" class="catContainer catBackground paw pointer"
-                                            data-bs-toggle="modal" data-bs-target="#selectCatModal"
-                                            onclick="fillSelectCatModal(this.id)"></div>
-                                        <div class="card-body">
-                                            ID: <span class="catId"></span> GEN:
-                                            <span class="catGen"></span>
-                                            <br />
-                                            DNA: <span class="catDna"></span>
-                                        </div>
+                                    <div class="bg-light text-dark" style="width: 40vh; padding: 5%;">
+                                        <div id="breedMale" class="btn dark-btn" data-bs-toggle="modal"
+                                            data-bs-target="#selectCatModal" onclick="fillSelectionModal(this.id)">
+                                            Select Daddy</div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row g-5 justify-content-center m-2">
                                 <div class="col d-flex justify-content-center">
-                                    <button type="button" class="btn btn-secondary light-b-shadow m-2"
-                                        onclick="resetBreed()">
+                                    <button id="resetBreedBtn" type="button"
+                                        class="btn btn-secondary light-b-shadow m-2">
                                         <b>Reset</b>
                                     </button>
                                     <button id="breedBtn" type="button"
@@ -189,15 +177,15 @@
                         <div class="tab-pane fade" id="nav-sell" role="tabpanel">
                             <div class="row g-5 justify-content-center m-2 mb-0">
                                 <div class="col">
-                                    <div class="card catCard bg-light text-dark" style="width: 18rem">
-                                        <div id="sellCat" class="catContainer catBackground paw pointer"
-                                            data-bs-toggle="modal" data-bs-target="#selectCatModal"
-                                            onclick="fillSelectCatModal(this.id)"></div>
+                                    <div class="card catCard bg-light text-dark" style="width: 40vh; padding: 5%;">
+                                        <button id="sellCat" class="btn dark-btn" data-bs-toggle="modal"
+                                            data-bs-target="#selectCatModal"
+                                            onclick="fillSelectionModal(this.id)">Select a cat to sell</button>
                                         <div class="card-body">
-                                            ID: <span class="catId"></span> GEN:
-                                            <span class="catGen"></span>
+                                            ID: <span class="selectedId"></span> GEN:
+                                            <span class="selectedGen"></span>
                                             <br />
-                                            DNA: <span class="catDna"></span>
+                                            DNA: <span class="selectedDna"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -236,11 +224,11 @@
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Select Kitty</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <h5 class="modal-title">Select a cat</h5>
+                        <button type="button" class="btn-close close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <div id="select-cat-collection" class="row g-5 justify-content-center m-2"></div>
+                        <div id="catSelection" class="catGrid container"></div>
                     </div>
                 </div>
             </div>
@@ -415,11 +403,11 @@
                 </div>
 
                 <div class="row">
-                    <div align="center" class="col-lg-6 ButtonRaw m-2">
+                    <div align="center" class="col-lg-6 ButtonRaw m-3">
                         <button type="button" class="btn btn-primary default btn-lg">Default DNA</button>
                         <button type="button" class="btn btn-warning random btn-lg">Random DNA</button>
                     </div>
-                    <div align="center" class="col-lg-5 ButtonRaw m-3">
+                    <div align="center" class="col-lg-4 ButtonRaw m-3">
                         <button type="button" class="btn btn-success btn-lg btn-block createCatBtn">CREATE</button>
                     </div>
                 </div>
@@ -446,7 +434,9 @@
 <script src="assets/js/factory/catFactory.js"></script>
 <script src="assets/js/factory/catSettings.js"></script>
 <script src="assets/js/buildCat.js"></script>
-<script src="assets/js/displayCat.js"></script>
+<script src="assets/js/displayCats.js"></script>
+<script src="assets/js/breeding.js"></script>
 <script src="./index.js"></script>
+
 
 </html>

@@ -111,8 +111,7 @@ footer {
     z-index: 0;
 }
 
-
-#cats-collection {
+.catGrid {
     position: inherit;
     display: grid;
     justify-content: center;

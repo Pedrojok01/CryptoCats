@@ -1,7 +1,7 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const CAT_CONTRACT_ADD = "0x9a250d7a7Ee58610b04dF82849a351DCec09A008";
-const MARKETPLACE_CONTRACT_ADD = "0x907b6F5f18e3E45B8FfBB4e2661f07C956F02A49";
+const CAT_CONTRACT_ADD = "0xbf697401e188dfD69794A88d99853Cf42E75127B";
+const MARKETPLACE_CONTRACT_ADD = "0xD889F921c53D0FA7657E18605B47856b35cc1724";
 const connectButton = document.querySelector('#loginButton');
 
 var userAddress = undefined;
@@ -143,7 +143,7 @@ async function createCat() {
         var dna = getDna();
         let dnaStr = web3.utils.toBN(dna).toString();
         await instanceCatContract.methods.createCatGen0(dnaStr).send({}, function (error, txHash) {
-            let msg = "Tx: " + txHash;
+            let msg = "<b>Tx:</b> " + txHash;
             if (error)
                 errorNotification(error);
             else

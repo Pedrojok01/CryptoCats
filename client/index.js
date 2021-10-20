@@ -1,7 +1,7 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const CAT_CONTRACT_ADD = "0x723149fBDfF4B1f2a7B5f9c80CB0BfA449154eC4";
-const MARKETPLACE_CONTRACT_ADD = "0x587Ab46502Ee3F6F08df3b6F217e1b252Adf2e4b";
+const CAT_CONTRACT_ADD = "0x9a250d7a7Ee58610b04dF82849a351DCec09A008";
+const MARKETPLACE_CONTRACT_ADD = "0x907b6F5f18e3E45B8FfBB4e2661f07C956F02A49";
 const connectButton = document.querySelector('#loginButton');
 
 var userAddress = undefined;
@@ -125,11 +125,12 @@ function restartApp() {
 }
 
 
-//Create Cat NFT when the button is clicked
+// Create Cat NFT from the Factory
 function createCat() {
 
     if (!notConnected()) {
-        var dnaStr = getDna();
+        var dna = getDna();
+        let dnaStr = web3.utils.toBN(dna).toString();
         instanceCatContract.methods.createCatGen0(dnaStr).send({}, function (error, txHash) {
             let msg = "Tx: " + txHash;
             if (error)
@@ -140,42 +141,36 @@ function createCat() {
     };
 }
 
+// Create button listener
 $(".btn.createCatBtn").click(() => {
     createCat();
 })
 
 
+// Create Cat NFT from 2 selected parents
+async function breedCat() {
 
-/* NOTIFICATIONS:
-*****************/
+    const dadId = $("#breedMale ~ * .selectedId").html();
+    const mumId = $("#breedFemale ~ * .selectedId").html();
+    // While waiting for event:
+    $("#breedBtn").addClass("disabled");
+    $("#breedFemale, #breedMale").removeClass("pointer");
+    $("#breedFemale, #breedMale").removeAttr("data-bs-toggle");
+    $("#breedFemale, #breedMale").removeAttr("onclick");
 
-//Display notifications for 5s
-function showNotifications(message) {
-    $("#notification").css({ visibility: 'visible' });
-    $("#notification").html(message);
-    resetMessage = '';
-    setTimeout(function () {
-        $("#notification").css({ visibility: 'hidden' }).html(resetMessage)
-    }, 10000);
-}
-
-
-function pendingNotification() {
-    const msg =
-        `<div class="spinner-border spinner-border-sm text-dark" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>`;
-    showNotifications(msg);
-}
-
-function errorNotification(error) {
-    if (error.message == undefined) {
-        showNotifications(error);
-        console.error(error);
-    } else {
-        showNotifications(error.message);
+    try {
+        const res = await instanceCatContract.methods.breed(dadId, mumId).send({})
+    } catch (err) {
+        errorNotification(err);
     }
+
+    resetBreed();
 }
+
+// breed button listener
+$("#breedBtn").click(() => {
+    breedCat();
+})
 
 
 
@@ -187,6 +182,12 @@ function showHomeTab() {
     const tab = new bootstrap.Tab(tabToDisplay);
     tab.show();
 }
+
+// Create button listener
+$("#homeButton").click( () => {
+    showHomeTab()
+});
+
 
 // Load -My Cats- tab
 async function loadMyCats() {
@@ -251,8 +252,8 @@ async function loadMarketplace() {
 }
 
 
-/* VARIOUS UTILS:
-*****************/
+/* VARIOUS:
+***********/
 
 
 async function updateGen0Count() {

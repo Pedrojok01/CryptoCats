@@ -6,23 +6,24 @@ function fillSelectionModal(domId) {
 
   resetModal();
 
-  const dadId = $("#breedMale ~ * .selectedId").html();
-  const mumId = $("#breedFemale ~ * .selectedId").html();
-  const sellCatId = $("#sellCat ~ * .selectedId").html();
+  const dadId = $("#breedMale ~ * .generalId").html();
+  const mumId = $("#breedFemale ~ * .generalId").html();
+  const sellCatId = $("#sellCat ~ * .generalId").html();
 
-  for (id = 0; id < userCats.length; id++) {
+  for (i = 0; i < userCats.length; i++) {
 
-    const catCopy = $("#catview" + id).clone();
+    const catCopy = $("#catview" + i).clone();
     catCopy.addClass("pointer");
+    const tokenId = userCats[i].indexId;
 
     let functionName = "selectForBreeding";
     if (domId == "sellCat") {
       functionName = "selectForSale";
     }
 
-    if (id != dadId && id != mumId && id != sellCatId) {
+    if ( tokenId != dadId && tokenId != mumId && tokenId != sellCatId) {
       catCopy.addClass("pointer");
-      catCopy.attr("onclick", `${functionName}("${domId}", "${id}")`);
+      catCopy.attr("onclick", `${functionName}("${domId}", "${i}", "${tokenId}")`);
       catCopy.appendTo("#catSelection");
     }
   }
@@ -30,12 +31,12 @@ function fillSelectionModal(domId) {
 
 
 // Select one parent for breeding:
-function selectForBreeding(domId, id) {
+function selectForBreeding(domId, userIndex, tokenId) {
 
-  showSelectedCat(domId, id);
+  showSelectedCat(domId, userIndex);
 
   $("#selectCatModal").modal("hide");
-  $(`#${domId} ~ * .selectedId`).html(id);
+  $(`#${domId} ~ * .selectedId`).html(tokenId);
   $(".card-body").css({ "visibility": "visible" });
 
   if ($("#breedFemale").html() != "" && $("#breedMale").html() != "") {
@@ -46,15 +47,16 @@ function selectForBreeding(domId, id) {
 
 
 // Display selected parent for breeding:
-function showSelectedCat(domId, id) {
+function showSelectedCat(domId, userIndex) {
 
-  let div = $("#catview" + id).clone();
+  let div = $(`#catview${userIndex}`).clone();
+  $(`#wholeHead${userIndex}`).css({ "width": "26vh" });
 
   $("#" + domId).empty();
   $("#" + domId).removeClass("btn");
   $("#" + domId).removeClass("dark-btn");
   $("#" + domId).append(div);
-  
+
 }
 
 

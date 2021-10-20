@@ -32,7 +32,7 @@
     <div id="menu">
         <nav class="navbar navbar-expand-lg fixed-top p-4 navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" type="button" onclick="showHomeTab()">CryptoCat - NFTs</a>
+                <a id="homeButton" class="navbar-brand" type="button" onclick="showHomeTab()">CryptoCat - NFTs</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarNavAltMarkup">
                     <span class="navbar-toggler-icon"></span>
@@ -145,7 +145,7 @@
                         <div class="tab-pane fade" id="nav-breed" role="tabpanel" style="height: 950px;">
                             <div class="row g-6 justify-content-center m-2">
                                 <div class="col">
-                                    <div class="bg-light text-dark" style="width: 40vh; padding: 5%; border-radius: 10px;">
+                                    <div class="bg-light text-dark" style="width: fit-content; padding: 5%; border-radius: 10px;">
                                         <div id="breedFemale" class="btn dark-btn" data-bs-toggle="modal"
                                             data-bs-target="#selectCatModal" onclick="fillSelectionModal(this.id)">
                                             Select Mummy</div>
@@ -154,7 +154,7 @@
                                     
                                 </div>
                                 <div class="col">
-                                    <div class="bg-light text-dark" style="width: 40vh; padding: 5%; border-radius: 10px;">
+                                    <div class="bg-light text-dark" style="width: fit-content; padding: 5%; border-radius: 10px;">
                                         <div id="breedMale" class="btn dark-btn" data-bs-toggle="modal"
                                             data-bs-target="#selectCatModal" onclick="fillSelectionModal(this.id)">
                                             Select Daddy</div>
@@ -169,7 +169,7 @@
                                         <b>Reset</b>
                                     </button>
                                     <button id="breedBtn" type="button" style="margin: 5%; width: 20vh;"
-                                        class="btn btn-success btn-lg disabled" onclick="breedKitty()">
+                                        class="btn btn-success btn-lg disabled">
                                         <b>Breed</b>
                                     </button>
                                 </div>
@@ -180,7 +180,7 @@
                         <div class="tab-pane fade" id="nav-sell" role="tabpanel">
                             <div class="row g-5 justify-content-center m-2 mb-0">
                                 <div class="col">
-                                    <div class="card catCard bg-light text-dark" style="width: 40vh; padding: 5%; border-radius: 10px;">
+                                    <div class="card catCard bg-light text-dark" style="width: fit-content; padding: 5%; border-radius: 10px;">
                                         <button id="sellCat" class="btn dark-btn" data-bs-toggle="modal"
                                             data-bs-target="#selectCatModal"
                                             onclick="fillSelectionModal(this.id)">Select a cat to sell</button>
@@ -439,6 +439,7 @@
 <script src="assets/js/buildCat.js"></script>
 <script src="assets/js/displayCats.js"></script>
 <script src="assets/js/breeding.js"></script>
+<script src="assets/js/utils/notifications.js"></script>
 <script src="./index.js"></script>
 
 

@@ -24,6 +24,7 @@ contract Catcontract is IERC721, Ownable {
 
     struct Cat {
         uint16 generation;
+        uint32 indexId;
         uint32 dadId;
         uint32 mumId;
         uint64 birthTime;
@@ -60,7 +61,6 @@ contract Catcontract is IERC721, Ownable {
         tokenSymbol = _symbol;
         maxCatsSupply = _maxCatsSupply;
         CREATION_LIMIT_GEN0 = _CREATION_LIMIT_GEN0;
-        _createKitty(0, 0, 0, uint256(79132031251211), address(0));
     }
 
     /*Functions:
@@ -326,13 +326,15 @@ contract Catcontract is IERC721, Ownable {
             "All gen-0 cats are already in circulation!"
         );
 
+        uint32 tokenId = uint32(catsSupplyCount);
         gen0Count++;
-        _createKitty(0, 0, 0, _genes, msg.sender);
+        _createKitty(0, tokenId, 0, 0, _genes, msg.sender);
     }
 
     // Create cats
     function _createKitty(
         uint256 _generation,
+        uint256 _tokenId,
         uint256 _dadId,
         uint256 _mumId,
         uint256 _genes,
@@ -340,6 +342,7 @@ contract Catcontract is IERC721, Ownable {
     ) internal returns (uint256) {
         Cat memory _cat = Cat({
             generation: uint16(_generation),
+            indexId: uint32(_tokenId),
             dadId: uint32(_dadId),
             mumId: uint32(_mumId),
             birthTime: uint64(block.timestamp),
@@ -403,6 +406,7 @@ contract Catcontract is IERC721, Ownable {
         view
         returns (
             uint256 generation,
+            uint256 indexId,
             uint256 dadId,
             uint256 mumId,
             uint256 birthTime,
@@ -413,6 +417,7 @@ contract Catcontract is IERC721, Ownable {
         Cat storage cat = cats[_tokenId];
 
         generation = cat.generation;
+        indexId = cat.indexId;
         dadId = cat.dadId;
         mumId = cat.mumId;
         birthTime = cat.birthTime;
@@ -434,14 +439,26 @@ function breed(uint256 _dadId, uint256 _mumId) public returns (uint256) {
         uint256 mumDna = cats[_mumId].genes;
         uint256 kidDna = _mixDna(dadDna, mumDna);
 
-        uint16 _generation = 0;
-        if (cats[_mumId].generation >= cats[_dadId].generation) {
-            _generation = cats[_mumId].generation++;
+        uint16 dadGen = cats[_dadId].generation;
+        uint16 mumGen = cats[_mumId].generation;
+        uint16 _generation = _setGeneration(dadGen, mumGen);
+
+        uint16 newIndexId = uint16(catsSupplyCount);
+
+        return _createKitty(_generation, newIndexId, _dadId, _mumId, kidDna, msg.sender);
+    }
+
+    // set new generation
+    function _setGeneration(uint16 _dadGen, uint _mumGen) private pure returns (uint16) {
+        uint16 generation;
+        
+        if ( _mumGen >= _dadGen ) {
+            generation = uint16(_mumGen + 1);
         } else {
-            _generation = cats[_dadId].generation++;
+            generation = uint16(_dadGen + 1);
         }
 
-        return _createKitty(_generation, _dadId, _mumId, kidDna, msg.sender);
+        return generation;
     }
 
     // Mix DNA from both parents with an extra 15% chance of mutation per gene

@@ -1,11 +1,11 @@
 // File to load cat in HTML Div / Tab / Modal
 
-
-
 // Get cats per user, then get cat object per cat Id
 async function loadCats(div) {
     notConnected();
     pendingNotification();
+
+    $("#cats-collection").empty();
 
     var catsToLoad = [];
 
@@ -16,7 +16,8 @@ async function loadCats(div) {
         for (i = 0; i < totalCats.length; i++) {
             var cat = await instanceCatContract.methods.getCat(totalCats[i]).call();
             catsToLoad.push(cat);
-            appendCat(cat[4], i, cat['generation'], div)
+            userIndex = i;
+            appendCat(cat[5], userIndex, cat[1], cat[0], div)
         }
         
         userCats = catsToLoad;
@@ -32,14 +33,14 @@ async function loadCats(div) {
 
 
 // Add cat to html element after CSS rendering
-function appendCat(dna, id, gen, div) {
+function appendCat(dna, userIndex, id, gen, div) {
     let dnaToRender = catDna(dna);
 
-    catCard(div, id);
-    renderCat(dnaToRender, id);
+    catCard(div, userIndex, id);
+    renderCat(dnaToRender, userIndex);
 
     $(`#catDNA${id}`).html(`
-    <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
+    <span class="badge badge-light" id="generalId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
     <br>
     <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>${gen}</h4></span>
     <br>
@@ -81,13 +82,13 @@ function catDna(dnaStr) {
 
 
 //Cat HTML Div for -My Cats- tab
-function catCard(div, id) {
+function catCard(div, userIndex, id) {
 
-    var catDiv = `<div id="catview${id}">
-                    <div class="catDiv">${catBody(id)}</div>
+    var catDiv = `<div id="catview${userIndex}">
+                    <div class="catDiv">${catBody(userIndex)}</div>
                     <div class="catInfos" id="catDNA${id}"></div>
                 </div>`
-    var catView = $('#catview' + id)
+    var catView = $(`#catview${userIndex}`)
 
     if (!catView.length) {
         div.append(catDiv)

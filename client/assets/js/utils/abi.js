@@ -682,6 +682,11 @@ var abi = {
         },
         {
           "internalType": "uint256",
+          "name": "indexId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
           "name": "dadId",
           "type": "uint256"
         },

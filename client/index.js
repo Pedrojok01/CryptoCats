@@ -58,6 +58,17 @@ async function loginWithMetaMask() {
     instanceMarketplaceContract = await new web3.eth.Contract(abi.CatMarketplace, MARKETPLACE_CONTRACT_ADD, { from: userAddress })
 
 
+    // NAV BAR TAB UPDATE
+    const currentNavbarTab = $("#menu .nav-link.active").attr("id");
+    if (currentNavbarTab == "nav-my-kitties-tab") {
+        await showMyCats();
+    } else if (currentNavbarTab == "nav-marketplace-tab") {
+        await loadMarketplace();
+    } else if (currentNavbarTab == "nav-factory-tab") {
+        await updateGen0Count();
+    }
+
+
     //Contract Event Listeners:
     await instanceCatContract.events.Birth({ filter: { owner: userAddress }, fromBlock: "latest" }).on('data', (event) => {
         /*if (isDuplicatedContractEvent("Birth", event.transactionHash)) {
@@ -76,22 +87,22 @@ async function loginWithMetaMask() {
     })
 
 
-    // NAV BAR TAB UPDATE
-    const currentNavbarTab = $("#menu .nav-link.active").attr("id");
-    if (currentNavbarTab == "nav-my-kitties-tab") {
-        await loadMyCats();
-    } else if (currentNavbarTab == "nav-marketplace-tab") {
-        await loadMarketplace();
-    } else if (currentNavbarTab == "nav-factory-tab") {
-        await updateGen0Count();
-    }
+    $(".createCatBtn").removeClass("disabled");
+    $("#gen0CountText").removeClass("hidden");
+    await updateGen0Count();
 
+
+    /***********
+        
+    //MARKETPLACE LISTENER TO ADD!
+    
+    ***********/
+
+    // Disconnect (the button!) from MetaMask
     connectButton.removeEventListener('click', loginWithMetaMask)
     setTimeout(() => {
         connectButton.addEventListener('click', logoutOfMetaMask)
     }, 200)
-
-    //MARKETPLACE LISTENER TO ADD!
 
 }
 
@@ -126,18 +137,19 @@ function restartApp() {
 
 
 // Create Cat NFT from the Factory
-function createCat() {
+async function createCat() {
 
     if (!notConnected()) {
         var dna = getDna();
         let dnaStr = web3.utils.toBN(dna).toString();
-        instanceCatContract.methods.createCatGen0(dnaStr).send({}, function (error, txHash) {
+        await instanceCatContract.methods.createCatGen0(dnaStr).send({}, function (error, txHash) {
             let msg = "Tx: " + txHash;
             if (error)
                 errorNotification(error);
             else
                 showNotifications(msg);
         })
+        await updateGen0Count();
     };
 }
 
@@ -174,97 +186,18 @@ $("#breedBtn").click(() => {
 
 
 
-/* MENU TABS DISPLAY:
-*********************/
-
-function showHomeTab() {
-    const tabToDisplay = document.querySelector("#nav-home-tab");
-    const tab = new bootstrap.Tab(tabToDisplay);
-    tab.show();
-}
-
-// Create button listener
-$("#homeButton").click( () => {
-    showHomeTab()
-});
-
-
-// Load -My Cats- tab
-async function loadMyCats() {
-    $("#nav-breed").removeClass("active show");
-    $("#nav-show").addClass("active show");
-    const tabToDisplay = document.querySelector("#nav-show-tab");
-    const tab = new bootstrap.Tab(tabToDisplay);
-    tab.show();
-    if (!notConnected()) {
-        await loadCats($('#cats-collection'));
-    };
-}
-
-// Load -MarketPlace- tab
-async function showNavMarketplaceTab() {
-    const tabToDisplay = document.querySelector("#nav-marketplace-tab");
-    const tab = new bootstrap.Tab(tabToDisplay);
-    tab.show();
-    if (!notConnected()) {
-        await loadMarketplace();
-    };
-}
-
-
-async function loadMarketplace() {
-    $("#marketplace-collection").empty();
-
-    notConnected();
-
-    pendingNotification();
-    /*
-        const marketplaceOffers = [];
-        try {
-            const offeredTokenIds = await marketplaceContract.methods
-                .getAllTokenOnSale()
-                .call();
-            for (tokenId of offeredTokenIds) {
-                const res = await marketplaceContract.methods.getOffer(tokenId).call();
-                const priceEther = web3.utils.fromWei(res.price, "ether");
-                const offer = {
-                    kittyId: tokenId,
-                    seller: res.seller,
-                    price: priceEther,
-                };
-                marketplaceOffers.push(offer);
-            }
-        } catch (err) {
-            errorNotification(err);
-            return;
-        }
-    
-        for (offer of marketplaceOffers) {
-            await appendMarketplaceCollection(offer.seller, offer.price, offer.kittyId);
-        }
-    
-        if (marketplaceOffers.length == 0) {
-            $("#marketplace-collection").append(
-                "<p class='text-light'>Currently, there are no kitties for sale ...</p>"
-            );
-        }
-    */
-}
-
-
 /* VARIOUS:
 ***********/
 
-
 async function updateGen0Count() {
-    notConnected();
-
-    try {
-        const count = await instanceCatContract.methods.Gen0Count().call();
-        $("#gen0Count").html(count);
-    } catch (err) {
-        errorNotification(err);
-    }
+    if (!notConnected()) {
+        try {
+            const count = await instanceCatContract.methods.Gen0Count().call();
+            $("#gen0Count").html(count);
+        } catch (err) {
+            errorNotification(err);
+        }
+    };
 }
 
 

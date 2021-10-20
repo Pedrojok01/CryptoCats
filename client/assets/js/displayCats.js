@@ -2,10 +2,7 @@
 
 // Get cats per user, then get cat object per cat Id
 async function loadCats(div) {
-    notConnected();
     pendingNotification();
-
-    $("#cats-collection").empty();
 
     var catsToLoad = [];
 
@@ -19,7 +16,7 @@ async function loadCats(div) {
             userIndex = i;
             appendCat(cat[5], userIndex, cat[1], cat[0], div)
         }
-        
+
         userCats = catsToLoad;
 
     } catch (err) {

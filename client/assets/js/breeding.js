@@ -21,7 +21,7 @@ function fillSelectionModal(domId) {
       functionName = "selectForSale";
     }
 
-    if ( tokenId != dadId && tokenId != mumId && tokenId != sellCatId) {
+    if (tokenId != dadId && tokenId != mumId && tokenId != sellCatId) {
       catCopy.addClass("pointer");
       catCopy.attr("onclick", `${functionName}("${domId}", "${i}", "${tokenId}")`);
       catCopy.appendTo("#catSelection");
@@ -60,8 +60,6 @@ function showSelectedCat(domId, userIndex) {
 }
 
 
-
-
 // Reset modal window, clear all cats:
 function resetModal() {
   $("#catSelection").empty();
@@ -94,22 +92,3 @@ function resetBreed() {
 $("#resetBreedBtn").click(() => {
   resetBreed();
 })
-
-
-/*
-function resetSell() {
-  $("#sellCat").empty();
-  $("#sellPrice").val("");
-
-  $("#sellCat + .card-body").html(EMPTY_CARD_BODY);
-  $("#sellCat").removeClass("silverBorder goldBorder");
-
-  $("#sellBtn").addClass("disabled");
-  $("#sellPrice").removeAttr("disabled");
-
-  $("#sellCat").addClass("pointer");
-  $("#sellCat").attr("data-bs-toggle", "modal");
-  $("#sellCat").attr("onclick", "fillSelectCatModal(this.id)");
-}
-
-*/

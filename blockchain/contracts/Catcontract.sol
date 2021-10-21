@@ -265,16 +265,6 @@ contract Catcontract is IERC721, Ownable {
         emit Transfer(_from, _to, _tokenId);
     }
 
-    function safeTransfer(
-        address _from,
-        address _to,
-        uint256 _tokenId,
-        bytes memory _data
-    ) internal {
-        require(_checkERC721Support(_from, _to, _tokenId, _data));
-        _transfer(_from, _to, _tokenId);
-    }
-
     function _safeTransfer(
         address _from,
         address _to,

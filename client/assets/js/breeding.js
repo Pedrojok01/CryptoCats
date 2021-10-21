@@ -50,7 +50,6 @@ function selectForBreeding(domId, userIndex, tokenId) {
 function showSelectedCat(domId, userIndex) {
 
   let div = $(`#catview${userIndex}`).clone();
-  $(`#wholeHead${userIndex}`).css({ "width": "26vh" });
 
   $("#" + domId).empty();
   $("#" + domId).removeClass("btn");
@@ -65,7 +64,7 @@ function resetModal() {
   $("#catSelection").empty();
 }
 
-
+// Reset the -Breed- tab:
 function resetBreed() {
 
   $("#breedFemale").html("Select Mummy");

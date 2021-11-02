@@ -1,18 +1,19 @@
 // Display cat selection modal for breeding and marketplace:
 
-
 // Display available cats into modal
-function fillSelectionModal(domId) {
+async function fillSelectionModal(domId) {
 
   resetModal();
 
-  const dadId = $("#breedMale ~ * .generalId").html();
-  const mumId = $("#breedFemale ~ * .generalId").html();
-  const sellCatId = $("#sellCat ~ * .generalId").html();
+  const dadId = $("#breedMale ~ * .selectedId").html();
+  const mumId = $("#breedFemale ~ * .selectedId").html();
+  const sellCatId = $("#sellCat ~ * .selectedId").html();
+  
+  var userCats = await getUserCats();
 
   for (i = 0; i < userCats.length; i++) {
 
-    const catCopy = $("#catview" + i).clone();
+    const catCopy = $(`#catview${i}`).clone();
     catCopy.addClass("pointer");
     const tokenId = userCats[i].indexId;
 
@@ -29,10 +30,8 @@ function fillSelectionModal(domId) {
   }
 }
 
-
 // Select one parent for breeding:
 function selectForBreeding(domId, userIndex, tokenId) {
-
   showSelectedCat(domId, userIndex);
 
   $("#selectCatModal").modal("hide");
@@ -42,9 +41,7 @@ function selectForBreeding(domId, userIndex, tokenId) {
   if ($("#breedFemale").html() != "" && $("#breedMale").html() != "") {
     $("#breedBtn").removeClass("disabled");
   }
-
 }
-
 
 // Display selected parent for breeding:
 function showSelectedCat(domId, userIndex) {
@@ -55,9 +52,27 @@ function showSelectedCat(domId, userIndex) {
   $("#" + domId).removeClass("btn");
   $("#" + domId).removeClass("dark-btn");
   $("#" + domId).append(div);
-
 }
 
+// Create Cat NFT from 2 selected parents
+async function breedCat() {
+
+  const dadId = $("#breedMale ~ * .selectedId").html();
+  const mumId = $("#breedFemale ~ * .selectedId").html();
+  // While waiting for event:
+  $("#breedBtn").addClass("disabled");
+  $("#breedFemale, #breedMale").removeClass("pointer");
+  $("#breedFemale, #breedMale").removeAttr("data-bs-toggle");
+  $("#breedFemale, #breedMale").removeAttr("onclick");
+
+  try {
+    const res = await instanceCatContract.methods.breed(dadId, mumId).send({})
+  } catch (err) {
+    errorNotification(err);
+  }
+
+  resetBreed();
+}
 
 // Reset modal window, clear all cats:
 function resetModal() {
@@ -88,6 +103,14 @@ function resetBreed() {
 }
 
 
+// **** BUTTONS LISTENERS **** //
+
+// Breed button listener
+$("#breedBtn").click(() => {
+  breedCat();
+})
+
+// Reset button listener
 $("#resetBreedBtn").click(() => {
   resetBreed();
 })

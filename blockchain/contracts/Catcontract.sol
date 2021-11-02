@@ -1,21 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.6;
 
-import "./interface/IERC721.sol";
-import "./Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Catcontract is IERC721, Ownable {
-
+contract Catcontract is ERC721Enumerable, Ownable {
     /*Storage:
-    ***********/
+     ***********/
 
     bytes4 internal constant MAGIC_ERC721_RECEIVED =
-        bytes4(keccak256("onERC721Received(address,address,uint256,bytes)")); // To check if contract is ERC721 compliant
+    bytes4(keccak256("onERC721Received(address,address,uint256,bytes)")); // To check if contract is ERC721 compliant
     bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
     bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
-
-    string public tokenName; // Token name
-    string public tokenSymbol; // Token symbol
 
     uint8 public CREATION_LIMIT_GEN0; // Max Gen0 supply, definied in constructor
     uint8 public gen0Count = 0; // Track the number of Gen0 cats
@@ -32,13 +28,9 @@ contract Catcontract is IERC721, Ownable {
     }
 
     Cat[] cats; // Cat storage array
-    mapping(uint256 => address) public catOwner; // Map from token ID to owner address
-    mapping(address => uint256) catTokenCount; //Map cats number by owner == get cats per address
-    mapping(uint256 => address) public catIndexToApproved;
-    mapping(address => mapping(address => bool)) internal _operatorApprovals; // Check if there is an approval for another address (true or false)
 
     /*Events:
-    **********/
+     **********/
 
     event Birth(
         address indexed owner,
@@ -49,16 +41,11 @@ contract Catcontract is IERC721, Ownable {
     );
 
     /*Constructor:
-    ***************/
+     ***************/
 
-    constructor(
-        string memory _name,
-        string memory _symbol,
-        uint256 _maxCatsSupply,
-        uint8 _CREATION_LIMIT_GEN0
-    ) {
-        tokenName = _name;
-        tokenSymbol = _symbol;
+    constructor(uint256 _maxCatsSupply, uint8 _CREATION_LIMIT_GEN0)
+        ERC721("CryptoCats", "CTC")
+    {
         maxCatsSupply = _maxCatsSupply;
         CREATION_LIMIT_GEN0 = _CREATION_LIMIT_GEN0;
     }
@@ -66,263 +53,32 @@ contract Catcontract is IERC721, Ownable {
     /*Functions:
      ************/
 
-/* CHECK FUNCTIONS:
-===================*/
-
-    // Check is this contract support ERC721 or ERC165 standart
-    function supportsInterface(bytes4 _interfaceId)
-        external
-        pure
-        returns (bool)
-    {
-        return (_interfaceId == _INTERFACE_ID_ERC721 ||
-            _interfaceId == _INTERFACE_ID_ERC165);
-    }
-
-    function _checkERC721Support(
-        address _from,
-        address _to,
-        uint256 _tokenId,
-        bytes memory _data
-    ) internal returns (bool) {
-        if (!_isContract(_to)) {
-            return true;
-        }
-        //Call onERC721Received in the _to contract
-        bytes4 returnData = IERC721TokenReceiver(_to).onERC721Received(
-            msg.sender,
-            _from,
-            _tokenId,
-            _data
-        );
-        // Check the return value (in IERC interface)
-        return returnData == MAGIC_ERC721_RECEIVED;
-    }
-
-    function _isContract(address _to) internal view returns (bool) {
-        uint32 size;
-        assembly {
-            size := extcodesize(_to)
-        }
-        return size > 0;
-    }
-
-    function _isOwnerOrApproved(
-        address _from,
-        address _to,
-        uint256 _tokenId
-    ) internal view returns (bool) {
-        require(
-            ownerOf(_tokenId) == _from,
-            "the sender address do not own this token"
-        );
-        require(_to != address(0), "ERC721: transfer to the zero address");
-        require(_tokenId < cats.length, "This cat doesn't exist!");
-
-        return (msg.sender == _from ||
-            _operatorApprovals[_from][msg.sender] == true ||
-            catIndexToApproved[_tokenId] == msg.sender);
-    }
-
-/* BASIC FUNCTIONS:
-===================*/
-
-    //Returns the name of the token
-    function name() external view override returns (string memory _name) {
-        _name = tokenName;
-        return tokenName;
-    }
-
-    //Returns the symbole of the token
-    function symbol() external view override returns (string memory _symbol) {
-        _symbol = tokenSymbol;
-        return tokenSymbol;
-    }
-
-    //Returns the actual number of tokens in circulation
-    function totalSupply() public view override returns (uint256) {
-        return cats.length;
-    }
-
     //Returns the acutal number of Gen0 cats in circulation
     function Gen0Count() external view returns (uint8) {
         return gen0Count;
     }
 
-    //Returns the max number of tokens in circulation
-    function maxSupply() external view returns (uint256) {
-        return maxCatsSupply;
-    }
-
-    //Returns the owner of the `tokenId` token
-    function ownerOf(uint256 _tokenId) public view returns (address) {
-        return catOwner[_tokenId];
-    }
-
-    //Returns the number of tokens in ``owner``'s account
-    function balanceOf(address _owner) public view returns (uint256 count) {
-        return catTokenCount[_owner];
-    }
-
     // Withdraws ETH from this contract
     function withdrawBalance() public onlyOwner {
         require(address(this).balance > 0, "Balance is zero.");
-
         payable(msg.sender).transfer(address(this).balance);
     }
 
-/* APPROVE FUNCTIONS:
-=====================*/
-
-    // Change or reaffirm the approved address for an NFT
-    function approve(address _approved, uint256 _tokenId) external onlyOwner {
-        require(
-            ownerOf(_tokenId) == msg.sender,
-            "You are not entitled to do this!"
-        );
-        _approve(_approved, _tokenId);
-        emit Approval(msg.sender, _approved, _tokenId);
-    }
-
-    //(msg.sender == _from || _operatorApprovals[_from][msg.sender] == true || catIndexToApproved[_tokenId] == msg.sender);
-
-    function _approve(address _approved, uint256 _tokenId) internal {
-        catIndexToApproved[_tokenId] = _approved;
-    }
-
-    ///Enable or disable approval for a third party ("operator") to manage all of `msg.sender`'s assets
-    function setApprovalForAll(address _operator, bool _approved)
-        external
-        onlyOwner
-    {
-        require(
-            _operator != msg.sender,
-            "There is no point in approving yourself!"
-        );
-        _setApprovalForAll(_operator, _approved);
-        emit ApprovalForAll(msg.sender, _operator, _approved);
-    }
-
-    function _setApprovalForAll(address _operator, bool _approved) internal {
-        _operatorApprovals[msg.sender][_operator] = _approved;
-    }
-
-    // Get the approved address for a single NFT
-    function isApproved(uint256 _tokenId) external view returns (address) {
-        require(_tokenId < cats.length, "This cat doesn't exist!");
-        return catIndexToApproved[_tokenId];
-    }
-
-    // Query if an address is an authorized operator for another address
-    function isApprovedForAll(address _owner, address _operator)
-        external
-        view
-        returns (bool)
-    {
-        return _operatorApprovals[_owner][_operator];
-    }
-
-    //Delete approval for a token
-    function deleteApproval(uint256 _tokenId) public {
-        require(
-            ownerOf(_tokenId) == msg.sender,
-            "You're not the owner of this cat!"
-        );
-        delete catIndexToApproved[_tokenId];
-    }
-
-/* TRANSFER FUNCTIONS:
-======================*/
-
-    //Transfers `tokenId` token from `msg.sender` to `to`.
-    function transfer(address _to, uint256 _tokenId) external {
-        require(_to != address(0), "ERC721: transfer to the 0 address");
-        require(
-            _to != address(this),
-            "ERC721: transfer to the contract address"
-        );
-
-        _transfer(msg.sender, _to, _tokenId);
-    }
-
-    function _transfer(
-        address _from,
-        address _to,
-        uint256 _tokenId
-    ) internal {
-        require(
-            ownerOf(_tokenId) == _from,
-            "You're not the owner of this cat!"
-        );
-
-        if (_from != address(0)) {
-            catTokenCount[_from] -= 1;
-            deleteApproval(_tokenId);
-        }
-        catTokenCount[_to]++;
-        catOwner[_tokenId] = _to;
-
-        emit Transfer(_from, _to, _tokenId);
-    }
-
-    function _safeTransfer(
-        address _from,
-        address _to,
-        uint256 _tokenId,
-        bytes memory _data
-    ) internal {
-        require(_checkERC721Support(_from, _to, _tokenId, _data));
-        _transfer(_from, _to, _tokenId);
-    }
-
-    // Transfer ownership of an NFT
-    function transferFrom(
-        address _from,
-        address _to,
-        uint256 _tokenId
-    ) external {
-        require(_to != address(0), "ERC721: transfer to the 0 address");
-        require(_isOwnerOrApproved(_from, _to, _tokenId));
-        _transfer(_from, _to, _tokenId);
-    }
-
-    // Transfers the ownership of an NFT from one address to a smart-contract
-    function safeTransferFrom(
-        address _from,
-        address _to,
-        uint256 _tokenId,
-        bytes memory _data
-    ) public {
-        require(_isOwnerOrApproved(_from, _to, _tokenId));
-        _safeTransfer(_from, _to, _tokenId, _data);
-    }
-
-    // Transfers the ownership of an NFT from one address to another address
-    function safeTransferFrom(
-        address _from,
-        address _to,
-        uint256 _tokenId
-    ) public {
-        safeTransferFrom(_from, _to, _tokenId, "");
-    }
 
 /* CREATE CAT FUNCTIONS:
 ========================*/
 
     // Create Gen0 cats
     function createCatGen0(uint256 _genes) public {
-        require(
-            gen0Count < CREATION_LIMIT_GEN0,
-            "All gen-0 cats are already in circulation!"
-        );
+        require(gen0Count < CREATION_LIMIT_GEN0, "All gen-0 cats are already in circulation!");
 
         uint32 tokenId = uint32(catsSupplyCount);
         gen0Count++;
-        _createKitty(0, tokenId, 0, 0, _genes, msg.sender);
+        _createCat(0, tokenId, 0, 0, _genes, msg.sender);
     }
 
     // Create cats
-    function _createKitty(
+    function _createCat(
         uint256 _generation,
         uint256 _tokenId,
         uint256 _dadId,
@@ -344,19 +100,17 @@ contract Catcontract is IERC721, Ownable {
         catsSupplyCount++;
 
         emit Birth(_owner, newCatId, _dadId, _mumId, _genes);
-        _transfer(address(0), _owner, newCatId);
+        _safeMint(_owner, newCatId);
         return newCatId;
     }
+
+
 
 /* GET CAT FUNCTIONS:
 ======================*/
 
     //Display all cats per generation:
-    function getCatsPerGeneration(uint16 _generation)
-        public
-        view
-        returns (uint256[] memory catsPerGen)
-    {
+    function getCatsPerGeneration(uint16 _generation) public view returns (uint256[] memory catsPerGen) {
         for (uint256 tokenId = 1; tokenId <= totalSupply(); tokenId++) {
             if (cats[tokenId].generation == _generation) {
                 uint256 index = 0;
@@ -381,7 +135,8 @@ contract Catcontract is IERC721, Ownable {
             tokensOwned = new uint256[](tokenCount);
             uint256 index = 0;
             for (uint256 tokenId = 0; tokenId < totalSupply(); tokenId++) {
-                if (catOwner[tokenId] == _owner) {
+                //if (catOwner[tokenId] == _owner) {
+                if (ownerOf(tokenId) == _owner) {
                     tokensOwned[index] = tokenId;
                     index++;
                 }
@@ -419,8 +174,9 @@ contract Catcontract is IERC721, Ownable {
 /* BREEDING FUNCTIONS:
 ======================*/
 
-function breed(uint256 _dadId, uint256 _mumId) public returns (uint256) {
+    function breed(uint256 _dadId, uint256 _mumId) public returns (uint256) {
         require(
+            //catOwner[_dadId] == msg.sender && catOwner[_mumId] == msg.sender,
             ownerOf(_dadId) == msg.sender && ownerOf(_mumId) == msg.sender,
             "You do not own those cats!"
         );
@@ -435,14 +191,26 @@ function breed(uint256 _dadId, uint256 _mumId) public returns (uint256) {
 
         uint16 newIndexId = uint16(catsSupplyCount);
 
-        return _createKitty(_generation, newIndexId, _dadId, _mumId, kidDna, msg.sender);
+        return
+            _createCat(
+                _generation,
+                newIndexId,
+                _dadId,
+                _mumId,
+                kidDna,
+                msg.sender
+            );
     }
 
     // set new generation
-    function _setGeneration(uint16 _dadGen, uint _mumGen) private pure returns (uint16) {
+    function _setGeneration(uint16 _dadGen, uint256 _mumGen)
+        private
+        pure
+        returns (uint16)
+    {
         uint16 generation;
-        
-        if ( _mumGen >= _dadGen ) {
+
+        if (_mumGen >= _dadGen) {
             generation = uint16(_mumGen + 1);
         } else {
             generation = uint16(_dadGen + 1);
@@ -539,6 +307,4 @@ function breed(uint256 _dadId, uint256 _mumId) public returns (uint256) {
         }
         return result;
     }
-
-
 }

@@ -9,16 +9,15 @@ function showHomeTab() {
     tab.show();
 }
 
-
 // Load -My Cats- tab
 async function showMyCats() {
-    $("#nav-breed").removeClass("active show");
+    $("#nav-breed, #nav-sell, #nav-marketplace, #nav-factory").removeClass("active show");
     $("#nav-show").addClass("active show");
     const tabToDisplay = document.querySelector("#nav-show-tab");
     const tab = new bootstrap.Tab(tabToDisplay);
     tab.show();
     if (!notConnected()) {
-        await loadCats($('#cats-collection'));
+        await loadCats($("#cats-collection"));
     };
 }
 

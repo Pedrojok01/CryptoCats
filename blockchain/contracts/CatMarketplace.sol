@@ -4,10 +4,8 @@ pragma solidity ^0.8.6;
 import "./interface/ICatMarketplace.sol";
 import "./Catcontract.sol";
 
-
 contract CatMarketplace is ICatMarketPlace, Ownable {
     Catcontract private _catContract;
-
 
     /*Storage:
      **********/
@@ -17,14 +15,10 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
         uint256 price;
         uint256 index;
         uint256 tokenId;
-        bool active;
     }
 
-    Offer[] offers;
-
-    mapping(uint256 => Offer) tokenIdToOffer;
-    mapping(uint256 => uint256) tokenIdToOfferId;
-
+    uint256[] private offersIds;
+    mapping(uint256 => Offer) tokenIdToOffer; // Map from cat Id to offer struct
 
     /*Constructor:
      **************/
@@ -32,7 +26,6 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
     constructor(address _catContractAddress) {
         _catContract = Catcontract(_catContractAddress);
     }
-
 
     /*Functions:
      ************/
@@ -51,15 +44,12 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
             address seller,
             uint256 price,
             uint256 index,
-            uint256 tokenId,
-            bool active
+            uint256 tokenId
         )
     {
-        require(_isOffer(_tokenId), "This cat isn't for sale!");
-        
         Offer memory offer = tokenIdToOffer[_tokenId];
 
-        return (offer.seller, offer.price, offer.index, offer.tokenId, offer.active);
+        return (offer.seller, offer.price, offer.index, offer.tokenId);
     }
 
     //Get all tokenId's that are currently for sale. Returns an empty array if none exist.
@@ -69,20 +59,7 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
         override
         returns (uint256[] memory listOfOffers)
     {
-        uint256 totalOffers = offers.length;
-
-        if (totalOffers == 0) {
-            return new uint256[](0);
-        } else {
-            listOfOffers = new uint256[](totalOffers);
-
-            for (uint256 offerId = 0; offerId < totalOffers; offerId++) {
-                if (offers[offerId].active != false)
-                    listOfOffers[offerId] = offers[offerId].tokenId;
-            }
-        }
-
-        return listOfOffers;
+        listOfOffers = offersIds;
     }
 
     // Creates a new offer for _tokenId for the price _price.
@@ -91,70 +68,67 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
             msg.sender == _catContract.ownerOf(_tokenId),
             "You do not own this cat!"
         );
-        require(
-            tokenIdToOffer[_tokenId].active == false,
-            "This cat is already on sale!"
-        );
+        require(_isOffer(_tokenId) == false, "This cat is already on sale!");
 
         _catContract.approve(address(this), _tokenId);
 
         Offer memory _offer = Offer({
             seller: payable(msg.sender),
             price: _price,
-            index: offers.length,
-            tokenId: _tokenId,
-            active: true
+            index: offersIds.length,
+            tokenId: _tokenId
         });
 
-        offers.push(_offer);
-
+        offersIds.push(_offer.index);
         tokenIdToOffer[_tokenId] = _offer;
-        tokenIdToOfferId[_tokenId] = _offer.index;
 
         emit MarketTransaction("Create offer", msg.sender, _tokenId);
     }
 
     // Removes an existing offer.
     function removeOffer(uint256 _tokenId) external override {
+        require(_isOffer(_tokenId) == true, "No offer for this cat!");
         require(
             msg.sender == tokenIdToOffer[_tokenId].seller,
             "This cat isn't yours!"
         );
-        require(_isOffer(_tokenId), "This cat isn't on sale!");
 
-        // Delete offer's info:
-        delete offers[tokenIdToOfferId[_tokenId]];
-
-        // Remove offer from mapping:
-        delete tokenIdToOffer[_tokenId];
-
-        // Delete token approval:
-        _catContract.deleteApproval(_tokenId);
+        _removeOffer(_tokenId);
 
         emit MarketTransaction("Cancel offer", msg.sender, _tokenId);
     }
 
     //Executes the purchase of _tokenId.
     function buyCat(uint256 _tokenId) external payable override {
-        require(_isOffer(_tokenId), "This cat isn't for sale!");
-        require(
-            msg.sender != tokenIdToOffer[_tokenId].seller,
-            "This is already your cat!"
-        );
-        require(msg.value == tokenIdToOffer[_tokenId].price, "Wrong price!");
+        Offer memory offer = tokenIdToOffer[_tokenId];
+        require(_isOffer(_tokenId) == true, "This cat isn't for sale!");
+        require(msg.sender != offer.seller, "This is already your cat!");
+        require(msg.value == offer.price, "Wrong price!");
 
-        // Delete offer info
-        delete offers[tokenIdToOfferId[_tokenId]];
-        // Remove offer in mapping
-        delete tokenIdToOffer[_tokenId];
+        _removeOffer(_tokenId);
 
-        tokenIdToOffer[_tokenId].seller.transfer(msg.value);
-        _catContract.safeTransferFrom(tokenIdToOffer[_tokenId].seller, msg.sender, _tokenId);
+        offer.seller.transfer(offer.price);
+        _catContract.transferFrom(offer.seller, msg.sender, _tokenId);
 
         emit MarketTransaction("Buy", msg.sender, _tokenId);
     }
 
     function _isOffer(uint256 _tokenId) private view returns (bool) {
-        return tokenIdToOffer[_tokenId].active == true;
+        return tokenIdToOffer[_tokenId].seller != address(0);
+    }
+
+    function _removeOffer(uint256 _tokenId) private {
+        uint256 offerToRemove = tokenIdToOffer[_tokenId].index;
+        uint256 temp = offersIds[offersIds.length - 1];
+
+        delete tokenIdToOffer[_tokenId];
+
+        if (_tokenId != temp) {
+            // switch offerToRemove and last offer in offers arr
+            offersIds[offerToRemove] = temp;
+            tokenIdToOffer[temp].index = offerToRemove;
+        }
+
+        offersIds.pop();
     }
 }

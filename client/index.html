@@ -65,8 +65,6 @@
         </nav>
     </div>
 
-
-
     <div class="tab-content frontend" align="center">
 
         <!-- Display Notifications / default = hidden -->
@@ -103,7 +101,7 @@
                     </p>
                 </div>
                 <div align="center" class="text-dark">
-                    <div id="marketplace-collection" class="row g-5 justify-content-center m-2"></div>
+                    <div id="marketplace-collection" class="catGrid container"></div>
                 </div>
             </div>
         </div>
@@ -179,43 +177,42 @@
                         </div>
 
                         <!-- Sell -->
-                        <div class="tab-pane fade" id="nav-sell" role="tabpanel">
+                        <div class="tab-pane fade" id="nav-sell" role="tabpanel" style="height: 80vh">
                             <div class="row g-5 justify-content-center m-2 mb-0">
-                                <div class="col">
+                                <div class="col m-2" style="max-width: 40vh" ;>
                                     <div class="card catCard bg-light text-dark"
                                         style="width: fit-content; padding: 5%; border-radius: 10px;">
                                         <button id="sellCat" class="btn dark-btn" data-bs-toggle="modal"
                                             data-bs-target="#selectCatModal"
                                             onclick="fillSelectionModal(this.id)">Select a cat to sell</button>
-                                        <div class="card-body">
-                                            ID: <span class="selectedId"></span> GEN:
-                                            <span class="selectedGen"></span>
-                                            <br />
-                                            DNA: <span class="selectedDna"></span>
+                                        <p class="card-body" style="visibility: hidden;">Really wanna sell your
+                                            CryptoCat <span class="selectedId">x</span>? Enter the price on the right:
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="col" style="max-width: 40vh" ;>
+                                    <div class="row g-0 justify-content-center m-2 mt-0" style="padding-top: 5%;">
+                                        <div class="input-group centerBelowBreakpointLg" style="width: 18rem">
+                                            <input type="number" class="form-control" id="sellPrice" step="any"
+                                                placeholder="Set Price" />
+                                            <span class="input-group-text">ETH</span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row g-0 justify-content-center m-2 mt-0">
-                                <div class="col">
-                                    <div class="input-group centerBelowBreakpointLg" style="width: 18rem">
-                                        <input type="number" class="form-control" id="sellPrice" step="any"
-                                            placeholder="Set Price" />
-                                        <span class="input-group-text">ETH</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-5 justify-content-center m-2">
-                                <div class="col d-flex justify-content-center">
-                                    <div style="display: flex;">
-                                        <button type="button" class="btn btn-danger btn-lg"
-                                            style="margin: 5%; width: 20vh;" onclick="resetSell()">
-                                            <b>Reset</b>
-                                        </button>
-                                        <button id="sellBtn" type="button" class="btn btn-success btn-lg disabled"
-                                            style="margin: 5%; width: 20vh;" onclick="sellKitty()">
-                                            <b>Create Offer</b>
-                                        </button>
+                                    <div class="row g-5 justify-content-center m-2">
+                                        <div class="col d-flex justify-content-center" style="max-width: 100vh" ;>
+                                            <div style="display: flex;">
+                                                <button id="resetSellBtn" type="button" style="margin: 5%; width: 20vh;"
+                                                    class="btn btn-danger btn-lg">
+                                                    <b>Reset</b>
+                                                </button>
+                                                <button id="sellBtn" type="button"
+                                                    class="btn btn-success btn-lg disabled"
+                                                    style="margin: 5%; width: 20vh;" onclick="sellCat()">
+                                                    <b>Create Offer</b>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -340,7 +337,6 @@
                         </div>
                     </div>
 
-
                     <div class="col-lg-6 cattributes m-2 light-b-shadow">
 
                         <!-- Tabs -->
@@ -421,9 +417,7 @@
                 <br>
                 <br>
             </div>
-
         </div>
-
     </div>
 
     <!-- Footer -->
@@ -446,6 +440,5 @@
 <script src="assets/js/breeding.js"></script>
 <script src="assets/js/marketPlace.js"></script>
 <script src="./index.js"></script>
-
 
 </html>

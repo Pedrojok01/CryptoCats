@@ -1,27 +1,41 @@
 // File to load cat in HTML Div / Tab / Modal
 
+/*
 // Get cats per user, then get cat object per cat Id
 async function loadCats(div) {
     pendingNotification();
+    var cats = await getUserCats();
 
+        for (i = 0; i < cats.length; i++) {
+            userIndex = i;
+            let dna = cats.genes;
+            appendCat(dna, userIndex, cats.tokenId, cats.generation, div);   
+        }
+    showNotifications("Your cats have been updated.");
+}
+
+*/
+
+
+// Get cats per user, then get cat object per cat Id
+async function loadCats(div) {
+    pendingNotification();
     var catsToLoad = [];
 
     try {
         let totalCats = await instanceCatContract.methods.tokensPerOwner(userAddress).call();
-        userCatsArr = totalCats;
 
         for (i = 0; i < totalCats.length; i++) {
             var cat = await instanceCatContract.methods.getCat(totalCats[i]).call();
             catsToLoad.push(cat);
             userIndex = i;
-            appendCat(cat[5], userIndex, cat[1], cat[0], div)
+            appendCat(cat.genes, userIndex, cat.indexId, cat.generation, div);
+            
         }
-
         userCats = catsToLoad;
 
     } catch (err) {
         errorNotification(err)
-        console.log(err);
         return;
     }
 
@@ -37,7 +51,23 @@ function appendCat(dna, userIndex, id, gen, div) {
     renderCat(dnaToRender, userIndex);
 
     $(`#catDNA${id}`).html(`
-    <span class="badge badge-light" id="generalId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
+    <span class="badge badge-light" id="selectedId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
+    <br>
+    <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>${gen}</h4></span>
+    <br>
+    <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>DNA:</b>${dna}</h4></span>`)
+}
+
+
+// Add cat to html element after CSS rendering
+function appendOffer(dna, userIndex, id, gen, div) {
+    let dnaToRender = catDna(dna);
+
+    offerCard(div, userIndex, id);
+    renderCat(dnaToRender, userIndex);
+
+    $(`#offerDNA${id}`).html(`
+    <span class="badge badge-light" id="selectedId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
     <br>
     <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>${gen}</h4></span>
     <br>
@@ -81,9 +111,9 @@ function catDna(dnaStr) {
 //Cat HTML Div for -My Cats- tab
 function catCard(div, userIndex, id) {
 
-    var catDiv = `<div id="catview${userIndex}">
+    var catDiv = `<div id="catview` + userIndex + `">
                     <div class="catDiv">${catBody(userIndex)}</div>
-                    <div class="catInfos" id="catDNA${id}"></div>
+                    <div class="catInfos" id="catDNA` + id + `"></div>
                 </div>`
     var catView = $(`#catview${userIndex}`)
 
@@ -92,13 +122,26 @@ function catCard(div, userIndex, id) {
     }
 }
 
+//Cat HTML Div for -My Cats- tab
+function offerCard(div, userIndex, id) {
+
+    var offerDiv = `<div id="offerview` + userIndex + `">
+                    <div class="catDiv">${catBody(userIndex)}</div>
+                    <div class="catInfos" id="offerDNA` + userIndex + `"></div>
+                </div>`
+    var offerView = $(`#offerview${userIndex}`)
+
+    if (!offerView.length) {
+        div.append(offerDiv)
+    }
+}
 
 //HTML Render per CatId:
 function catBody(id) {
 
     var catHTML =
         `<div id="wholeHead${id}" class="head">
-            <div id="head${id}" class="head_background"></div>
+            <div id="headColor${id}" class="head_background"></div>
                 <div class="ears">
                     <div id="leftEar${id}" class="ear_left">
                         <div id="innerLeftEar${id}" class="inner_ear_left"></div>

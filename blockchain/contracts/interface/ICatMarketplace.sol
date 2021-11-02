@@ -20,7 +20,7 @@ interface ICatMarketPlace {
     /**
     * Get the details about a offer for _tokenId. Throws an error if there is no active offer for _tokenId.
      */
-    function getOffer(uint256 _tokenId) external view returns ( address seller, uint256 price, uint256 index, uint256 tokenId, bool active);
+    function getOffer(uint256 _tokenId) external view returns ( address seller, uint256 price, uint256 index, uint256 tokenId);
 
     /**
     * Get all tokenId's that are currently for sale. Returns an empty arror if none exist.

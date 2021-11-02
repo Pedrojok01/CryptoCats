@@ -7,7 +7,7 @@ var colors = Object.values(allColors())
 
 function bodyColor(code, id) {
     var color = colors[code];
-    $(`#head${id}, #rightEar${id}, #leftEar${id}, #mainBody${id}`).css('background-color', '#' + color)
+    $(`#headColor${id}, #rightEar${id}, #leftEar${id}, #mainBody${id}`).css('background-color', '#' + color)
 }
 
 function mouthColor(code, id) {
@@ -18,7 +18,7 @@ function mouthColor(code, id) {
 function pawsColor(code, id) {
     var color = colors[code];
     $(`#innerRightEar${id}, #innerLeftEar${id}, #tail${id}`).css('background-color', '#' + color);
-    $(`#footFrontLeft${id}, #footFrontRight${id}, #footBackLeft${id}, #footBackRight${id}`).css('background-color', '#' + color);
+    $(`#footColor${id}, #footFrontLeft${id}, #footFrontRight${id}, #footBackLeft${id}, #footBackRight${id}`).css('background-color', '#' + color);
 }
 
 function eyesColor(code, id) {

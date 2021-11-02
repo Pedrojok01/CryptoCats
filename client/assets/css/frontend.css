@@ -126,6 +126,7 @@ footer {
 .catDiv {
     background-color: #e2efff !important;
     position: sticky;
+    width: 350px;
     height: 500px;
     transform: scale(78%);
     border-radius: 10px;
@@ -136,7 +137,7 @@ footer {
 
 .catInfos {
     position: relative;
-    top: -30px;
+    top: -135px;
 }
 
 
@@ -144,6 +145,11 @@ footer {
     position: absolute;
     left: 20px;
     bottom: 5px;
+}
+
+#marketAction {
+    position: relative;
+    top: -120px;
 }
 
 

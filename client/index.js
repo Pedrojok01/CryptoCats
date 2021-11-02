@@ -1,18 +1,26 @@
 const web3 = new Web3(Web3.givenProvider);
 
-const CAT_CONTRACT_ADD = "0xbf697401e188dfD69794A88d99853Cf42E75127B";
-const MARKETPLACE_CONTRACT_ADD = "0xD889F921c53D0FA7657E18605B47856b35cc1724";
+//LOCAL
+//const CAT_CONTRACT_ADD = "0x76B3034F16EFB8581fEA65785E15d17E9Dd3af83";
+//const MARKETPLACE_CONTRACT_ADD = "0x04e40DA78C7D16fdB227D25aaabA85688Cc3De2f";
+
+// LOCAL WITH ERC71 FROM OPENZEP
+const CAT_CONTRACT_ADD = "0x735FB4Ea6B4717804aa27B5097Ca8E6E80F20d3f";
+const MARKETPLACE_CONTRACT_ADD = "0x08e9087f41C0908fC1d71c920B6e7520f3b0b8Ea";
+
+//KOVAN
+//const CAT_CONTRACT_ADD = "0xbf697401e188dfD69794A88d99853Cf42E75127B";
+//const MARKETPLACE_CONTRACT_ADD = "0xD889F921c53D0FA7657E18605B47856b35cc1724";
 const connectButton = document.querySelector('#loginButton');
 
 var userAddress = undefined;
-let userCats = []; //cat object
-var userCatsArr = []; //cat Id array
+//let userCats = []; //cat object
+//var userCatsArr = []; //cat Id array
 var instanceCatContract;
 var instanceMarketplaceContract;
 
 let lastBirthEvent = "";
 let lastMarketTransactionEvent = "";
-
 
 
 $(document).ready(async function () {
@@ -92,11 +100,72 @@ async function loginWithMetaMask() {
     await updateGen0Count();
 
 
-    /***********
-        
-    //MARKETPLACE LISTENER TO ADD!
-    
-    ***********/
+
+    instanceMarketplaceContract.events.MarketTransaction({ filter: { owner: userAddress }, fromBlock: "latest" },
+        async (error, event) => {
+            if (error) {
+                errorNotification(error);
+                return;
+            }
+
+            const txType = event.returnValues.TxType;
+            const tokenId = event.returnValues.tokenId;
+            const transactionHash = event.transactionHash;
+
+            if (txType == "Cancel offer" || isDuplicatedContractEvent("MarketTransaction", event.transactionHash)) {
+                return;
+            }
+
+            var offer;
+            try {
+                offer = await instanceMarketplaceContract.methods.getOffer(tokenId).call();
+            } catch (err) {
+                errorNotification(err);
+                return;
+            }
+
+            const priceEther = web3.utils.fromWei(offer.price, "ether");
+
+
+
+            if (txType == "Create offer") {
+                /*let offer;
+                try {
+                    offer = await instanceMarketplaceContract.methods.getOffer(tokenId).call();
+                } catch (err) {
+                    errorNotification(err);
+                    return;
+                }
+
+                const priceEther = web3.utils.fromWei(offer.price, "ether");*/
+                let message2 = `Your sale offer has been succesfully created!<br/><b>Cat Id:</b> ${tokenId}, <b>Price:</b> ${priceEther} ETH,<br/> <b>Tx hash:</b> ${transactionHash}`
+                showNotifications(message2);
+/*
+                const currentNavbarTab = $("#menu .nav-link.active").attr("id");
+                if (currentNavbarTab == "nav-marketplace-tab") {
+
+                    // update marketplace
+                    const catEl = $(`#marketplace-collection #offerview${tokenId}`);
+                    if (catEl.length != 0) {
+                        catEl.find("span.offerPrice").html(priceEther);
+                    } else {
+                        await appendMarketplaceCollection(offer.seller, priceEther, tokenId);
+                    }
+                }*/
+            } else if (txType == "Cancel offer") {
+                let message3 = `Your sale offer has been succesfully cancelled!<br/><b>Cat Id:</b> ${tokenId}, <b>Price:</b> ${priceEther} ETH,<br/> <b>Tx hash:</b> ${transactionHash}`
+                showNotifications(message3);
+            } else if (txType == "Buy") {
+                let message4 = `You have succesfully bought the cat ${tokenId} for ${priceEther}ETH!<br/><b>Tx hash:</b> ${transactionHash}`
+                showNotifications(message4);
+            } else {
+                console.warn(
+                    "Unhandled MarketTransaction event with 'txType' =",
+                    txType
+                );
+            }
+        });
+
 
     // Disconnect (the button!) from MetaMask
     connectButton.removeEventListener('click', loginWithMetaMask)
@@ -159,31 +228,46 @@ $(".btn.createCatBtn").click(() => {
 })
 
 
-// Create Cat NFT from 2 selected parents
-async function breedCat() {
-
-    const dadId = $("#breedMale ~ * .selectedId").html();
-    const mumId = $("#breedFemale ~ * .selectedId").html();
-    // While waiting for event:
-    $("#breedBtn").addClass("disabled");
-    $("#breedFemale, #breedMale").removeClass("pointer");
-    $("#breedFemale, #breedMale").removeAttr("data-bs-toggle");
-    $("#breedFemale, #breedMale").removeAttr("onclick");
-
+// Get all cats per user as an array of object -cat-
+async function getUserCats() {
+    var catsArr = [];
     try {
-        const res = await instanceCatContract.methods.breed(dadId, mumId).send({})
-    } catch (err) {
-        errorNotification(err);
-    }
+        let cats = await instanceCatContract.methods.tokensPerOwner(userAddress).call();
 
-    resetBreed();
+        for (i = 0; i < cats.length; i++) {
+            var cat = await instanceCatContract.methods.getCat(cats[i]).call();
+            catsArr.push(cat);
+        }
+    } catch (err) {
+        errorNotification(err)
+        return;
+    }
+    return catsArr;
 }
 
-// breed button listener
-$("#breedBtn").click(() => {
-    breedCat();
-})
 
+// Get all cats on sale as an array of object -offer-
+async function getCatsOffers() {
+    var offersArr = [];
+    try {
+        let offers = await instanceMarketplaceContract.methods.getAllTokenOnSale().call();
+
+        for (i = 0; i < offers.length; i++) {
+            let res = await instanceMarketplaceContract.methods.getOffer(offers[i]).call();
+            let priceEther = web3.utils.fromWei(res.price, "ether");
+            let offer = {
+                catId: res.tokenId,
+                seller: res.seller,
+                price: priceEther,
+            };
+            offersArr.push(offer);
+        }
+    } catch (err) {
+        errorNotification(err)
+        return;
+    }
+    return offersArr;
+}
 
 
 /* VARIOUS:

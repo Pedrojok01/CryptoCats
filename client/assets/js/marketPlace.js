@@ -31,7 +31,6 @@ async function loadMarketplace() {
         offerIndex = i;
         let catId = marketOffers[i].catId;
         var cat = await instanceCatContract.methods.getCat(catId).call();
-        console.log(cat);
         appendOffer(cat.genes, offerIndex, catId, cat.generation, $("#marketplace-collection"))
         var offerCard = $(`#offerview${i}`);
 

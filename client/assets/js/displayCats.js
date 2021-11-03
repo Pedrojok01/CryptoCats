@@ -107,7 +107,7 @@ function offerCard(div, userIndex, id) {
 
     var offerDiv = `<div id="offerview${userIndex}">
                     <div class="catDiv">${catBody(userIndex)}</div>
-                    <div class="catInfos" id="offerDNA${id}"></div>
+                    <div class="catInfos" id="offerDNA${userIndex}"></div>
                 </div>`
     var offerView = $(`#offerview${userIndex}`)
 

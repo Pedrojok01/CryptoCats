@@ -32,3 +32,8 @@ async function showNavMarketplaceTab() {
         await loadMarketplace();
     };
 }
+
+// Get back to top of page
+function scrollToTop() {
+    $(window).scrollTop(0);
+}

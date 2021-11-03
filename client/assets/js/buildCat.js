@@ -77,7 +77,6 @@ function switchEyes(num, id) {
 }
 
 
-
 // CSS for eyes variations:
 function normalEyes(id) { //NORMAL
     $(`#eyeRight${id}`).css({ 'visibility': 'visible', 'transform': 'rotate(0deg)' })
@@ -148,8 +147,6 @@ function eyesType5(id) { //SURPRISED
 }
 
 
-
-
 /*Decoration variations:
 ************************/
 
@@ -218,7 +215,6 @@ function thirdEyeDecoration(id) { //THIRD EYE
 }
 
 
-
 // Decoration colors --- Has been included in decorationVariation rendering
 function decorationColor(codeShape, codeColor, id) {
     var color = colors[codeColor]
@@ -230,7 +226,6 @@ function decorationColor(codeShape, codeColor, id) {
         $(`#foreheadMid${id}, #foreheadLeft${id}, #foreheadRight${id}`).css('background-color', '#' + color)
     }
 }
-
 
 
 /*Animations:

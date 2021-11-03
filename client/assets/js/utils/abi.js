@@ -596,46 +596,6 @@ var abi = {
     {
       "inputs": [
         {
-          "internalType": "uint16",
-          "name": "_generation",
-          "type": "uint16"
-        }
-      ],
-      "name": "getCatsPerGeneration",
-      "outputs": [
-        {
-          "internalType": "uint256[]",
-          "name": "catsPerGen",
-          "type": "uint256[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_owner",
-          "type": "address"
-        }
-      ],
-      "name": "tokensPerOwner",
-      "outputs": [
-        {
-          "internalType": "uint256[]",
-          "name": "tokensOwned",
-          "type": "uint256[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
           "internalType": "uint256",
           "name": "_tokenId",
           "type": "uint256"
@@ -672,6 +632,46 @@ var abi = {
           "internalType": "uint256",
           "name": "genes",
           "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint16",
+          "name": "_generation",
+          "type": "uint16"
+        }
+      ],
+      "name": "getCatsPerGeneration",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "catsPerGen",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_owner",
+          "type": "address"
+        }
+      ],
+      "name": "tokensPerOwner",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "tokensOwned",
+          "type": "uint256[]"
         }
       ],
       "stateMutability": "view",

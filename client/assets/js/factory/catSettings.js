@@ -128,8 +128,6 @@ $(".btn.random").click(() => {
 })
 
 
-
-
 /*Colors listeners:
 ******************/
 
@@ -162,7 +160,6 @@ $('#collarcolor').change(() => {
   var colorVal = $('#collarcolor').val()
   collarColorFactory(colors[colorVal], colorVal)
 })
-
 
 
 /*Cattributes listeners:

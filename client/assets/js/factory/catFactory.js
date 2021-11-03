@@ -14,7 +14,6 @@ function genColors() {
 }
 
 
-
 /*Body color variations:
 ************************/
 
@@ -60,10 +59,6 @@ function collarColorFactory(color, code) {
     $('#collarcode').html('code: ' + code)
     $('#dnacollar').html(code)
 }
-
-
-
-
 
 
 /*Eyes variations:
@@ -187,7 +182,6 @@ function eyesType5Factory() { //SURPRISED
 
 
 
-
 /*Decorations variations:
 *************************/
 
@@ -249,8 +243,6 @@ function thirdEyeDecorationFactory() { //THIRD EYE
     $('.forehead.line_left').css({ "transform": "rotate(0deg)", "height": "30px", "width": "30px", "top": "3px", "left": "13px", "border-radius": "50%", "background-color": "black" })
     $('.forehead.line_right').css({ "transform": "rotate(0deg)", "height": "5px", "width": "5px", "top": "14px", "left": "25px", "border-radius": "50%", "background-color": "white" })
 }
-
-
 
 
 

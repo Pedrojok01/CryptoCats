@@ -53,21 +53,13 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
     }
 
     //Get all tokenId's that are currently for sale. Returns an empty array if none exist.
-    function getAllTokenOnSale()
-        external
-        view
-        override
-        returns (uint256[] memory listOfOffers)
-    {
+    function getAllTokenOnSale() external view override returns (uint256[] memory listOfOffers) {
         listOfOffers = offersIds;
     }
 
     // Creates a new offer for _tokenId for the price _price.
     function setOffer(uint256 _price, uint256 _tokenId) external override {
-        require(
-            msg.sender == _catContract.ownerOf(_tokenId),
-            "You do not own this cat!"
-        );
+        require(msg.sender == _catContract.ownerOf(_tokenId), "You do not own this cat!");
         require(_isOffer(_tokenId) == false, "This cat is already on sale!");
 
         _catContract.approve(address(this), _tokenId);
@@ -79,7 +71,7 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
             tokenId: _tokenId
         });
 
-        offersIds.push(_offer.index);
+        offersIds.push(_offer.tokenId);
         tokenIdToOffer[_tokenId] = _offer;
 
         emit MarketTransaction("Create offer", msg.sender, _tokenId);
@@ -113,10 +105,6 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
         emit MarketTransaction("Buy", msg.sender, _tokenId);
     }
 
-    function _isOffer(uint256 _tokenId) private view returns (bool) {
-        return tokenIdToOffer[_tokenId].seller != address(0);
-    }
-
     function _removeOffer(uint256 _tokenId) private {
         uint256 offerToRemove = tokenIdToOffer[_tokenId].index;
         uint256 temp = offersIds[offersIds.length - 1];
@@ -130,5 +118,10 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
         }
 
         offersIds.pop();
+    }
+
+    // Check if an offer is active
+    function _isOffer(uint256 _tokenId) private view returns (bool) {
+        return tokenIdToOffer[_tokenId].seller != address(0);
     }
 }

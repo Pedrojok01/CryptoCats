@@ -1,4 +1,5 @@
-// Display cat selection modal for breeding and marketplace:
+// Display cats selection modal for both Breeding & Sell:
+
 
 // Display available cats into modal
 async function fillSelectionModal(domId) {
@@ -72,6 +73,7 @@ async function breedCat() {
   }
 
   resetBreed();
+  scrollToTop();
 }
 
 // Reset modal window, clear all cats:

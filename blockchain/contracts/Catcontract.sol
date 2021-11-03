@@ -5,18 +5,14 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Catcontract is ERC721Enumerable, Ownable {
+    
     /*Storage:
      ***********/
 
-    bytes4 internal constant MAGIC_ERC721_RECEIVED =
-    bytes4(keccak256("onERC721Received(address,address,uint256,bytes)")); // To check if contract is ERC721 compliant
-    bytes4 private constant _INTERFACE_ID_ERC721 = 0x80ac58cd;
-    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;
-
-    uint8 public CREATION_LIMIT_GEN0; // Max Gen0 supply, definied in constructor
-    uint8 public gen0Count = 0; // Track the number of Gen0 cats
-    uint256 public maxCatsSupply; // Max cats supply, definied in constructor
-    uint256 public catsSupplyCount; // Actual cats supply
+    uint8 public CREATION_LIMIT_GEN0;   // Max Gen0 supply, definied in constructor
+    uint8 public gen0Count = 0;         // Actual number of Gen0 cats
+    uint256 public maxCatsSupply;       // Max cats supply, definied in constructor
+    uint256 public catsSupplyCount;     // Actual cats supply
 
     struct Cat {
         uint16 generation;
@@ -29,6 +25,7 @@ contract Catcontract is ERC721Enumerable, Ownable {
 
     Cat[] cats; // Cat storage array
 
+
     /*Events:
      **********/
 
@@ -40,12 +37,11 @@ contract Catcontract is ERC721Enumerable, Ownable {
         uint256 genes
     );
 
+
     /*Constructor:
      ***************/
 
-    constructor(uint256 _maxCatsSupply, uint8 _CREATION_LIMIT_GEN0)
-        ERC721("CryptoCats", "CTC")
-    {
+    constructor(uint256 _maxCatsSupply, uint8 _CREATION_LIMIT_GEN0) ERC721("CryptoCats", "CTC") {
         maxCatsSupply = _maxCatsSupply;
         CREATION_LIMIT_GEN0 = _CREATION_LIMIT_GEN0;
     }
@@ -53,7 +49,7 @@ contract Catcontract is ERC721Enumerable, Ownable {
     /*Functions:
      ************/
 
-    //Returns the acutal number of Gen0 cats in circulation
+    //Returns the actual number of Gen0 cats in circulation
     function Gen0Count() external view returns (uint8) {
         return gen0Count;
     }
@@ -109,42 +105,6 @@ contract Catcontract is ERC721Enumerable, Ownable {
 /* GET CAT FUNCTIONS:
 ======================*/
 
-    //Display all cats per generation:
-    function getCatsPerGeneration(uint16 _generation) public view returns (uint256[] memory catsPerGen) {
-        for (uint256 tokenId = 1; tokenId <= totalSupply(); tokenId++) {
-            if (cats[tokenId].generation == _generation) {
-                uint256 index = 0;
-                catsPerGen[index] = tokenId;
-                index++;
-            }
-        }
-        return catsPerGen;
-    }
-
-    // Get all cats per owner:
-    function tokensPerOwner(address _owner)
-        public
-        view
-        returns (uint256[] memory tokensOwned)
-    {
-        uint256 tokenCount = balanceOf(_owner);
-
-        if (tokenCount == 0) {
-            return new uint256[](0);
-        } else {
-            tokensOwned = new uint256[](tokenCount);
-            uint256 index = 0;
-            for (uint256 tokenId = 0; tokenId < totalSupply(); tokenId++) {
-                //if (catOwner[tokenId] == _owner) {
-                if (ownerOf(tokenId) == _owner) {
-                    tokensOwned[index] = tokenId;
-                    index++;
-                }
-            }
-            return tokensOwned;
-        }
-    }
-
     //Get cat genes per cat id:
     function getCat(uint256 _tokenId)
         public
@@ -168,7 +128,37 @@ contract Catcontract is ERC721Enumerable, Ownable {
         birthTime = cat.birthTime;
         genes = cat.genes;
     }
+    
+    //Display all cats per generation:
+    function getCatPerGeneration(uint16 _generation) public view returns (uint256[] memory catsPerGen) {
+        for (uint256 tokenId = 1; tokenId <= totalSupply(); tokenId++) {
+            if (cats[tokenId].generation == _generation) {
+                uint256 index = 0;
+                catsPerGen[index] = tokenId;
+                index++;
+            }
+        }
+        return catsPerGen;
+    }
 
+    // Get all cats per owner:
+    function getCatPerOwner(address _owner) public view returns (uint256[] memory tokensOwned) {
+        uint256 tokenCount = balanceOf(_owner);
+
+        if (tokenCount == 0) {
+            return new uint256[](0);
+        } else {
+            tokensOwned = new uint256[](tokenCount);
+            uint256 index = 0;
+            for (uint256 tokenId = 0; tokenId < totalSupply(); tokenId++) {
+                if (ownerOf(tokenId) == _owner) {
+                    tokensOwned[index] = tokenId;
+                    index++;
+                }
+            }
+            return tokensOwned;
+        }
+    }
 
 
 /* BREEDING FUNCTIONS:
@@ -176,7 +166,6 @@ contract Catcontract is ERC721Enumerable, Ownable {
 
     function breed(uint256 _dadId, uint256 _mumId) public returns (uint256) {
         require(
-            //catOwner[_dadId] == msg.sender && catOwner[_mumId] == msg.sender,
             ownerOf(_dadId) == msg.sender && ownerOf(_mumId) == msg.sender,
             "You do not own those cats!"
         );
@@ -203,28 +192,16 @@ contract Catcontract is ERC721Enumerable, Ownable {
     }
 
     // set new generation
-    function _setGeneration(uint16 _dadGen, uint256 _mumGen)
-        private
-        pure
-        returns (uint16)
-    {
-        uint16 generation;
-
+    function _setGeneration(uint16 _dadGen, uint256 _mumGen) private pure returns (uint16 generation) {
         if (_mumGen >= _dadGen) {
             generation = uint16(_mumGen + 1);
         } else {
             generation = uint16(_dadGen + 1);
         }
-
-        return generation;
     }
 
     // Mix DNA from both parents with an extra 15% chance of mutation per gene
-    function _mixDna(uint256 _dadDna, uint256 _mumDna)
-        private
-        view
-        returns (uint256)
-    {
+    function _mixDna(uint256 _dadDna, uint256 _mumDna) private view returns (uint256) {
         uint8 random = uint8(block.timestamp % 255); // binary between 00000000-11111111
         uint8 index = 7;
         uint16 i;

@@ -1,21 +1,5 @@
 // File to load cat in HTML Div / Tab / Modal
 
-/*
-// Get cats per user, then get cat object per cat Id
-async function loadCats(div) {
-    pendingNotification();
-    var cats = await getUserCats();
-
-        for (i = 0; i < cats.length; i++) {
-            userIndex = i;
-            let dna = cats.genes;
-            appendCat(dna, userIndex, cats.tokenId, cats.generation, div);   
-        }
-    showNotifications("Your cats have been updated.");
-}
-
-*/
-
 
 // Get cats per user, then get cat object per cat Id
 async function loadCats(div) {
@@ -23,16 +7,14 @@ async function loadCats(div) {
     var catsToLoad = [];
 
     try {
-        let totalCats = await instanceCatContract.methods.tokensPerOwner(userAddress).call();
+        let totalCats = await instanceCatContract.methods.getCatPerOwner(userAddress).call();
 
         for (i = 0; i < totalCats.length; i++) {
             var cat = await instanceCatContract.methods.getCat(totalCats[i]).call();
             catsToLoad.push(cat);
             userIndex = i;
             appendCat(cat.genes, userIndex, cat.indexId, cat.generation, div);
-            
         }
-        userCats = catsToLoad;
 
     } catch (err) {
         errorNotification(err)
@@ -59,21 +41,20 @@ function appendCat(dna, userIndex, id, gen, div) {
 }
 
 
-// Add cat to html element after CSS rendering
+// Add offer to html element after CSS rendering
 function appendOffer(dna, userIndex, id, gen, div) {
     let dnaToRender = catDna(dna);
 
     offerCard(div, userIndex, id);
     renderCat(dnaToRender, userIndex);
 
-    $(`#offerDNA${id}`).html(`
+    $(`#offerDNA${userIndex}`).html(`
     <span class="badge badge-light" id="selectedId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
     <br>
     <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>${gen}</h4></span>
     <br>
     <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>DNA:</b>${dna}</h4></span>`)
 }
-
 
 //Apply cat CSS Styles from buidCat.js
 function renderCat(dna, id) {
@@ -103,7 +84,6 @@ function catDna(dnaStr) {
         "animation": dnaStr.substring(14, 15),
         "lastNum": dnaStr.substring(15, 16)
     }
-
     return dna;
 }
 
@@ -122,12 +102,12 @@ function catCard(div, userIndex, id) {
     }
 }
 
-//Cat HTML Div for -My Cats- tab
+//Offer HTML Div for -Marketplace- tab
 function offerCard(div, userIndex, id) {
 
-    var offerDiv = `<div id="offerview` + userIndex + `">
+    var offerDiv = `<div id="offerview${userIndex}">
                     <div class="catDiv">${catBody(userIndex)}</div>
-                    <div class="catInfos" id="offerDNA` + userIndex + `"></div>
+                    <div class="catInfos" id="offerDNA${id}"></div>
                 </div>`
     var offerView = $(`#offerview${userIndex}`)
 

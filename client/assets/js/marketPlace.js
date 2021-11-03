@@ -1,39 +1,6 @@
 // Load marketPlace tab
-/*
 async function loadMarketplace() {
     $("#marketplace-collection").empty();
-    notConnected();
-    pendingNotification();
-
-    var marketOffers;
-    
-    marketOffers = await getCatsOffers();
-
-    if (marketOffers.length == 0) {
-        $("#marketplace-collection").append("<p class='text-light'>There are currently no cats for sale...</p>");
-    }
-
-    for (i = 0; i < marketOffers.length; i++) {
-        offerIndex = i;
-        var cat = await instanceCatContract.methods.getCat(marketOffers[i].catId).call();
-        appendOffer(cat.genes, offerIndex, cat.indexId, cat.generation, $("#marketplace-collection"))
-        var offerCard = $(`#offerview${i}`);
-
-        if (marketOffers[i].seller.toLowerCase() === userAddress.toLowerCase()) {
-            const action = marketActionHtml(marketOffers[i].seller, marketOffers[i].price, marketOffers[i].catId, true);
-            offerCard.append(action);
-
-        } else {
-            const action = marketActionHtml(marketOffers[i].seller, marketOffers[i].price, marketOffers[i].catId, false);
-            offerCard.append(action);
-        }
-    }
-}
-*/
-
-async function loadMarketplace() {
-    $("#marketplace-collection").empty();
-    notConnected();
     pendingNotification();
 
     var marketOffers = [];
@@ -62,8 +29,10 @@ async function loadMarketplace() {
 
     for (i = 0; i < marketOffers.length; i++) {
         offerIndex = i;
-        var cat = await instanceCatContract.methods.getCat(marketOffers[i].catId).call();
-        appendOffer(cat.genes, offerIndex, cat.indexId, cat.generation, $("#marketplace-collection"))
+        let catId = marketOffers[i].catId;
+        var cat = await instanceCatContract.methods.getCat(catId).call();
+        console.log(cat);
+        appendOffer(cat.genes, offerIndex, catId, cat.generation, $("#marketplace-collection"))
         var offerCard = $(`#offerview${i}`);
 
         if (marketOffers[i].seller.toLowerCase() === userAddress.toLowerCase()) {
@@ -77,6 +46,7 @@ async function loadMarketplace() {
     }
 }
 
+// Define "CANCEL" or "BUY" function and display HTML action div
 function marketActionHtml(owner, priceEther, catId, isCancelAction = false) {
     let actionLabel = "Buy";
     let functionCall = `buyCat(${catId}, ${priceEther})`;
@@ -93,29 +63,30 @@ function marketActionHtml(owner, priceEther, catId, isCancelAction = false) {
     const html = `
       <div id="marketAction" class="row p-2 rounded d-flex align-items-center cattributes mx-5 light-b-shadow text-${color} d-flex">
         <span class="col">Owner:</span>
-        <a type="button" class="col btn btn-link text-${color}" href="https://kovan.etherscan.io/address/${owner}"
-        target="_blank" rel="noopener noreferrer">
-        ${ownerTrimmed}</span>
+        <a type="button" class="col btn btn-link text-${color}" 
+            href="https://kovan.etherscan.io/address/${owner}"
+            target="_blank" rel="noopener noreferrer">
+            ${ownerTrimmed}
         </a>
         <div class="row-cols-2 p-2 rounded d-flex align-items-center">
-        <div class="col text-${color} fw-bold">
-          <span class="offerPrice">${priceEther}</span> ETH
+            <div class="col text-${color} fw-bold">
+                <span class="offerPrice">${priceEther}</span> ETH
+            </div>
+            <button
+            type="button"
+            class="col btn btn-${color} light-b-shadow"
+            onclick="${functionCall}"
+            >
+            <b>${actionLabel}</b>
+            </button>
         </div>
-        <button
-          type="button"
-          class="col btn btn-${color} light-b-shadow"
-          onclick="${functionCall}"
-        >
-          <b>${actionLabel}</b>
-        </button>
-      </div>
       </div>
     `;
 
     return html;
 }
 
-
+// Display the selection modal
 function selectForSale(domId, userIndex, tokenId) {
     showSelectedCat(domId, userIndex);
 
@@ -124,7 +95,6 @@ function selectForSale(domId, userIndex, tokenId) {
     $(".card-body").css({ "visibility": "visible" });
 
     const sellPrice = $("#sellPrice").val();
-    //const tokenId = $("#sellCat ~ * .catId").html();
     if (tokenId != "" && sellPrice != "" && sellPrice >= 0) {
         $("#sellBtn").removeClass("disabled");
     }
@@ -181,6 +151,7 @@ async function sellCat() {
         console.log(err)
     }
     resetSell();
+    scrollToTop();
 }
 
 
@@ -210,6 +181,7 @@ async function buyCat(catId, priceEther) {
     } catch (err) {
         errorNotification(err);
     }
+    scrollToTop();
 }
 
 function removeCatOffer(catId) {

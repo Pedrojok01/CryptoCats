@@ -646,7 +646,7 @@ var abi = {
           "type": "uint16"
         }
       ],
-      "name": "getCatsPerGeneration",
+      "name": "getCatPerGeneration",
       "outputs": [
         {
           "internalType": "uint256[]",
@@ -666,7 +666,7 @@ var abi = {
           "type": "address"
         }
       ],
-      "name": "tokensPerOwner",
+      "name": "getCatPerOwner",
       "outputs": [
         {
           "internalType": "uint256[]",

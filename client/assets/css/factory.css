@@ -21,6 +21,7 @@
 
 .dnaDiv {
     position: absolute;
+    padding: 2%;
     left:20px;
     bottom: 5px;
 }

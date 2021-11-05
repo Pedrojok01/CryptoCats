@@ -154,30 +154,30 @@ function decorationVariation(numShape, numColor, id) {
     switch (numShape) {
         case "1":
             normalDecoration(id)
-            $(`#decorationName${id}`).html('None') //no forehaed deco
+            //$(`#decorationName${id}`).html('None') //no forehaed deco
             noDecoration(id)
             decorationColor(numShape, numColor, id)
             break
         case "2":
-            $(`#decorationName${id}`).html('Basic')
+            //$(`#decorationName${id}`).html('Basic')
             normalDecoration(id)
             decorationColor(numShape, numColor, id)
             break
         case "3":
             normalDecoration(id)
-            $(`#decorationName${id}`).html('Wild')
+            //$(`#decorationName${id}`).html('Wild')
             wildDecoration(id)
             decorationColor(numShape, numColor, id)
             break
         case "4":
             normalDecoration(id)
-            $(`#decorationName${id}`).html('Crescendo')
+            //$(`#decorationName${id}`).html('Crescendo')
             crescendoDecoration(id)
             decorationColor(numShape, numColor, id)
             break
         case "5":
             normalDecoration(id)
-            $(`#decorationName${id}`).html('Third eye')
+            //$(`#decorationName${id}`).html('Third eye')
             thirdEyeDecoration(id)
             decorationColor(numShape, numColor, id)
             break
@@ -236,31 +236,25 @@ function animationVariation(num, id) {
     switch (num) {
         case "1":
             resetAnimation(id);
-            $(`#animationName${id}`).html('None')
             break;
         case "2":
             resetAnimation(id);
-            $(`#animationName${id}`).html('Head')
             animationType1(id);
             break;
         case "3":
             resetAnimation(id);
-            $(`#animationName${id}`).html('Tail')
             animationType2(id);
             break;
         case "4":
             resetAnimation(id);
-            $(`#animationName${id}`).html('Paws')
             animationType3(id);
             break;
         case "5":
             resetAnimation(id);
-            $(`#animationName${id}`).html('Eyes')
             animationType4(id);
             break;
         case "6":
             resetAnimation(id);
-            $(`#animationName${id}`).html('All')
             animationType5(id);
             break;
     }
@@ -309,4 +303,61 @@ function resetAnimation(id) { //RESET ALL ANIMS
     $(`#footFrontLeft${id}, #footBackLeft${id}`).removeClass('movingPawsLeft');
     $(`#footFrontRight${id}, #footBackRight${id}`).removeClass('movingPawsRight');
     resetEyes(id);
+}
+
+
+
+/*Background variations:
+************************/
+
+function backgroundVariation(num, id) {
+    switch (num) {
+        case "1":
+            normalBG(id);
+            break
+        case "2":
+            normalBG(id);
+            BG1(id)
+            break
+        case "3":
+            normalBG(id);
+            BG2(id)
+            break
+        case "4":
+            normalBG(id);
+            BG3(id)
+            break
+        case "5":
+            normalBG(id);
+            BG4(id)
+            break
+    }
+}
+
+
+function normalBG(id) {   //NORMAL BACKGROUND
+    $(`#catCardDiv${id}`).css({ 'background-color': '#e2efff' })
+    $(`#catCardDiv${id}`).removeClass('blue-gr silver-gr gold-gr black-gr')
+    $(`#offerCardDiv${id}`).css({ 'background-color': '#e2efff' })
+    $(`#offerCardDiv${id}`).removeClass('blue-gr silver-gr gold-gr black-gr')
+}
+
+function BG1(id) {         //BLUE
+    $(`#catCardDiv${id}`).addClass('blue-gr')
+    $(`#offerCardDiv${id}`).addClass('blue-gr') 
+}
+
+function BG2(id) {         //SILVER
+    $(`#catCardDiv${id}`).addClass('silver-gr')
+    $(`#offerCardDiv${id}`).addClass('silver-gr')
+}
+
+function BG3(id) {         //GOLD
+    $(`#catCardDiv${id}`).addClass('gold-gr')
+    $(`#offerCardDiv${id}`).addClass('gold-gr') 
+}
+
+function BG4(id) {         //BLACK
+    $(`#catCardDiv${id}`).addClass('black-gr')
+    $(`#offerCardDiv${id}`).addClass('black-gr')
 }

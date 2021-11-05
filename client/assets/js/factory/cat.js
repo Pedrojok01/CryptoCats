@@ -86,10 +86,9 @@ function cat() {
                 <!--Cattributes-->
                 <span id="dnashape"></span>
                 <span id="dnadecoration"></span>
-                <span id="dnadecorationCollor"></span>
+                <span id="dnadecorationColor"></span>
                 <span id="dnaanimation"></span>
-
-                <span id="dnaspecial"></span>
+                <span id="dnabackground"></span>
             </b>
         </div>
     </div >
@@ -115,31 +114,31 @@ function cat() {
         <!-- Cat colors -->
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="catColors" role="tabpanel">
-                <div class="form-group" style="margin-bottom: 1rem">
+                <div class="form-group" style="margin-bottom: 1.5rem">
                     <label for="formControlRange" style="margin-bottom: 1rem"><b>Head and body color</b><span
                         class="badge bg-dark ml-2" id="bodycode"></span></label>
                     <input type="range" min="10" max="98" class="form-range" id="bodycolor" style="width: 100%"
                     onchange="changeFaceColor()">
                 </div>
-                <div class="form-group" style="margin-bottom: 1rem">
+                <div class="form-group" style="margin-bottom: 1.5rem">
                     <label for="formControlRange"><b>Mouth and belly color</b><span
                         class="badge bg-dark ml-2" id="mouthcode"></span></label>
                     <input type="range" min="10" max="98" class="form-range" id="mouthcolor" style="width: 100%"
                     onchange="changeMouthColor()">
                 </div>
-                <div class="form-group" style="margin-bottom: 1rem">
+                <div class="form-group" style="margin-bottom: 1.5rem">
                     <label for="formControlRange"><b>Paws, ears and tail color</b><span
                         class="badge bg-dark ml-2" id="pawscode"></span></label>
                     <input type="range" min="10" max="98" class="form-range" id="pawscolor" style="width: 100%"
                     onchange="changePawsColor()">
                 </div>
-                <div class="form-group" style="margin-bottom: 1rem">
+                <div class="form-group" style="margin-bottom: 1.5rem">
                     <label for="formControlRange"><b>Eyes and tail-ball color</b><span
                         class="badge bg-dark ml-2" id="eyescode"></span></label>
                     <input type="range" min="10" max="98" class="form-range" id="eyescolor" style="width: 100%"
                     onchange="changeEyesColor()">
                 </div>
-                <div class="form-group" style="margin-bottom: 1rem">
+                <div class="form-group" style="margin-bottom: 1.5rem">
                     <label for="formControlRange"><b>Collar color</b><span class="badge bg-dark ml-2"
                         id="collarcode"></span></label>
                     <input type="range" min="10" max="98" class="form-range" id="collarcolor" style="width: 100%"
@@ -149,29 +148,35 @@ function cat() {
 
             <!-- Cattributes -->
             <div class="tab-pane fade" id="cattributes" role="tabpanel">
-                <div class="form-group" style="margin-bottom: 2.1rem">
+                <div class="form-group" style="margin-bottom: 1.5rem">
                     <label for="formControlRange"><b>Eyes shape</b><span class="badge bg-dark ml-2"
                         id="eyeNameFactory"></span></label>
                     <input type="range" min="1" max="6" class="form-range" id="eyeshape" style="width: 100%"
                     onchange="changeEyesShape()">
                 </div>
-                <div class="form-group" style="margin-bottom: 2.1rem">
+                <div class="form-group" style="margin-bottom: 1.5rem">
                     <label for="formControlRange"><b>Forehead shape</b><span class="badge bg-dark ml-2"
                         id="decorationNameFactory"></span></label>
                     <input type="range" min="1" max="5" class="form-range" id="decorationshape" style="width: 100%"
                     onchange="changeDecoShape()">
                 </div>
-                <div class="form-group" style="margin-bottom: 2.1rem">
+                <div class="form-group" style="margin-bottom: 1.5rem">
                     <label for="formControlRange"><b>Forehead's color</b><span class="badge bg-dark ml-2"
                         id="decorationcodeFactory"></span></label>
                     <input type="range" min="10" max="98" class="form-range" id="decorationcolor" style="width: 100%"
                     onchange="changeDecoColor()">
                 </div>
-                <div class="form-group" style="margin-bottom: 2.1rem">
+                <div class="form-group" style="margin-bottom: 1.5rem">
                     <label for="formControlRange"><b>Animation</b><span class="badge bg-dark ml-2"
                         id="animationNameFactory"></span></label>
                     <input type="range" min="1" max="6" class="form-range" id="animation" style="width: 100%"
                     onchange="changeAnim()">
+                </div>
+                <div class="form-group" style="margin-bottom: 1.5rem">
+                    <label for="formControlRange"><b>Background</b><span class="badge bg-dark ml-2"
+                        id="backgroundNameFactory"></span></label>
+                    <input type="range" min="1" max="5" class="form-range" id="background" style="width: 100%"
+                    onchange="changeBG()">
                 </div>
             </div>
         </div>

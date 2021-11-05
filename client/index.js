@@ -174,6 +174,7 @@ async function createCat() {
                 showNotifications(msg);
         })
         await updateGen0Count();
+        scrollToTop();
     };
 }
 

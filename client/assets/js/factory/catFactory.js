@@ -328,3 +328,64 @@ function resetAnimationFactory() { //RESET ALL ANIMS
     $('.foot.front.right, .foot.back.right').removeClass('movingPawsRight');
     resetEyesFactory();
 }
+
+
+/*Background variations:
+************************/
+
+function backgroundVariationFactory(num) {
+    $('#dnabackground').html(num)
+    switch (num) {
+        case 1:
+            $('#backgroundNameFactory').html('Basic')
+            normalBGFactory();
+            break
+        case 2:
+            normalBGFactory();
+            $('#backgroundNameFactory').html('Blue')
+            BG1Factory()
+            break
+        case 3:
+            normalBGFactory();
+            $('#backgroundNameFactory').html('Silver')
+            BG2Factory()
+            break
+        case 4:
+            normalBGFactory();
+            $('#backgroundNameFactory').html('Gold')
+            BG3Factory()
+            break
+        case 5:
+            normalBGFactory();
+            $('#backgroundNameFactory').html('Black')
+            BG4Factory()
+            break
+    }
+}
+
+
+function normalBGFactory() {   //NORMAL BACKGROUND
+    $('.catbox').css({ 'background-color': '#e2efff' })
+    $('.catbox').removeClass('blue-gr silver-gr gold-gr black-gr')
+    $('.dnaDiv').removeClass('rounded-pill bg-light text-dark')
+    $('.dnaDiv').css({ "margin": "inherit"})
+}
+
+function BG1Factory() {         //BLUE
+    $('.catbox').addClass('blue-gr')  
+}
+
+function BG2Factory() {         //SILVER
+    $('.catbox').addClass('silver-gr') 
+}
+
+function BG3Factory() {         //GOLD
+    $('.catbox').addClass('gold-gr') 
+}
+
+function BG4Factory() {         //BLACK
+    $('.catbox').addClass('black-gr')
+    $('.dnaDiv').addClass('rounded-pill bg-light text-dark')
+    $('.dnaDiv').css({ "margin": "inherit"})
+}
+

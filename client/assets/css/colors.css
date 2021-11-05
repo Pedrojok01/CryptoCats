@@ -20,7 +20,15 @@
 /* GRADIENT */
 
 .blue-gr {
-  background-image: linear-gradient(to right,#008ED4, #45a6d3);
+  background-image: linear-gradient(to right,#008ED4, #94bed1);
+}
+
+.silver-gr {
+  background-image: linear-gradient(to right,#5e6069, #d9dde6);
+}
+
+.gold-gr {
+  background-image: linear-gradient(to right,#e0e400, #f1edb5);
 }
 
 .black-gr {

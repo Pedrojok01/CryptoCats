@@ -13,7 +13,7 @@ var defaultDNA = {
   "decorationPattern": 2,
   "decorationColor": 67,
   "animation": 1,
-  "lastNum": 1
+  "background": 1
 }
 
 
@@ -40,9 +40,9 @@ function resetCatToDefault() {
   $('#dnacollar').html(defaultDNA.collarColor)
   $('#dnashape').html(defaultDNA.eyesShape)
   $('#dnadecoration').html(defaultDNA.decorationPattern)
-  $('#dnadecorationCollor').html(defaultDNA.decorationColor)
+  $('#dnadecorationColor').html(defaultDNA.decorationColor)
   $('#dnaanimation').html(defaultDNA.animation)
-  $('#dnaspecial').html(defaultDNA.lastNum)
+  $('#dnabackground').html(defaultDNA.background)
 }
 
 
@@ -55,9 +55,9 @@ function getDna() {
   dna += $('#dnacollar').html();
   dna += $('#dnashape').html();
   dna += $('#dnadecoration').html();
-  dna += $('#dnadecorationCollor').html();
+  dna += $('#dnadecorationColor').html();
   dna += $('#dnaanimation').html();
-  dna += $('#dnaspecial').html();
+  dna += $('#dnabackground').html();
 
   return parseInt(dna);
 }
@@ -82,6 +82,8 @@ function renderCatFactory(dna) {
   $('#decorationcolor').val(dna.decorationColor)
   animationVariationFactory(dna.animation)
   $('#animation').val(dna.animation)
+  backgroundVariationFactory(dna.background)
+  $('#background').val(dna.background)
 }
 
 
@@ -113,7 +115,7 @@ $(".btn.random").click(() => {
     "decorationPattern": Math.floor(Math.random() * 5) + 1,
     "decorationColor": Math.floor(Math.random() * 89) + 10,
     "animation": Math.floor(Math.random() * 6) + 1,
-    "lastNum": 1
+    "background": Math.floor(Math.random() * 4) + 1,
   }
   $('#dnabody').html(randomDNA.bodyColor);
   $('#dnamouth').html(randomDNA.mouthColor);
@@ -124,6 +126,7 @@ $(".btn.random").click(() => {
   $('#dnadecoration').html(randomDNA.decorationPattern);
   $('#dnadecorationCollor').html(randomDNA.decorationColor);
   $('#dnaanimation').html(randomDNA.animation);
+  $('#dnabackground').html(randomDNA.background);
   renderCatFactory(randomDNA)
 })
 
@@ -177,4 +180,9 @@ function changeDecoColor() {
 function changeAnim() {
   var animationVal = parseInt($('#animation').val());
   animationVariationFactory(animationVal);
+}
+
+function changeBG() {
+  var bgVal = parseInt($('#background').val());
+  backgroundVariationFactory(bgVal);
 }

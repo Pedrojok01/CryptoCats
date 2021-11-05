@@ -66,6 +66,7 @@ function renderCat(dna, id) {
     switchEyes(dna.eyesShape, id)
     decorationVariation(dna.decorationPattern, dna.decorationColor, id)
     animationVariation(dna.animation, id)
+    backgroundVariation(dna.background, id)
 }
 
 //Split the cat DNA to use in the render
@@ -82,7 +83,7 @@ function catDna(dnaStr) {
         "decorationPattern": dnaStr.substring(11, 12),
         "decorationColor": dnaStr.substring(12, 14),
         "animation": dnaStr.substring(14, 15),
-        "lastNum": dnaStr.substring(15, 16)
+        "background": dnaStr.substring(15, 16)
     }
     return dna;
 }
@@ -92,7 +93,7 @@ function catDna(dnaStr) {
 function catCard(div, userIndex, id) {
 
     var catDiv = `<div id="catview` + userIndex + `">
-                    <div class="catDiv light-b-shadow">${catBody(userIndex)}</div>
+                    <div id="catCardDiv` + userIndex + `" class="catDiv light-b-shadow">${catBody(userIndex)}</div>
                     <div class="catInfos" id="catDNA` + id + `"></div>
                 </div>`
     var catView = $(`#catview${userIndex}`)
@@ -106,7 +107,7 @@ function catCard(div, userIndex, id) {
 function offerCard(div, userIndex, id) {
 
     var offerDiv = `<div id="offerview${userIndex}">
-                    <div class="catDiv light-b-shadow">${catBody(userIndex)}</div>
+                    <div id="offerCardDiv${userIndex}" class="catDiv light-b-shadow">${catBody(userIndex)}</div>
                     <div class="catInfos" id="offerDNA${userIndex}"></div>
                 </div>`
     var offerView = $(`#offerview${userIndex}`)

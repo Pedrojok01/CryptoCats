@@ -5,10 +5,13 @@
     background-position:bottom;
 }
 
+
+
+/* ==== NAVBAR ==== */
+
 .navbar-brand {
     font-weight: 700;
 }
-
 
 #menu .nav-pills .nav-link.active {
     background-color: transparent;
@@ -28,8 +31,6 @@
     color: #ed5b0d;
 }
 
-
-/* adjust tabs to bootstrap bg-light background */
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
   color: #495057;
@@ -41,6 +42,8 @@
   width: 156px;
 }
 
+
+/* ==== CONTENT ==== */
 
 .catGroup { 
     max-width: 70%;
@@ -67,7 +70,6 @@
     margin-bottom: 120px;
 }
 
-/*Added*/
 body {
     display: flex;
     flex-direction: column;
@@ -76,7 +78,6 @@ body {
     background: #343a40;
     padding-right: 0 !important;
 }
-
 
 .topBar {
     display: block;
@@ -100,6 +101,9 @@ footer {
     padding: 2vh;
     background: #F8F8F8;
 }
+
+
+/* ==== CATS DISPLAY ==== */
 
 .catGrid {
     position: inherit;
@@ -130,7 +134,6 @@ footer {
     top: -135px;
 }
 
-
 .dnaDiv {
     position: absolute;
     left: 20px;
@@ -143,47 +146,26 @@ footer {
 }
 
 
-.egg {
-    width: 150px;
-    height: 150px;
-    background: url('../images/egg.png') no-repeat;
-    background-size: contain;
-}
 
+/* ==== BUTTONS ==== */
 
-
-/* BUTTONS */
-
-.red-btn {
-    background-image: -webkit-linear-gradient(0deg, #f14437 0%, #ed5b0d 99%);
-    color: #ffffff;
-    border-radius: 30px;
-    padding: 17px 55px;
-    font-weight: 600;
-    letter-spacing: 1px;
-  }
-  .red-btn:hover {
-    background-color: #cc3737;
-    color: #ffffff;
-  }
-
-  .dark-btn {
+.dark-btn {
     background-image: -webkit-linear-gradient(0deg, #25211f 0%, #312721 99%);
     color: #ffffff;
     border-radius: 30px;
     padding: 17px 30px;
     font-weight: 600;
     letter-spacing: 1px;
-  }
-  .dark-btn:hover {
+}
+.dark-btn:hover {
     background-color: #423933;
     color: #ffffff;
-  }
-  
- .white-btn {
+}
+
+.white-btn {
     background: #ffffff;    
     border-radius: 30px;
     padding: 17px 3vw;
     font-weight: 600;
     letter-spacing: 1px;
- } 
+} 

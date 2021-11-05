@@ -30,13 +30,6 @@
     padding-bottom: 50px;
 }
 
-.factoryTitle{
-    padding-top: 30px;
-    padding-bottom: 20px;
-}
-
 #notification {
     visibility: hidden;
 }
-
-/*<script src="assets/js/factory/cat.js"></script>*/

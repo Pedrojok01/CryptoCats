@@ -92,7 +92,7 @@ function catDna(dnaStr) {
 function catCard(div, userIndex, id) {
 
     var catDiv = `<div id="catview` + userIndex + `">
-                    <div class="catDiv">${catBody(userIndex)}</div>
+                    <div class="catDiv light-b-shadow">${catBody(userIndex)}</div>
                     <div class="catInfos" id="catDNA` + id + `"></div>
                 </div>`
     var catView = $(`#catview${userIndex}`)
@@ -106,7 +106,7 @@ function catCard(div, userIndex, id) {
 function offerCard(div, userIndex, id) {
 
     var offerDiv = `<div id="offerview${userIndex}">
-                    <div class="catDiv">${catBody(userIndex)}</div>
+                    <div class="catDiv light-b-shadow">${catBody(userIndex)}</div>
                     <div class="catInfos" id="offerDNA${userIndex}"></div>
                 </div>`
     var offerView = $(`#offerview${userIndex}`)

@@ -19,7 +19,7 @@ var defaultDNA = {
 
 // when page load
 $(document).ready(function () {
-  defaultPage()
+  defaultPage();
 });
 
 
@@ -128,63 +128,53 @@ $(".btn.random").click(() => {
 })
 
 
-/*Colors listeners:
-******************/
+/* To edit color ranges manually:
+*********************************/
 
-//Face and body
-$('#bodycolor').change(() => {
-  var colorVal = $('#bodycolor').val()
-  bodyColorFactory(colors[colorVal], colorVal)
-})
+function changeFaceColor() {
+  var colorVal = $('#bodycolor').val();
+  bodyColorFactory(colors[colorVal], colorVal);
+}
 
-//Mouth and belly
-$('#mouthcolor').change(() => {
-  var colorVal = $('#mouthcolor').val()
-  mouthColorFactory(colors[colorVal], colorVal)
-})
+function changeMouthColor() {
+  var colorVal = $('#mouthcolor').val();
+  mouthColorFactory(colors[colorVal], colorVal);
+}
 
-//Paws, ears and tail
-$('#pawscolor').change(() => {
-  var colorVal = $('#pawscolor').val()
-  pawsColorFactory(colors[colorVal], colorVal)
-})
+function changePawsColor() {
+  var colorVal = $('#pawscolor').val();
+  pawsColorFactory(colors[colorVal], colorVal);
+}
 
-//Eyes, collar and tail-ball
-$('#eyescolor').change(() => {
-  var colorVal = $('#eyescolor').val()
-  eyesColorFactory(colors[colorVal], colorVal)
-})
+function changeEyesColor() {
+  var colorVal = $('#eyescolor').val();
+  eyesColorFactory(colors[colorVal], colorVal);
+}
 
-//Collar color
-$('#collarcolor').change(() => {
-  var colorVal = $('#collarcolor').val()
-  collarColorFactory(colors[colorVal], colorVal)
-})
+function changeCollarColor() {
+  var colorVal = $('#collarcolor').val();
+  collarColorFactory(colors[colorVal], colorVal);
+}
 
+/* To edit cattributes ranges manually:
+***************************************/
 
-/*Cattributes listeners:
-************************/
+function changeEyesShape() {
+  var shape = parseInt($('#eyeshape').val());
+  eyeVariationFactory(shape);
+}
 
-//Eyes shape
-$('#eyeshape').change(() => {
-  var shape = parseInt($('#eyeshape').val())
-  eyeVariationFactory(shape)
-})
+function changeDecoShape() {
+  var decoShape = parseInt($('#decorationshape').val());
+  decorationVariationFactory(decoShape);
+}
 
-//Decorations
-$('#decorationshape').change(() => {
-  var decoShape = parseInt($('#decorationshape').val())
-  decorationVariationFactory(decoShape)
-})
+function changeDecoColor() {
+  var colorVal = $('#decorationcolor').val();
+  decorationColorFactory(colors[colorVal], colorVal);
+}
 
-//Decorations color
-$('#decorationcolor').change(() => {
-  var colorVal = $('#decorationcolor').val()
-  decorationColorFactory(colors[colorVal], colorVal)
-})
-
-//Animations
-$('#animation').change(() => {
-  var animationVal = parseInt($('#animation').val())
-  animationVariationFactory(animationVal)
-})
+function changeAnim() {
+  var animationVal = parseInt($('#animation').val());
+  animationVariationFactory(animationVal);
+}

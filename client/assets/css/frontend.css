@@ -101,16 +101,6 @@ footer {
     background: #F8F8F8;
 }
 
-
-.catBox {
-    background-color: #e2efff !important;
-    position: relative;
-    border-radius: 10px;
-    padding: 20px 20px 20px 20px;
-    object-fit: contain;
-    z-index: 0;
-}
-
 .catGrid {
     position: inherit;
     display: grid;

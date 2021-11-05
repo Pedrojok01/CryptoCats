@@ -33,11 +33,11 @@ function appendCat(dna, userIndex, id, gen, div) {
     renderCat(dnaToRender, userIndex);
 
     $(`#catDNA${id}`).html(`
-    <span class="badge badge-light" id="selectedId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
+    <span class="badge bg-light text-dark" id="selectedId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
     <br>
-    <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>${gen}</h4></span>
+    <span class="badge bg-light text-dark"><h4 class="tsp-2 m-0"><b>GEN:</b>${gen}</h4></span>
     <br>
-    <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>DNA:</b>${dna}</h4></span>`)
+    <span class="badge bg-light text-dark"><h4 class="tsp-2 m-0"><b>DNA:</b>${dna}</h4></span>`)
 }
 
 
@@ -49,11 +49,11 @@ function appendOffer(dna, userIndex, id, gen, div) {
     renderCat(dnaToRender, userIndex);
 
     $(`#offerDNA${userIndex}`).html(`
-    <span class="badge badge-light" id="selectedId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
+    <span class="badge bg-light text-dark" id="selectedId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
     <br>
-    <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>GEN:</b>${gen}</h4></span>
+    <span class="badge bg-light text-dark"><h4 class="tsp-2 m-0"><b>GEN:</b>${gen}</h4></span>
     <br>
-    <span class="badge badge-light"><h4 class="tsp-2 m-0"><b>DNA:</b>${dna}</h4></span>`)
+    <span class="badge bg-light text-dark"><h4 class="tsp-2 m-0"><b>DNA:</b>${dna}</h4></span>`)
 }
 
 //Apply cat CSS Styles from buidCat.js

@@ -1,4 +1,3 @@
-
 // when page load
 $(document).ready(function () {
     cat();

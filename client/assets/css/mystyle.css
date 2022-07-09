@@ -1,13 +1,12 @@
-
 @font-face {
   font-family: "Poppins";
-  src        : url("Poppins-Light.ttf");
+  src: url("Poppins-Light.ttf");
 }
 
 body {
   font-family: Poppins;
   font-weight: 500;
-  letter-spacing: 1px; 
+  letter-spacing: 1px;
 }
 
 .navbar-light {
@@ -19,15 +18,15 @@ body {
 }
 
 html {
-  overflow-x: hidden;  
+  overflow-x: hidden;
 }
 
 .abs-center {
-  display        : flex;
-  align-items    : center;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  min-height     : 80vh;
-  text-align     : center;
+  min-height: 80vh;
+  text-align: center;
 }
 
 p {
@@ -35,18 +34,16 @@ p {
 }
 
 #message {
-  margin  : 10px;
+  margin: 10px;
   position: fixed;
-  bottom  : 4rem;
-  z-index : 2000;
-  right   : 10px;
+  bottom: 4rem;
+  z-index: 2000;
+  right: 10px;
 }
 
 .pointer {
   cursor: pointer;
 }
-
-
 
 /*  Alignment */
 
@@ -54,11 +51,9 @@ p {
   flex-wrap: nowrap;
 }
 
-
 .item-c {
   align-items: center;
 }
-
 
 .t-inline {
   white-space: nowrap;
@@ -73,7 +68,6 @@ th {
   vertical-align: unset;
 }
 
-
 .scale-2 {
   transform: scale(1.6);
 }
@@ -84,8 +78,8 @@ th {
 }
 
 .hidden {
-  transition: all .2s ease-in-out;
-  display   : none;
+  transition: all 0.2s ease-in-out;
+  display: none;
 }
 
 .dflex {
@@ -99,8 +93,6 @@ th {
 .show-block {
   display: inline-block;
 }
-
-
 
 /* SIZING */
 
@@ -153,52 +145,45 @@ th {
 }
 
 .vh-100 {
-
   min-height: 100vh;
 }
 
 .vh-10 {
-
   min-height: 10vh;
 }
 
 .vh-15 {
-
   min-height: 15vh;
 }
-
 
 /* BOXES */
 
 #results {
-
-  margin  : 10px;
+  margin: 10px;
   position: fixed;
-  bottom  : 10px;
-  z-index : 2000;
-  right   : 10px;
+  bottom: 10px;
+  z-index: 2000;
+  right: 10px;
 }
-
 
 /* TOOLTIP */
 .tooltip-btn {
-  padding-left    : 5px;
-  padding-right   : 5px;
-  padding-bottom  : 0px;
-  padding-top     : 0px;
-  color           : #721c24;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  color: #721c24;
   background-color: #f8d7da;
-  border-color    : #f5c6cb;
+  border-color: #f5c6cb;
 }
 
 .tooltip-inner {
   background: #cce5ff;
-  color     : #004085;
-  padding   : 10px;
+  color: #004085;
+  padding: 10px;
 }
 
 .tooltip.show {
-
   opacity: 1;
 }
 
@@ -207,72 +192,51 @@ th {
 .bs-tooltip-left .arrow::before,
 .bs-tooltip-top .arrow::before {
   border-top-color: #cce5ff;
-
-
 }
 
 /* opacity */
 
 .opacity-on {
-
   opacity: 0;
 }
 
 .opacity-9 {
-
   opacity: 0.9;
-
 }
 
 .opacity-8 {
-
   opacity: 0.8;
-
 }
 
 .opacity-7 {
-
   opacity: 0.7;
-
 }
 
 .opacity-6 {
-
   opacity: 0.6;
-
 }
 
 /* TEXT ALIGMENT */
 
-
 .underline {
-
   text-decoration: underline;
-
 }
 
-
 .ta-l {
-
   text-align: left;
 }
 
 .ta-c {
-
   text-align: center;
-
 }
 
 .ta-r {
-
   text-align: right;
-
 }
 
 .tsp-1 {
   letter-spacing: 1px;
 }
-
 
 .tsp-2 {
   letter-spacing: 2px;
@@ -280,11 +244,8 @@ th {
 
 /* SHADOW*/
 
-
 .light-shadow {
-
   text-shadow: 1px 2px 3px #8e8e8e;
-
 }
 
 .light-b-shadow {
@@ -298,20 +259,17 @@ th {
 }
 
 .radius-50 {
-
   border-radius: 50%;
 }
 
 .radius-10 {
-
   border-radius: 10px;
 }
-
 
 /* TRANSITIONS */
 
 .trans-fast {
-  transition: all .75s ease;
+  transition: all 0.75s ease;
 }
 
 .trans-normal {
@@ -331,7 +289,6 @@ h4 {
 .fs-50 {
   font-size: 50%;
 }
-
 
 /* Margin and padding */
 
@@ -490,12 +447,11 @@ h4 {
 /* EFFECTS ANIMATIONS */
 
 .reflex-box {
-
-  -webkit-box-reflect: below 5px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0%, transparent), to(rgba(250, 250, 250, 0.2)))
+  -webkit-box-reflect: below 5px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0%, transparent), to(rgba(250, 250, 250, 0.2)));
 }
 
 .grow {
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .grow:hover {
@@ -503,20 +459,18 @@ h4 {
 }
 
 .fadeoutleft {
-  opacity  : 0;
-  overflow : hidden;
+  opacity: 0;
+  overflow: hidden;
   transform: translateX(-90%);
-
 }
 
 .myfadeOut {
-  opacity   : 0;
+  opacity: 0;
   transition: all 0.5s ease-in-out;
 }
 
 .fadeinright {
-  opacity  : 0;
-  overflow : hidden;
+  opacity: 0;
+  overflow: hidden;
   transform: translateX(90%);
-
 }

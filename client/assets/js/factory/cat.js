@@ -1,14 +1,11 @@
 // when page load
 $(document).ready(function () {
-    cat();
+  cat();
 });
-
 
 // Display HTML code for catin Factory
 function cat() {
-
-    var cat = 
-    `<div class="col-lg-4 catBox m-2 light-b-shadow d-flex justify-content-center">
+  var cat = `<div class="col-lg-4 catBox m-2 light-b-shadow d-flex justify-content-center">
         <div class="cat">
             <div class="head">
                 <div class="head_background"></div>
@@ -180,8 +177,7 @@ function cat() {
                 </div>
             </div>
         </div>
-    </div>`
+    </div>`;
 
-    $('#catAndCattibutes').html(cat)
-
+  $("#catAndCattibutes").html(cat);
 }

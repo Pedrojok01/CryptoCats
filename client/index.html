@@ -1,290 +1,365 @@
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CryptoCat</title>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/mystyle.css">
-    <link rel="stylesheet" href="assets/css/factory.css">
-    <link rel="stylesheet" href="assets/css/colors.css">
-    <link rel="stylesheet" href="assets/css/frontend.css">
-    <link rel="stylesheet" href="assets/css/cats.css">
-    <link rel="stylesheet" href="assets/css/animations.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/mystyle.css" />
+    <link rel="stylesheet" href="assets/css/factory.css" />
+    <link rel="stylesheet" href="assets/css/colors.css" />
+    <link rel="stylesheet" href="assets/css/frontend.css" />
+    <link rel="stylesheet" href="assets/css/cats.css" />
+    <link rel="stylesheet" href="assets/css/animations.css" />
 
     <script src="assets/js/utils/colors.js"></script>
     <script src="assets/js/utils/abi.js"></script>
-</head>
+  </head>
 
-
-<body>
-
+  <body>
     <!-- Start menu-->
     <div id="menu">
-        <nav class="navbar navbar-expand-lg fixed-top p-4 navbar-light bg-light">
-            <div class="container">
-                <a id="homeButton" class="navbar-brand" type="button" onclick="showHomeTab()">CryptoCat - NFTs</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarNavAltMarkup">
-                    <span class="navbar-toggler-icon"></span>
+      <nav class="navbar navbar-expand-lg fixed-top p-4 navbar-light bg-light">
+        <div class="container">
+          <a id="homeButton" class="navbar-brand" type="button" onclick="showHomeTab()">CryptoCat - NFTs</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup" role="tablist">
+            <div class="navbar-nav ms-auto">
+              <div
+                class="nav nav-pills align-items-end flex-column flex-lg-row mt-3 mt-lg-0"
+                id="nav-tab"
+                role="tablist"
+              >
+                <button
+                  class="nav-link active"
+                  id="nav-home-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#nav-home"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Home</b>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNavAltMarkup" role="tablist">
-                    <div class="navbar-nav ms-auto">
-                        <div class="nav nav-pills align-items-end flex-column flex-lg-row mt-3 mt-lg-0" id="nav-tab"
-                            role="tablist">
-                            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="pill"
-                                data-bs-target="#nav-home" type="button" role="tab">
-                                <b>Home</b>
-                            </button>
-                            <button onclick="showMyCats()" class="nav-link" id="nav-my-cats-tab" data-bs-toggle="pill"
-                                data-bs-target="#nav-my-cats" type="button" role="tab">
-                                <b>My Cats</b>
-                            </button>
-                            <button onclick="loadMarketplace()" class="nav-link" id="nav-marketplace-tab"
-                                data-bs-toggle="pill" data-bs-target="#nav-marketplace" type="button" role="tab">
-                                <b>Marketplace</b>
-                            </button>
-                            <button class="nav-link" id="nav-factory-tab" data-bs-toggle="pill"
-                                data-bs-target="#nav-factory" type="button" role="tab">
-                                <b>Factory</b>
-                            </button>
-                            <button id="loginButton" class="btn dark-btn ml-4">Connect MetaMask</button>
-                        </div>
-                    </div>
-                </div>
+                <button
+                  onclick="showMyCats()"
+                  class="nav-link"
+                  id="nav-my-cats-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#nav-my-cats"
+                  type="button"
+                  role="tab"
+                >
+                  <b>My Cats</b>
+                </button>
+                <button
+                  onclick="loadMarketplace()"
+                  class="nav-link"
+                  id="nav-marketplace-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#nav-marketplace"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Marketplace</b>
+                </button>
+                <button
+                  class="nav-link"
+                  id="nav-factory-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#nav-factory"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Factory</b>
+                </button>
+                <button id="loginButton" class="btn dark-btn ml-4">Connect MetaMask</button>
+              </div>
             </div>
-        </nav>
+          </div>
+        </div>
+      </nav>
     </div>
 
     <div class="tab-content frontend" align="center">
+      <!-- Display Notifications / default = hidden -->
+      <div class="topBar alert alert-success" style="visibility: hidden" role="alert" id="notification"></div>
 
-        <!-- Display Notifications / default = hidden -->
-        <div class="topBar alert alert-success" style="visibility: hidden" role="alert" id="notification"></div>
+      <!-- Home page Tab -->
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel">
+        <div class="container p-5">
+          <img src="assets/images/homeCatsGroup.png" class="catGroup" />
+          <div class="container">
+            <div class="banner">
+              <h3 class="c-white m-2">Collect and breed...<br />...some funny looking cats!</h3>
+              <button class="btn white-btn mt-2 c-red" onclick="showNavMarketplaceTab()">Get your own cat now</button>
+            </div>
+          </div>
 
-        <!-- Home page Tab -->
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel">
-            <div class="container p-5">
-                <img src="assets/images/homeCatsGroup.png" class="catGroup">
-                <div class="container">
-                    <div class="banner">
-                        <h3 class="c-white m-2">Collect and breed...<br>...some funny looking cats!</h3>
-                        <button class="btn white-btn mt-2 c-red" onclick="showNavMarketplaceTab()">Get your own cat
-                            now</button>
+          <div></div>
+
+          <div class="container middleBox">
+            <div class="row" id="catsDiv"></div>
+            <div class="row" id="ownersCatsDiv hidden"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Marketplace Tab -->
+      <div class="tab-pane fade" id="nav-marketplace" role="tabpanel">
+        <div class="container">
+          <div align="center">
+            <h1>Marketplace</h1>
+            <p class="mb-0">Buy cat NFTs from others or cancel your sale offers</p>
+          </div>
+          <div align="center" class="text-dark">
+            <div id="marketplace-collection" class="catGrid container"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My cats Tab -->
+      <div class="tab-pane fade" id="nav-my-cats" role="tabpanel">
+        <div class="container" style="max-width: none">
+          <div align="center" class="mb-4">
+            <h1>Cats Inventory</h1>
+            <p>Interact with your cats NFTs</p>
+          </div>
+          <div align="center" class="text-dark mt-6">
+            <nav id="menu-my-cats" class="pt-2">
+              <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                <button
+                  class="nav-link active"
+                  id="nav-show-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-show"
+                  type="button"
+                  role="tab"
+                  onclick="showMyCats()"
+                >
+                  <b>Show</b>
+                </button>
+                <button
+                  class="nav-link"
+                  id="nav-breed-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-breed"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Breed</b>
+                </button>
+                <button
+                  class="nav-link"
+                  id="nav-sell-tab"
+                  data-bs-toggle="tab"
+                  data-bs-target="#nav-sell"
+                  type="button"
+                  role="tab"
+                >
+                  <b>Sell</b>
+                </button>
+              </div>
+            </nav>
+            <div class="tab-content">
+              <!-- Show -->
+              <div class="tab-pane fade active show" id="nav-show" role="tabpanel">
+                <div id="cats-collection" class="catGrid container"></div>
+              </div>
+
+              <!-- Breed -->
+              <div class="tab-pane fade" id="nav-breed" role="tabpanel" style="height: 950px">
+                <div class="row g-6 justify-content-center m-2">
+                  <div class="col">
+                    <div class="bg-light text-dark" style="width: fit-content; padding: 5%; border-radius: 10px">
+                      <div
+                        id="breedFemale"
+                        class="btn dark-btn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#selectCatModal"
+                        onclick="fillSelectionModal(this.id)"
+                      >
+                        Select Mummy
+                      </div>
+                      <p class="card-body" style="visibility: hidden">
+                        You've choosen <span class="selectedId">x</span> as the mother!
+                      </p>
                     </div>
+                  </div>
+                  <div class="col">
+                    <div class="bg-light text-dark" style="width: fit-content; padding: 5%; border-radius: 10px">
+                      <div
+                        id="breedMale"
+                        class="btn dark-btn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#selectCatModal"
+                        onclick="fillSelectionModal(this.id)"
+                      >
+                        Select Daddy
+                      </div>
+                      <p class="card-body" style="visibility: hidden">
+                        You've choosen <span class="selectedId">x</span> as the father!
+                      </p>
+                    </div>
+                  </div>
                 </div>
+                <div class="row g-5 justify-content-center">
+                  <div class="col d-flex justify-content-center">
+                    <button
+                      id="resetBreedBtn"
+                      type="button"
+                      style="margin: 5%; width: 20vh"
+                      class="btn btn-danger btn-lg"
+                    >
+                      <b>Reset</b>
+                    </button>
+                    <button
+                      id="breedBtn"
+                      type="button"
+                      style="margin: 5%; width: 20vh"
+                      class="btn btn-success btn-lg disabled"
+                    >
+                      <b>Breed</b>
+                    </button>
+                  </div>
+                </div>
+              </div>
 
-                <div></div>
+              <!-- Sell -->
+              <div class="tab-pane fade" id="nav-sell" role="tabpanel" style="height: 80vh">
+                <div class="row g-5 justify-content-center m-2 mb-0">
+                  <div class="col m-2" style="max-width: 40vh" ;>
+                    <div
+                      class="card catCard bg-light text-dark"
+                      style="width: fit-content; padding: 5%; border-radius: 10px"
+                    >
+                      <button
+                        id="sellCat"
+                        class="btn dark-btn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#selectCatModal"
+                        onclick="fillSelectionModal(this.id)"
+                      >
+                        Select a cat to sell
+                      </button>
+                      <p class="card-body" style="visibility: hidden">
+                        Really wanna sell your CryptoCat <span class="selectedId">x</span>? Enter the price on the
+                        right:
+                      </p>
+                    </div>
+                  </div>
 
-                <div class="container middleBox">
-                    <div class="row" id="catsDiv"></div>
-                    <div class="row" id="ownersCatsDiv hidden"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Marketplace Tab -->
-        <div class="tab-pane fade" id="nav-marketplace" role="tabpanel">
-            <div class="container">
-                <div align="center">
-                    <h1>Marketplace</h1>
-                    <p class="mb-0">
-                        Buy cat NFTs from others or cancel your sale offers
-                    </p>
-                </div>
-                <div align="center" class="text-dark">
-                    <div id="marketplace-collection" class="catGrid container"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- My cats Tab -->
-        <div class="tab-pane fade" id="nav-my-cats" role="tabpanel">
-            <div class="container" style="max-width: none;">
-                <div align="center" class="mb-4">
-                    <h1>Cats Inventory</h1>
-                    <p>Interact with your cats NFTs</p>
-                </div>
-                <div align="center" class="text-dark mt-6">
-                    <nav id="menu-my-cats" class="pt-2">
-                        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                            <button class="nav-link active" id="nav-show-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-show" type="button" role="tab" onclick="showMyCats()">
-                                <b>Show</b>
-                            </button>
-                            <button class="nav-link" id="nav-breed-tab" data-bs-toggle="tab" data-bs-target="#nav-breed"
-                                type="button" role="tab">
-                                <b>Breed</b>
-                            </button>
-                            <button class="nav-link" id="nav-sell-tab" data-bs-toggle="tab" data-bs-target="#nav-sell"
-                                type="button" role="tab">
-                                <b>Sell</b>
-                            </button>
+                  <div class="col" style="max-width: 40vh" ;>
+                    <div class="row g-0 justify-content-center m-2 mt-0" style="padding-top: 5%">
+                      <div class="input-group centerBelowBreakpointLg" style="width: 18rem">
+                        <input type="number" class="form-control" id="sellPrice" step="any" placeholder="Set Price" />
+                        <span class="input-group-text">ETH</span>
+                      </div>
+                    </div>
+                    <div class="row g-5 justify-content-center m-2">
+                      <div class="col d-flex justify-content-center" style="max-width: 100vh" ;>
+                        <div style="display: flex">
+                          <button
+                            id="resetSellBtn"
+                            type="button"
+                            style="margin: 5%; width: 20vh"
+                            class="btn btn-danger btn-lg"
+                          >
+                            <b>Reset</b>
+                          </button>
+                          <button
+                            id="sellBtn"
+                            type="button"
+                            class="btn btn-success btn-lg disabled"
+                            style="margin: 5%; width: 20vh"
+                            onclick="sellCat()"
+                          >
+                            <b>Create Offer</b>
+                          </button>
                         </div>
-                    </nav>
-                    <div class="tab-content">
-
-                        <!-- Show -->
-                        <div class="tab-pane fade active show" id="nav-show" role="tabpanel">
-                            <div id="cats-collection" class="catGrid container"></div>
-                        </div>
-
-                        <!-- Breed -->
-                        <div class="tab-pane fade" id="nav-breed" role="tabpanel" style="height: 950px;">
-                            <div class="row g-6 justify-content-center m-2">
-                                <div class="col">
-                                    <div class="bg-light text-dark"
-                                        style="width: fit-content; padding: 5%; border-radius: 10px;">
-                                        <div id="breedFemale" class="btn dark-btn" data-bs-toggle="modal"
-                                            data-bs-target="#selectCatModal" onclick="fillSelectionModal(this.id)">
-                                            Select Mummy</div>
-                                        <p class="card-body" style="visibility: hidden;">You've choosen <span
-                                                class="selectedId">x</span> as the mother!</p>
-                                    </div>
-
-                                </div>
-                                <div class="col">
-                                    <div class="bg-light text-dark"
-                                        style="width: fit-content; padding: 5%; border-radius: 10px;">
-                                        <div id="breedMale" class="btn dark-btn" data-bs-toggle="modal"
-                                            data-bs-target="#selectCatModal" onclick="fillSelectionModal(this.id)">
-                                            Select Daddy</div>
-                                        <p class="card-body" style="visibility: hidden;">You've choosen <span
-                                                class="selectedId">x</span> as the father!</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-5 justify-content-center">
-                                <div class="col d-flex justify-content-center">
-                                    <button id="resetBreedBtn" type="button" style="margin: 5%; width: 20vh;"
-                                        class="btn btn-danger btn-lg">
-                                        <b>Reset</b>
-                                    </button>
-                                    <button id="breedBtn" type="button" style="margin: 5%; width: 20vh;"
-                                        class="btn btn-success btn-lg disabled">
-                                        <b>Breed</b>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Sell -->
-                        <div class="tab-pane fade" id="nav-sell" role="tabpanel" style="height: 80vh">
-                            <div class="row g-5 justify-content-center m-2 mb-0">
-                                <div class="col m-2" style="max-width: 40vh" ;>
-                                    <div class="card catCard bg-light text-dark"
-                                        style="width: fit-content; padding: 5%; border-radius: 10px;">
-                                        <button id="sellCat" class="btn dark-btn" data-bs-toggle="modal"
-                                            data-bs-target="#selectCatModal"
-                                            onclick="fillSelectionModal(this.id)">Select a cat to sell</button>
-                                        <p class="card-body" style="visibility: hidden;">Really wanna sell your
-                                            CryptoCat <span class="selectedId">x</span>? Enter the price on the right:
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="col" style="max-width: 40vh" ;>
-                                    <div class="row g-0 justify-content-center m-2 mt-0" style="padding-top: 5%;">
-                                        <div class="input-group centerBelowBreakpointLg" style="width: 18rem">
-                                            <input type="number" class="form-control" id="sellPrice" step="any"
-                                                placeholder="Set Price" />
-                                            <span class="input-group-text">ETH</span>
-                                        </div>
-                                    </div>
-                                    <div class="row g-5 justify-content-center m-2">
-                                        <div class="col d-flex justify-content-center" style="max-width: 100vh" ;>
-                                            <div style="display: flex;">
-                                                <button id="resetSellBtn" type="button" style="margin: 5%; width: 20vh;"
-                                                    class="btn btn-danger btn-lg">
-                                                    <b>Reset</b>
-                                                </button>
-                                                <button id="sellBtn" type="button"
-                                                    class="btn btn-success btn-lg disabled"
-                                                    style="margin: 5%; width: 20vh;" onclick="sellCat()">
-                                                    <b>Create Offer</b>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
 
-        <!-- Select Cat Modal -->
-        <div class="modal text-dark" id="selectCatModal" tabindex="-1">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Select a cat</h5>
-                        <button type="button" class="btn-close close" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="catSelection" class="catGrid container"></div>
-                    </div>
-                </div>
+      <!-- Select Cat Modal -->
+      <div class="modal text-dark" id="selectCatModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Select a cat</h5>
+              <button type="button" class="btn-close close" data-bs-dismiss="modal"></button>
             </div>
-        </div>
-
-
-        <!-- factory Tab -->
-        <div class="tab-pane fade" style="height: 1000px" id="nav-factory" role="tabpanel">
-            <div class="container p-6">
-                <div align="center" class="mb-4">
-                    <h1>Cats-Factory</h1>
-                    <p>Create your custom NFT Cat from scratch! <br />
-                        <span id="gen0CountText" class="hidden">(<span id="gen0Count">?</span> out of 50!)</span>
-                    </p>
-                </div>
-
-                <div id="catAndCattibutes" class="row justify-content-center mt-5">
-                    <!-- Cat box -->
-                </div>
-
-                <div class="row">
-                    <div align="center" class="col-lg-6 ButtonRaw m-3">
-                        <button type="button" class="btn btn-primary default btn-lg">Default DNA</button>
-                        <button type="button" class="btn btn-warning random btn-lg">Random DNA</button>
-                    </div>
-                    <div align="center" class="col-lg-4 ButtonRaw m-3">
-                        <button type="button" class="btn btn-success btn-lg btn-block createCatBtn">CREATE</button>
-                    </div>
-                </div>
-
-                <br>
-                <br>
+            <div class="modal-body">
+              <div id="catSelection" class="catGrid container"></div>
             </div>
+          </div>
         </div>
+      </div>
+
+      <!-- factory Tab -->
+      <div class="tab-pane fade" style="height: 1000px" id="nav-factory" role="tabpanel">
+        <div class="container p-6">
+          <div align="center" class="mb-4">
+            <h1>Cats-Factory</h1>
+            <p>
+              Create your custom NFT Cat from scratch! <br />
+              <span id="gen0CountText" class="hidden">(<span id="gen0Count">?</span> out of 50!)</span>
+            </p>
+          </div>
+
+          <div id="catAndCattibutes" class="row justify-content-center mt-5">
+            <!-- Cat box -->
+          </div>
+
+          <div class="row">
+            <div align="center" class="col-lg-6 ButtonRaw m-3">
+              <button type="button" class="btn btn-primary default btn-lg">Default DNA</button>
+              <button type="button" class="btn btn-warning random btn-lg">Random DNA</button>
+            </div>
+            <div align="center" class="col-lg-4 ButtonRaw m-3">
+              <button type="button" class="btn btn-success btn-lg btn-block createCatBtn">CREATE</button>
+            </div>
+          </div>
+
+          <br />
+          <br />
+        </div>
+      </div>
     </div>
 
     <!-- Footer -->
     <footer align="center">
-        <p>
-            Ethereum dApp programming - Moralis Academy - @2021
-            <br>
-            Designed by: <a href="https://pedrojok01.github.io/">Pedrojok01</a>
-        </p>
+      <p>
+        Ethereum dApp programming - Moralis Academy - @2021
+        <br />
+        Designed by: <a href="https://pedrojok01.github.io/">Pedrojok01</a>
+      </p>
     </footer>
+  </body>
 
-</body>
-
-<script src="assets/js/factory/cat.js"></script>
-<script src="assets/js/factory/catFactory.js"></script>
-<script src="assets/js/factory/catSettings.js"></script>
-<script src="assets/js/buildCat.js"></script>
-<script src="assets/js/displayCats.js"></script>
-<script src="assets/js/utils/notifications.js"></script>
-<script src="assets/js/utils/tabsDisplay.js"></script>
-<script src="assets/js/breeding.js"></script>
-<script src="assets/js/marketPlace.js"></script>
-<script src="./index.js"></script>
-
+  <script src="assets/js/factory/cat.js"></script>
+  <script src="assets/js/factory/catFactory.js"></script>
+  <script src="assets/js/factory/catSettings.js"></script>
+  <script src="assets/js/buildCat.js"></script>
+  <script src="assets/js/displayCats.js"></script>
+  <script src="assets/js/utils/notifications.js"></script>
+  <script src="assets/js/utils/tabsDisplay.js"></script>
+  <script src="assets/js/breeding.js"></script>
+  <script src="assets/js/marketPlace.js"></script>
+  <script src="./index.js"></script>
 </html>

@@ -31,7 +31,7 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
      ************/
 
     //Set the current Catcontract address and initialize the instance of Catcontract:
-    function setCatContract(address _catContractAddress) external onlyOwner {
+    function setCatContract(address _catContractAddress) external override onlyOwner {
         _catContract = Catcontract(_catContractAddress);
     }
 

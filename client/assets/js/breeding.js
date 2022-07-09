@@ -1,19 +1,16 @@
 // Display cats selection modal for both Breeding & Sell:
 
-
 // Display available cats into modal
 async function fillSelectionModal(domId) {
-
   resetModal();
 
   const dadId = $("#breedMale ~ * .selectedId").html();
   const mumId = $("#breedFemale ~ * .selectedId").html();
   const sellCatId = $("#sellCat ~ * .selectedId").html();
-  
+
   var userCats = await getUserCats();
 
   for (i = 0; i < userCats.length; i++) {
-
     const catCopy = $(`#catview${i}`).clone();
     catCopy.addClass("pointer");
     const tokenId = userCats[i].indexId;
@@ -37,7 +34,7 @@ function selectForBreeding(domId, userIndex, tokenId) {
 
   $("#selectCatModal").modal("hide");
   $(`#${domId} ~ * .selectedId`).html(tokenId);
-  $(".card-body").css({ "visibility": "visible" });
+  $(".card-body").css({ visibility: "visible" });
 
   if ($("#breedFemale").html() != "" && $("#breedMale").html() != "") {
     $("#breedBtn").removeClass("disabled");
@@ -46,7 +43,6 @@ function selectForBreeding(domId, userIndex, tokenId) {
 
 // Display selected parent for breeding:
 function showSelectedCat(domId, userIndex) {
-
   let div = $(`#catview${userIndex}`).clone();
 
   $("#" + domId).empty();
@@ -57,7 +53,6 @@ function showSelectedCat(domId, userIndex) {
 
 // Create Cat NFT from 2 selected parents
 async function breedCat() {
-
   const dadId = $("#breedMale ~ * .selectedId").html();
   const mumId = $("#breedFemale ~ * .selectedId").html();
   // While waiting for event:
@@ -67,7 +62,7 @@ async function breedCat() {
   $("#breedFemale, #breedMale").removeAttr("onclick");
 
   try {
-    const res = await instanceCatContract.methods.breed(dadId, mumId).send({})
+    const res = await instanceCatContract.methods.breed(dadId, mumId).send({});
   } catch (err) {
     errorNotification(err);
   }
@@ -83,7 +78,6 @@ function resetModal() {
 
 // Reset the -Breed- tab:
 function resetBreed() {
-
   $("#breedFemale").html("Select Mummy");
   $("#breedFemale").addClass("btn");
   $("#breedFemale").addClass("dark-btn");
@@ -93,7 +87,7 @@ function resetBreed() {
   $("#breedMale").addClass("dark-btn");
 
   $(".selectedId").html("");
-  $(".card-body").css({ "visibility": "hidden" });
+  $(".card-body").css({ visibility: "hidden" });
   $("#breedBtn").addClass("disabled");
 
   $("#breedFemale").addClass("pointer");
@@ -104,15 +98,14 @@ function resetBreed() {
   $("#breedMale").attr("onclick", "fillSelectionModal(this.id)");
 }
 
-
 // **** BUTTONS LISTENERS **** //
 
 // Breed button listener
 $("#breedBtn").click(() => {
   breedCat();
-})
+});
 
 // Reset button listener
 $("#resetBreedBtn").click(() => {
   resetBreed();
-})
+});

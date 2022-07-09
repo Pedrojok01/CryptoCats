@@ -1,36 +1,36 @@
 .catBox {
-    background-color: #e2efff !important;
-    position: relative;
-    border-radius: 10px;
-    padding: 20px 20px 20px 20px;
-    object-fit: contain;
-    z-index: 0;
+  background-color: #e2efff !important;
+  position: relative;
+  border-radius: 10px;
+  padding: 20px 20px 20px 20px;
+  object-fit: contain;
+  z-index: 0;
 }
 
 .ButtonRaw {
-    position: relative;
-    border-radius: 10px;
-    object-fit: contain;
+  position: relative;
+  border-radius: 10px;
+  object-fit: contain;
 }
 
 .cattributes {
-    padding: 25px;
-    background-color: #ededed;
-    border-radius: 10px;
+  padding: 25px;
+  background-color: #ededed;
+  border-radius: 10px;
 }
 
 .dnaDiv {
-    position: absolute;
-    padding: 2%;
-    left:20px;
-    bottom: 5px;
+  position: absolute;
+  padding: 2%;
+  left: 20px;
+  bottom: 5px;
 }
 
 .tabs {
-    padding-top: 10px;
-    padding-bottom: 50px;
+  padding-top: 10px;
+  padding-bottom: 50px;
 }
 
 #notification {
-    visibility: hidden;
+  visibility: hidden;
 }

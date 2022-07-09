@@ -1,6 +1,5 @@
 # CryptoCats dApp - Create, Breed and Sale some funny lookin' cats!
 
-
 [![](https://img.shields.io/badge/Moralis%20Academy-Ethereum%20Dapp%20Programming-blue)](https://academy.moralis.io/)
 [![Stargazers](https://img.shields.io/github/stars/Pedrojok01/CryptoCats)](https://github.com/Pedrojok01/CryptoCats/stargazers)
 [![Issues](https://img.shields.io/github/issues/Pedrojok01/CryptoCats)](https://github.com/Pedrojok01/CryptoCats/issues)
@@ -15,6 +14,7 @@ Try it yourself: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)
 ![Preview](./client/assets/images/preview.jpg)
 
 Decentralized application for the Ethereum Network built with:
+
 - Solidity ^0.8.6
 - Truffle
 - Ganache
@@ -24,6 +24,7 @@ Decentralized application for the Ethereum Network built with:
 ## Installation
 
 Make sure you have the following ready:
+
 - `Node.JS` installed
 - `npm` installed
 - [Truffle](https://www.trufflesuite.com/docs) installed globally via `npm install -g truffle` (developed on v5.3.2).
@@ -46,6 +47,7 @@ To deploy your own smart-contracts:
 ## Config
 
 On each deploy, make sure to:
+
 - Change the `CAT_CONTRACT_ADD` and the `MARKETPLACE_CONTRACT_ADD` in `/client/index.js` to your deployed contracts address;
 - Edit the abi file in `/client/assets/js/utils/abi.js` in you make any changes to the smart-contracts;
 - Enable/disable, and update the suitable networks in `truffle-config.js`;
@@ -54,4 +56,3 @@ On each deploy, make sure to:
 ## Use
 
 You are now set to start your local server. Make sure you're in `CryptoCats/client` and launch the local server using the following command: `python3 -m http.server 8000`. You can then access the app in your browser at: [http://localhost:8000/](http://localhost:8000/).
-

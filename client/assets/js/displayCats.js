@@ -1,127 +1,125 @@
 // File to load cat in HTML Div / Tab / Modal
 
-
 // Get cats per user, then get cat object per cat Id
 async function loadCats(div) {
-    pendingNotification();
-    var catsToLoad = [];
+  pendingNotification();
+  var catsToLoad = [];
 
-    try {
-        let totalCats = await instanceCatContract.methods.getCatPerOwner(userAddress).call();
+  try {
+    let totalCats = await instanceCatContract.methods.getCatPerOwner(userAddress).call();
 
-        for (i = 0; i < totalCats.length; i++) {
-            var cat = await instanceCatContract.methods.getCat(totalCats[i]).call();
-            catsToLoad.push(cat);
-            userIndex = i;
-            appendCat(cat.genes, userIndex, cat.indexId, cat.generation, div);
-        }
-
-    } catch (err) {
-        errorNotification(err)
-        return;
+    for (i = 0; i < totalCats.length; i++) {
+      var cat = await instanceCatContract.methods.getCat(totalCats[i]).call();
+      catsToLoad.push(cat);
+      userIndex = i;
+      appendCat(cat.genes, userIndex, cat.indexId, cat.generation, div);
     }
+  } catch (err) {
+    errorNotification(err);
+    return;
+  }
 
-    showNotifications("Your cats have been updated.");
+  showNotifications("Your cats have been updated.");
 }
-
 
 // Add cat to html element after CSS rendering
 function appendCat(dna, userIndex, id, gen, div) {
-    let dnaToRender = catDna(dna);
+  let dnaToRender = catDna(dna);
 
-    catCard(div, userIndex, id);
-    renderCat(dnaToRender, userIndex);
+  catCard(div, userIndex, id);
+  renderCat(dnaToRender, userIndex);
 
-    $(`#catDNA${id}`).html(`
+  $(`#catDNA${id}`).html(`
     <span class="badge bg-light text-dark" id="selectedId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
     <br>
     <span class="badge bg-light text-dark"><h4 class="tsp-2 m-0"><b>GEN:</b>${gen}</h4></span>
     <br>
-    <span class="badge bg-light text-dark"><h4 class="tsp-2 m-0"><b>DNA:</b>${dna}</h4></span>`)
+    <span class="badge bg-light text-dark"><h4 class="tsp-2 m-0"><b>DNA:</b>${dna}</h4></span>`);
 }
-
 
 // Add offer to html element after CSS rendering
 function appendOffer(dna, userIndex, id, gen, div) {
-    let dnaToRender = catDna(dna);
+  let dnaToRender = catDna(dna);
 
-    offerCard(div, userIndex, id);
-    renderCat(dnaToRender, userIndex);
+  offerCard(div, userIndex, id);
+  renderCat(dnaToRender, userIndex);
 
-    $(`#offerDNA${userIndex}`).html(`
+  $(`#offerDNA${userIndex}`).html(`
     <span class="badge bg-light text-dark" id="selectedId"><h4 class="tsp-2 m-0"><b>ID:</b>${id}</h4></span>
     <br>
     <span class="badge bg-light text-dark"><h4 class="tsp-2 m-0"><b>GEN:</b>${gen}</h4></span>
     <br>
-    <span class="badge bg-light text-dark"><h4 class="tsp-2 m-0"><b>DNA:</b>${dna}</h4></span>`)
+    <span class="badge bg-light text-dark"><h4 class="tsp-2 m-0"><b>DNA:</b>${dna}</h4></span>`);
 }
 
 //Apply cat CSS Styles from buidCat.js
 function renderCat(dna, id) {
-    bodyColor(dna.bodyColor, id)
-    mouthColor(dna.mouthColor, id)
-    pawsColor(dna.pawsColor, id)
-    eyesColor(dna.eyesColor, id)
-    collarColor(dna.collarColor, id)
-    switchEyes(dna.eyesShape, id)
-    decorationVariation(dna.decorationPattern, dna.decorationColor, id)
-    animationVariation(dna.animation, id)
-    backgroundVariation(dna.background, id)
+  bodyColor(dna.bodyColor, id);
+  mouthColor(dna.mouthColor, id);
+  pawsColor(dna.pawsColor, id);
+  eyesColor(dna.eyesColor, id);
+  collarColor(dna.collarColor, id);
+  switchEyes(dna.eyesShape, id);
+  decorationVariation(dna.decorationPattern, dna.decorationColor, id);
+  animationVariation(dna.animation, id);
+  backgroundVariation(dna.background, id);
 }
 
 //Split the cat DNA to use in the render
 function catDna(dnaStr) {
-    var dna = {
-        //Colors
-        "bodyColor": dnaStr.substring(0, 2),
-        "mouthColor": dnaStr.substring(2, 4),
-        "pawsColor": dnaStr.substring(4, 6),
-        "eyesColor": dnaStr.substring(6, 8),
-        "collarColor": dnaStr.substring(8, 10),
-        //Cattributes
-        "eyesShape": dnaStr.substring(10, 11),
-        "decorationPattern": dnaStr.substring(11, 12),
-        "decorationColor": dnaStr.substring(12, 14),
-        "animation": dnaStr.substring(14, 15),
-        "background": dnaStr.substring(15, 16)
-    }
-    return dna;
+  var dna = {
+    //Colors
+    bodyColor: dnaStr.substring(0, 2),
+    mouthColor: dnaStr.substring(2, 4),
+    pawsColor: dnaStr.substring(4, 6),
+    eyesColor: dnaStr.substring(6, 8),
+    collarColor: dnaStr.substring(8, 10),
+    //Cattributes
+    eyesShape: dnaStr.substring(10, 11),
+    decorationPattern: dnaStr.substring(11, 12),
+    decorationColor: dnaStr.substring(12, 14),
+    animation: dnaStr.substring(14, 15),
+    background: dnaStr.substring(15, 16),
+  };
+  return dna;
 }
-
 
 //Cat HTML Div for -My Cats- tab
 function catCard(div, userIndex, id) {
+  var catDiv =
+    `<div id="catview` +
+    userIndex +
+    `">
+                    <div id="catCardDiv` +
+    userIndex +
+    `" class="catDiv light-b-shadow">${catBody(userIndex)}</div>
+                    <div class="catInfos" id="catDNA` +
+    id +
+    `"></div>
+                </div>`;
+  var catView = $(`#catview${userIndex}`);
 
-    var catDiv = `<div id="catview` + userIndex + `">
-                    <div id="catCardDiv` + userIndex + `" class="catDiv light-b-shadow">${catBody(userIndex)}</div>
-                    <div class="catInfos" id="catDNA` + id + `"></div>
-                </div>`
-    var catView = $(`#catview${userIndex}`)
-
-    if (!catView.length) {
-        div.append(catDiv)
-    }
+  if (!catView.length) {
+    div.append(catDiv);
+  }
 }
 
 //Offer HTML Div for -Marketplace- tab
 function offerCard(div, userIndex, id) {
-
-    var offerDiv = `<div id="offerview${userIndex}">
+  var offerDiv = `<div id="offerview${userIndex}">
                     <div id="offerCardDiv${userIndex}" class="catDiv light-b-shadow">${catBody(userIndex)}</div>
                     <div class="catInfos" id="offerDNA${userIndex}"></div>
-                </div>`
-    var offerView = $(`#offerview${userIndex}`)
+                </div>`;
+  var offerView = $(`#offerview${userIndex}`);
 
-    if (!offerView.length) {
-        div.append(offerDiv)
-    }
+  if (!offerView.length) {
+    div.append(offerDiv);
+  }
 }
 
 //HTML Render per CatId:
 function catBody(id) {
-
-    var catHTML =
-        `<div id="wholeHead${id}" class="head">
+  var catHTML = `<div id="wholeHead${id}" class="head">
             <div id="headColor${id}" class="head_background"></div>
                 <div class="ears">
                     <div id="leftEar${id}" class="ear_left">
@@ -179,7 +177,7 @@ function catBody(id) {
             <div id="tail${id}" class="tail">
                 <div id="tailBallColor${id}" class="tail_ball"></div>
             </div>
-        </div>`
+        </div>`;
 
-    return catHTML;
+  return catHTML;
 }

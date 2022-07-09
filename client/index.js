@@ -65,10 +65,6 @@ async function loginWithMetaMask() {
   await instanceCatContract.events
     .Birth({ filter: { owner: userAddress }, fromBlock: "latest" })
     .on("data", (event) => {
-      /*if (isDuplicatedContractEvent("Birth", event.transactionHash)) {
-            return;
-        }
-        */
       let owner = event.returnValues.owner;
       let catId = event.returnValues.catId;
       let dadId = event.returnValues.dadId;

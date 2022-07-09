@@ -18,7 +18,6 @@ async function loadCats(div) {
     errorNotification(err);
     return;
   }
-
   showNotifications("Your cats have been updated.");
 }
 
@@ -85,17 +84,10 @@ function catDna(dnaStr) {
 }
 
 const catCard = (div, userIndex, id) => {
-  var catDiv =
-    `<div id="catview` +
-    userIndex +
-    `">
-                  <div id="catCardDiv` +
-    userIndex +
-    `" class="catDiv light-b-shadow">${catBody(userIndex)}</div>
-                  <div class="catInfos" id="catDNA` +
-    id +
-    `"></div>
-              </div>`;
+  var catDiv = `<div id="catview${userIndex}">
+                    <div id="catCardDiv${userIndex}" class="catDiv light-b-shadow">${catBody(userIndex)}</div>
+                    <div class="catInfos" id="catDNA${userIndex}"></div>
+                </div>`;
   var catView = $(`#catview${userIndex}`);
 
   if (!catView.length) {

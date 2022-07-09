@@ -24,8 +24,6 @@ $(document).ready(function () {
 // Default DNA value
 function defaultPage() {
   resetCatToDefault();
-  $(".tab.cattributesBtn").hide();
-  $(".tab.catColorsBtn").show();
   renderCatFactory(defaultDNA);
 }
 
@@ -83,16 +81,6 @@ function renderCatFactory(dna) {
 
 /*Tabs settings in Cattributes:
  *******************************/
-
-$(".btn.catColorsBtn").click(() => {
-  $(".tab.cattributesBtn").hide();
-  $(".tab.catColorsBtn").show();
-});
-
-$(".btn.cattributesBtn").click(() => {
-  $(".tab.catColorsBtn").hide();
-  $(".tab.cattributesBtn").show();
-});
 
 $(".btn.default").click(() => {
   defaultPage();

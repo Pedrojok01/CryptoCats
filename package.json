@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@openzeppelin/contracts": "^4.7.0",
-    "@truffle/hdwallet-provider": "2.0.9",
+    "@truffle/hdwallet-provider": "2.0.10",
     "dotenv": "^16.0.1",
     "eslint": "^8.19.0",
     "eslint-config-jquery": "^3.0.0",

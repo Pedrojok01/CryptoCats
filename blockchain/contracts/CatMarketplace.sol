@@ -3,8 +3,9 @@ pragma solidity 0.8.7;
 
 import "./interface/ICatMarketplace.sol";
 import "./Catcontract.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract CatMarketplace is ICatMarketPlace, Ownable {
+contract CatMarketplace is ICatMarketPlace, Ownable, ReentrancyGuard {
     Catcontract private _catContract;
 
     /*Storage:
@@ -58,7 +59,7 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
     }
 
     // Creates a new offer for _tokenId for the price _price.
-    function setOffer(uint256 _price, uint256 _tokenId) external override {
+    function setOffer(uint256 _price, uint256 _tokenId) external override nonReentrant {
         require(msg.sender == _catContract.ownerOf(_tokenId), "You do not own this cat!");
         require(_isOffer(_tokenId) == false, "This cat is already on sale!");
 
@@ -88,7 +89,7 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
     }
 
     //Executes the purchase of _tokenId.
-    function buyCat(uint256 _tokenId) external payable override {
+    function buyCat(uint256 _tokenId) external payable override nonReentrant {
         Offer memory offer = tokenIdToOffer[_tokenId];
         require(_isOffer(_tokenId) == true, "This cat isn't for sale!");
         require(msg.sender != offer.seller, "This is already your cat!");

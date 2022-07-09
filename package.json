@@ -1,8 +1,11 @@
 {
   "name": "cryptocats",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "live link: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)",
+  "author": "Pedrojok01",
+  "license": "MIT",
   "main": "index.js",
+  "homepage": "https://github.com/Pedrojok01/CryptoCats#readme",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,10 +13,12 @@
     "type": "git",
     "url": "git+https://github.com/Pedrojok01/CryptoCats.git"
   },
-  "author": "Pedrojok01",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Pedrojok01/CryptoCats/issues"
   },
-  "homepage": "https://github.com/Pedrojok01/CryptoCats#readme"
+  "devDependencies": {
+    "@openzeppelin/contracts": "^4.7.0",
+    "@truffle/hdwallet-provider": "2.0.9",
+    "dotenv": "^16.0.1"
+  }
 }

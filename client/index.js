@@ -55,7 +55,7 @@ async function loginWithMetaMask() {
 
     // NAV BAR TAB UPDATE
     const currentNavbarTab = $("#menu .nav-link.active").attr("id");
-    if (currentNavbarTab == "nav-my-kitties-tab") {
+    if (currentNavbarTab == "nav-my-cats-tab") {
         await showMyCats();
     } else if (currentNavbarTab == "nav-marketplace-tab") {
         await loadMarketplace();

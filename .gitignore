@@ -6,7 +6,8 @@
 
 # production
 /blockchain/build
-/blockchain/.secret
+/blockchain/secret.json
+.env
 
 # netlify
 /client/build

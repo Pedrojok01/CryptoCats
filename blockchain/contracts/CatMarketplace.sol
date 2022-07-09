@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.6;
+pragma solidity 0.8.7;
 
 import "./interface/ICatMarketplace.sol";
 import "./Catcontract.sol";
@@ -80,10 +80,7 @@ contract CatMarketplace is ICatMarketPlace, Ownable {
     // Removes an existing offer.
     function removeOffer(uint256 _tokenId) external override {
         require(_isOffer(_tokenId) == true, "No offer for this cat!");
-        require(
-            msg.sender == tokenIdToOffer[_tokenId].seller,
-            "This cat isn't yours!"
-        );
+        require(msg.sender == tokenIdToOffer[_tokenId].seller, "This cat isn't yours!");
 
         _removeOffer(_tokenId);
 

@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.6;
+pragma solidity 0.8.7;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Catcontract is ERC721Enumerable, Ownable {
-    
     /*Storage:
      ***********/
 
-    uint8 public CREATION_LIMIT_GEN0;   // Max Gen0 supply, definied in constructor
-    uint8 public gen0Count = 0;         // Actual number of Gen0 cats
-    uint256 public maxCatsSupply;       // Max cats supply, definied in constructor
-    uint256 public catsSupplyCount;     // Actual cats supply
+    uint8 public CREATION_LIMIT_GEN0; // Max Gen0 supply, definied in constructor
+    uint8 public gen0Count = 0; // Actual number of Gen0 cats
+    uint256 public maxCatsSupply; // Max cats supply, definied in constructor
+    uint256 public catsSupplyCount; // Actual cats supply
 
     struct Cat {
         uint16 generation;
@@ -25,18 +24,10 @@ contract Catcontract is ERC721Enumerable, Ownable {
 
     Cat[] cats; // Cat storage array
 
-
     /*Events:
      **********/
 
-    event Birth(
-        address indexed owner,
-        uint256 indexed catId,
-        uint256 dadId,
-        uint256 mumId,
-        uint256 genes
-    );
-
+    event Birth(address indexed owner, uint256 indexed catId, uint256 dadId, uint256 mumId, uint256 genes);
 
     /*Constructor:
      ***************/
@@ -60,8 +51,7 @@ contract Catcontract is ERC721Enumerable, Ownable {
         payable(msg.sender).transfer(address(this).balance);
     }
 
-
-/* CREATE CAT FUNCTIONS:
+    /* CREATE CAT FUNCTIONS:
 ========================*/
 
     // Create Gen0 cats
@@ -100,9 +90,7 @@ contract Catcontract is ERC721Enumerable, Ownable {
         return newCatId;
     }
 
-
-
-/* GET CAT FUNCTIONS:
+    /* GET CAT FUNCTIONS:
 ======================*/
 
     //Get cat genes per cat id:
@@ -128,7 +116,7 @@ contract Catcontract is ERC721Enumerable, Ownable {
         birthTime = cat.birthTime;
         genes = cat.genes;
     }
-    
+
     //Display all cats per generation:
     function getCatPerGeneration(uint16 _generation) public view returns (uint256[] memory catsPerGen) {
         for (uint256 tokenId = 1; tokenId <= totalSupply(); tokenId++) {
@@ -160,15 +148,11 @@ contract Catcontract is ERC721Enumerable, Ownable {
         }
     }
 
-
-/* BREEDING FUNCTIONS:
+    /* BREEDING FUNCTIONS:
 ======================*/
 
     function breed(uint256 _dadId, uint256 _mumId) public returns (uint256) {
-        require(
-            ownerOf(_dadId) == msg.sender && ownerOf(_mumId) == msg.sender,
-            "You do not own those cats!"
-        );
+        require(ownerOf(_dadId) == msg.sender && ownerOf(_mumId) == msg.sender, "You do not own those cats!");
         require(_dadId != _mumId, "What you're asking for is impossible!");
         uint256 dadDna = cats[_dadId].genes;
         uint256 mumDna = cats[_mumId].genes;
@@ -180,15 +164,7 @@ contract Catcontract is ERC721Enumerable, Ownable {
 
         uint16 newIndexId = uint16(catsSupplyCount);
 
-        return
-            _createCat(
-                _generation,
-                newIndexId,
-                _dadId,
-                _mumId,
-                kidDna,
-                msg.sender
-            );
+        return _createCat(_generation, newIndexId, _dadId, _mumId, kidDna, msg.sender);
     }
 
     // set new generation
@@ -246,9 +222,7 @@ contract Catcontract is ERC721Enumerable, Ownable {
 
     // Random number between 00 and 98 = percent %
     function randomPercent() private view returns (uint256) {
-        uint256 percent = uint256(
-            keccak256(abi.encodePacked(block.timestamp, msg.sender, gasleft()))
-        ) % 98;
+        uint256 percent = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender, gasleft()))) % 98;
         return percent;
     }
 

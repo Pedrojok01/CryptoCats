@@ -84,25 +84,24 @@ function catDna(dnaStr) {
   return dna;
 }
 
-//Cat HTML Div for -My Cats- tab
-function catCard(div, userIndex, id) {
+const catCard = (div, userIndex, id) => {
   var catDiv =
     `<div id="catview` +
     userIndex +
     `">
-                    <div id="catCardDiv` +
+                  <div id="catCardDiv` +
     userIndex +
     `" class="catDiv light-b-shadow">${catBody(userIndex)}</div>
-                    <div class="catInfos" id="catDNA` +
+                  <div class="catInfos" id="catDNA` +
     id +
     `"></div>
-                </div>`;
+              </div>`;
   var catView = $(`#catview${userIndex}`);
 
   if (!catView.length) {
     div.append(catDiv);
   }
-}
+};
 
 //Offer HTML Div for -Marketplace- tab
 function offerCard(div, userIndex, id) {

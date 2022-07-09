@@ -21,7 +21,7 @@ function pendingNotification() {
 
 // Display error message if any
 function errorNotification(error) {
-  if (error.message == undefined) {
+  if (error.message === undefined) {
     showNotifications(error);
     console.error(error);
   } else {

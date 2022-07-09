@@ -10,7 +10,7 @@ function showHomeTab() {
 }
 
 // Load -My Cats- tab
-async function showMyCats() {
+const showMyCats = async () => {
   $("#nav-breed, #nav-sell, #nav-marketplace, #nav-factory").removeClass("active show");
   $("#nav-show").addClass("active show");
   const tabToDisplay = document.querySelector("#nav-show-tab");
@@ -19,7 +19,7 @@ async function showMyCats() {
   if (!notConnected()) {
     await loadCats($("#cats-collection"));
   }
-}
+};
 
 // Load -MarketPlace- tab
 async function showNavMarketplaceTab() {

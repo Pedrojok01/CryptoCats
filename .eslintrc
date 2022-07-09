@@ -1,37 +1,33 @@
 {
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "env": {
-      "browser": true,
-      "node": true,
-      "es2021": true,
-      "jest": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/jsx-runtime",
-      "plugin:react/recommended",
-      "plugin:prettier/recommended",
-      "plugin:react-hooks/recommended"
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 12
+  },
+  "env": {
+    "jquery": true,
+    "browser": true,
+    "commonjs": true,
+  "es2021": true
+  },
+  "extends": [
+    "jquery",
+    "plugin:jquery/slim",
+    "eslint:recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "jquery"
+  ],
+  "rules": {
+    "semi": [
+      "error",
+      "always"
     ],
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 12,
-      "sourceType": "module"
-    },
-    "plugins": [
-      "react"
+    "quotes": [
+      "error",
+      "double"
     ],
-    "rules": {
-      "react/react-in-jsx-scope": "off",
-      "react/prop-types": "off",
-      "react/jsx-key": "off",
-      "react/no-unescaped-entities": "off",
-      "linebreak-style": 0
-    }
+    "no-undef": "off",
+    "no-unused-vars": "off"
   }
+}

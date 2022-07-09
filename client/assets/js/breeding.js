@@ -16,11 +16,11 @@ async function fillSelectionModal(domId) {
     const tokenId = userCats[i].indexId;
 
     let functionName = "selectForBreeding";
-    if (domId == "sellCat") {
+    if (domId === "sellCat") {
       functionName = "selectForSale";
     }
 
-    if (tokenId != dadId && tokenId != mumId && tokenId != sellCatId) {
+    if (tokenId !== dadId && tokenId !== mumId && tokenId !== sellCatId) {
       catCopy.addClass("pointer");
       catCopy.attr("onclick", `${functionName}("${domId}", "${i}", "${tokenId}")`);
       catCopy.appendTo("#catSelection");
@@ -36,7 +36,7 @@ function selectForBreeding(domId, userIndex, tokenId) {
   $(`#${domId} ~ * .selectedId`).html(tokenId);
   $(".card-body").css({ visibility: "visible" });
 
-  if ($("#breedFemale").html() != "" && $("#breedMale").html() != "") {
+  if ($("#breedFemale").html() !== "" && $("#breedMale").html() !== "") {
     $("#breedBtn").removeClass("disabled");
   }
 }

@@ -328,7 +328,7 @@ function thirdEyeDecoration(id) {
 // Decoration colors --- Has been included in decorationVariation rendering
 function decorationColor(codeShape, codeColor, id) {
   var color = colors[codeColor];
-  if (codeShape == 5) {
+  if (codeShape === 5) {
     $(`#foreheadMid${id}`).css("background-color", "#" + color);
     $(`#foreheadLeft${id}`).css("background-color", "black");
     $(`#foreheadRight${id}`).css("background-color", "white");
@@ -390,7 +390,7 @@ function animationType4(id) {
   //EYES MOVING
   let temp = $(`#eyeName${id}`).html(); // CHANGE AFTER EYES SHAPE
 
-  if (temp == "Tired" || temp == "Cyclope" || temp == "Surprised") {
+  if (temp === "Tired" || temp === "Cyclope" || temp === "Surprised") {
     $(
       `#innerPupilLeft${id}, #smallerInnerPupilLeft${id}, #innerPupilRight${id}, #smallerInnerPupilRight${id}`
     ).addClass("movingInnerEyes");

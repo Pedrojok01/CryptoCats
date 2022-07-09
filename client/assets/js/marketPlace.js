@@ -23,7 +23,7 @@ async function loadMarketplace() {
     return;
   }
 
-  if (marketOffers.length == 0) {
+  if (marketOffers.length === 0) {
     $("#marketplace-collection").append("<p class='text-light'>There are currently no cats for sale...</p>");
   }
 
@@ -93,7 +93,7 @@ function selectForSale(domId, userIndex, tokenId) {
   $(".card-body").css({ visibility: "visible" });
 
   const sellPrice = $("#sellPrice").val();
-  if (tokenId != "" && sellPrice != "" && sellPrice >= 0) {
+  if (tokenId !== "" && sellPrice !== "" && sellPrice >= 0) {
     $("#sellBtn").removeClass("disabled");
   }
 }

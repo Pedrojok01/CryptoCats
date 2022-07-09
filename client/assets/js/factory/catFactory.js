@@ -42,7 +42,7 @@ function eyesColorFactory(color, code) {
 
 function decorationColorFactory(color, code) {
   let temp = $("#decorationshape").val();
-  if (temp == 5) {
+  if (temp === 5) {
     $(".forehead").css("background-color", "#" + color);
     $(".forehead.line_left").css("background-color", "black");
     $(".forehead.line_right").css("background-color", "white");
@@ -97,7 +97,7 @@ function eyeVariationFactory(num) {
   switchEyesFactory(num);
 
   let eyeAnim = parseInt($("#animation").val());
-  if (eyeAnim == 5 || eyeAnim == 6) {
+  if (eyeAnim === 5 || eyeAnim === 6) {
     animationType4Factory(eyeAnim);
   }
 }
@@ -396,7 +396,7 @@ function animationType4Factory() {
   //EYES MOVING
   let temp = parseInt($("#eyeshape").val());
   resetEyesFactory();
-  if (temp == 3 || temp == 4 || temp == 6) {
+  if (temp === 3 || temp === 4 || temp === 6) {
     $(".inner_pupil.left, .smaller_inner_pupil.left, .inner_pupil.right, .smaller_inner_pupil.right").addClass(
       "movingInnerEyes"
     );

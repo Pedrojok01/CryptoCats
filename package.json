@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint:check": "eslint .",
-    "lint:fix": "eslint --fix",
+    "lint:fix": "eslint --fix \"**/*.{sol,js,jsx,ts,tsx,css,md,json,html}\"",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write \"**/*.{sol,js,jsx,ts,tsx,css,md,json,html}\" .prettierrc --config ./.prettierrc",
     "slither": "slither ./blockchain/contracts --solc-remaps @openzeppelin=node_modules/@openzeppelin --exclude naming-convention,external-function,low-level-calls --buidler-ignore-compile"
@@ -25,7 +25,10 @@
     "@openzeppelin/contracts": "^4.7.0",
     "@truffle/hdwallet-provider": "2.0.9",
     "dotenv": "^16.0.1",
+    "eslint": "^8.19.0",
+    "eslint-config-jquery": "^3.0.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jquery": "^1.5.1",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.7.1",
     "prettier-plugin-solidity": "^1.0.0-beta.19"

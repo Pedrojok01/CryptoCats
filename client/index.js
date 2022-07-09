@@ -53,11 +53,11 @@ async function loginWithMetaMask() {
 
   // NAV BAR TAB UPDATE
   const currentNavbarTab = $("#menu .nav-link.active").attr("id");
-  if (currentNavbarTab == "nav-my-cats-tab") {
+  if (currentNavbarTab === "nav-my-cats-tab") {
     await showMyCats();
-  } else if (currentNavbarTab == "nav-marketplace-tab") {
+  } else if (currentNavbarTab === "nav-marketplace-tab") {
     await loadMarketplace();
-  } else if (currentNavbarTab == "nav-factory-tab") {
+  } else if (currentNavbarTab === "nav-factory-tab") {
     await updateGen0Count();
   }
 
@@ -97,7 +97,7 @@ async function loginWithMetaMask() {
       const tokenId = event.returnValues.tokenId;
       const transactionHash = event.transactionHash;
 
-      if (txType == "Cancel offer" || isDuplicatedContractEvent("MarketTransaction", event.transactionHash)) {
+      if (txType === "Cancel offer" || isDuplicatedContractEvent("MarketTransaction", event.transactionHash)) {
         return;
       }
 
@@ -111,13 +111,13 @@ async function loginWithMetaMask() {
 
       const priceEther = web3.utils.fromWei(offer.price, "ether");
 
-      if (txType == "Create offer") {
+      if (txType === "Create offer") {
         let message2 = `Your sale offer has been succesfully created!<br/><b>Cat Id:</b> ${tokenId}, <b>Price:</b> ${priceEther} ETH,<br/> <b>Tx hash:</b> ${transactionHash}`;
         showNotifications(message2);
-      } else if (txType == "Cancel offer") {
+      } else if (txType === "Cancel offer") {
         let message3 = `Your sale offer has been succesfully cancelled!<br/><b>Cat Id:</b> ${tokenId}, <b>Price:</b> ${priceEther} ETH,<br/> <b>Tx hash:</b> ${transactionHash}`;
         showNotifications(message3);
-      } else if (txType == "Buy") {
+      } else if (txType === "Buy") {
         let message4 = `You have succesfully bought the cat ${tokenId} for ${priceEther}ETH!<br/><b>Tx hash:</b> ${transactionHash}`;
         showNotifications(message4);
       } else {
@@ -146,7 +146,7 @@ function logoutOfMetaMask() {
 }
 
 function notConnected() {
-  if (userAddress == undefined) {
+  if (userAddress === undefined) {
     showNotifications("Metamask not connected!");
     return true;
   }

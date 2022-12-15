@@ -1,4 +1,5 @@
-export const isProdEnv = process.env.NODE_ENV === "production" ? true : false;
+// export const isProdEnv = process.env.NODE_ENV === "production" ? true : false;
+export const isProdEnv = false; // Bypass Netlify prod deployment
 
 export const SUPPORTED_CHAIN = {
     mainnet: 1,

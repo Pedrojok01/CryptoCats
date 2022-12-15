@@ -5,8 +5,10 @@ import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 
+import { isProdEnv } from "./data/constant";
+
 const { chains, provider, webSocketProvider } = configureChains(
-    [mainnet, ...(process.env.NODE_ENV === "development" ? [goerli] : [])],
+    [goerli, mainnet, ...(isProdEnv ? [goerli] : [mainnet])],
     [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! })]
 );
 

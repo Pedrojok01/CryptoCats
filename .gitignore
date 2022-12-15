@@ -36,6 +36,8 @@ yarn-error.log*
 /blockchain/build
 /blockchain/secret.json
 .env
+.npmrc
+
 
 # vercel
 

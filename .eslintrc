@@ -15,6 +15,7 @@
     "parser": "@typescript-eslint/parser",
     "plugins": ["react", "react-hooks", "import", "@typescript-eslint", "prettier"],
     "extends": [
+        "next",
         "next/core-web-vitals",
         "eslint:recommended",
         "plugin:import/recommended",

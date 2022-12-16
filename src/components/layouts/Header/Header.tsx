@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import { HamburgerIcon } from "@chakra-ui/icons";
 import {
     Box,
@@ -15,32 +13,16 @@ import {
     Link,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useNetwork } from "wagmi";
 
-import { isProdEnv, SUPPORTED_CHAIN } from "../../../data/constant";
 import { useWindowWidthAndHeight } from "../../../hooks/useWindowWidthAndHeight";
 import { ChainVerification, ColorModeButton, ConnectButton, NavBar } from "../../elements";
 
 const Header = () => {
-    const { chain } = useNetwork();
     const { isMobile } = useWindowWidthAndHeight();
-    const [isSupportedChain, setIsSupportedChain] = useState<boolean>(true);
-
-    useEffect(() => {
-        if (chain) {
-            if (
-                (isProdEnv && chain.id === SUPPORTED_CHAIN.mainnet) ||
-                (!isProdEnv && chain.id === SUPPORTED_CHAIN.testnet)
-            ) {
-                setIsSupportedChain(true);
-            } else setIsSupportedChain(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [chain]);
 
     return (
         <Box borderBottom="1px" borderBottomColor="chakra-border-color">
-            {chain && !isSupportedChain && <ChainVerification />}
+            <ChainVerification />
             <Container maxW="container.xl" p={"10px"}>
                 <Flex align="center" justify="space-between">
                     <Heading cursor={"default"} size="md">

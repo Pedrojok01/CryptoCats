@@ -1,5 +1,5 @@
 <div align="center">
-<h1><strong>CryptoCats - Create, Breed and Sale some funny lookin' cats!</strong></h1>
+<h1><strong>CryptoCats - Create, Breed and Sell some funny lookin' cats!</strong></h1>
 
 [![Stargazers](https://img.shields.io/github/stars/Pedrojok01/CryptoCats)](https://github.com/Pedrojok01/CryptoCats/stargazers)
 [![Issues](https://img.shields.io/github/issues/Pedrojok01/CryptoCats)](https://github.com/Pedrojok01/CryptoCats/issues)
@@ -22,6 +22,14 @@ CryptoCats Revisited. No more vanilla JS (which, despite being a huge mess, was 
 Decentralized application (Dapp) deployed on Goerli, but compatible with all EVM networks. Initially built as a part of the programming course: Ethereum Dapp Programming on [academy.moralis.io](https://academy.moralis.io/courses/ethereum-dapp-programming).
 
 Try it yourself: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)
+
+## Features
+
+-   [x] Factory - Design and Create your own Cat for FREE in the Cat Factory! When you're done, just click on the `Create` button to mint your cat! (Limited to 100 Cats)
+-   [x] MyCats/Show - Display all the cats present in your collection;
+-   [x] MyCats/Breed - Select two parents, breed a seebling out and find out which characteristics you inherited from each!
+-   [x] MyCats/Sell - Create a sell offer to list your cat on the marketplace!
+-   [x] Marketplace - Buy some cats on the marketplace or simply remove your offers.
 
 ## Built With
 
@@ -63,8 +71,8 @@ To deploy your own smart-contracts:
 
 On each deploy, make sure to:
 
--   Change the `CAT_CONTRACT_ADD` and the `MARKETPLACE_CONTRACT_ADD` in `/client/index.js` to your deployed contracts address;
--   Edit the abi file in `/client/assets/js/utils/abi.js` if you made any changes to the smart-contracts;
+-   Change the `CAT_CONTRACT_ADD` and the `MARKETPLACE_CONTRACT_ADD` in `src/data/constant.ts` to your deployed contracts address;
+-   Edit the ABI files in `src/data/abis/` if you made any changes to the smart-contracts;
 -   Enable/disable/update the suitable networks in `hardhat.config.tsc`, `package.json` & `src/data/constant.ts`;
 
 ## Use

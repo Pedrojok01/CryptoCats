@@ -80,9 +80,9 @@ Try it yourself: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)
 
 1.  Clone the repo with the following command:
 
-```sh
-git clone https://github.com/Pedrojok01/CryptoCats
-```
+    ```sh
+    git clone https://github.com/Pedrojok01/CryptoCats
+    ```
 
 2.  Make sure you're on the root directory, then install all dependencies via:
     ```sh
@@ -97,9 +97,9 @@ To deploy your own smart-contracts:
 -   Edit the `hardhat.config.tsc` if needed, and the `"deploy"` script in the `package.json` file with the network needed;
 -   To deploy your smart-contracts simply run the command below, and wait for the contract addresses and ABI to appear in your console:
 
-```sh
-yarn deploy
-```
+    ```sh
+    yarn deploy
+    ```
 
 -   Replace the contract addresses (both `CAT_CONTRACT` & `MARKETPLACE_CONTRACT_ADD`) and the corresponding chains infos in the `src/data/constant.ts` file;
 -   And don't forget to have some funds ready if you want to buy some CryptoCats on the marketplace! [Faucet for the Goerli network](https://goerlifaucet.com/);

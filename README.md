@@ -12,6 +12,31 @@
 ![Preview](./public/preview.gif)
 
 </div>
+<br></br>
+
+<!-- TABLE OF CONTENTS -->
+
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#Description">Description</a>    
+    </li>
+    <li><a href="#built-with">Built With</a></li>
+    <li>
+      <a href="#Features">Features</a>
+    </li>
+    <li><a href="#getting-started">Getting Started</a>
+    <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#contracts-deployment">Contracts deployment</a></li>
+        <li><a href="#config">Config</a></li>
+      </ul>
+    </li>
+    <li><a href="#use">Use</a></li>
+  </ol>
+
+<br></br>
 
 ## UPDATE (Dec 2022):
 
@@ -42,22 +67,22 @@ Try it yourself: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)
 -   [![prettier]][prettier-url]
 -   [![ESLint]][eslint-url]
 
-## Installation
+## Getting Started
 
-### Make sure you have the following ready:
+### Prerequisites:
 
 -   `Node.JS` installed
 -   `npm` installed
 -   [hardhat](https://hardhat.org/hardhat-runner/docs/getting-started#overview) installed via `yarn add --dev hardhat@esm` (developed on v2.12.0-esm).
 -   [MetaMask](https://metamask.io/) installed in your browser
 
-### Installation steps:
+### Installation:
 
 1.  Clone the repo via `git clone https://github.com/Pedrojok01/CryptoCats`
 2.  Make sure you're on the root directory, then install all dependencies via:
     `yarn install`
 
-## Contracts deployment
+### Contracts deployment
 
 To deploy your own smart-contracts:
 
@@ -67,7 +92,7 @@ To deploy your own smart-contracts:
 -   Replace the contract addresses (both `CAT_CONTRACT` & `MARKETPLACE_CONTRACT_ADD`) and the corresponding chains infos in the `src/data/constant.ts` file;
 -   And don't forget to have some funds ready if you want to buy some CryptoCats on the marketplace! [Faucet for the Goerli network](https://goerlifaucet.com/);
 
-## Config
+### Config
 
 On each deploy, make sure to:
 

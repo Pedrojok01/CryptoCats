@@ -78,9 +78,16 @@ Try it yourself: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)
 
 ### Installation:
 
-1.  Clone the repo via `git clone https://github.com/Pedrojok01/CryptoCats`
+1.  Clone the repo with the following command:
+
+```sh
+git clone https://github.com/Pedrojok01/CryptoCats
+```
+
 2.  Make sure you're on the root directory, then install all dependencies via:
-    `yarn install`
+    ```sh
+    yarn install
+    ```
 
 ### Contracts deployment
 
@@ -88,7 +95,12 @@ To deploy your own smart-contracts:
 
 -   Remove `.example` from the `.env.example` file and edit the file with your API KEYs for the networks you wish to use and your PRIVATE KEY (<b>Do not paste your private key anywhere else!</b>);
 -   Edit the `hardhat.config.tsc` if needed, and the `"deploy"` script in the `package.json` file with the network needed;
--   Simply Run `yarn deploy` to deploy your smart-contracts, and wait for the contract addresses and ABI to appear in your console.
+-   To deploy your smart-contracts simply run the command below, and wait for the contract addresses and ABI to appear in your console:
+
+```sh
+yarn deploy
+```
+
 -   Replace the contract addresses (both `CAT_CONTRACT` & `MARKETPLACE_CONTRACT_ADD`) and the corresponding chains infos in the `src/data/constant.ts` file;
 -   And don't forget to have some funds ready if you want to buy some CryptoCats on the marketplace! [Faucet for the Goerli network](https://goerlifaucet.com/);
 
@@ -102,7 +114,11 @@ On each deploy, make sure to:
 
 ## Use
 
-You are now set to start your local server. Make sure you're in the root directory type: `yarn dev`.
+You are now set to start your local server. Make sure you're in the root directory type:
+
+```sh
+yarn dev
+```
 
 <br></br>
 

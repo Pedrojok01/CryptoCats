@@ -24,7 +24,6 @@ function App({ Component, pageProps }: AppProps) {
                 <NextHead>
                     <title>CryptoCats</title>
                 </NextHead>
-
                 {mounted && <Component {...pageProps} />}
             </WagmiConfig>
         </ChakraProvider>

@@ -1,22 +1,10 @@
 import { CSSProperties, useEffect, useState } from "react";
 
 import { CopyIcon } from "@chakra-ui/icons";
-import { Skeleton, Tooltip } from "@chakra-ui/react";
+import { Flex, Skeleton, Tooltip } from "@chakra-ui/react";
 
 import { getEllipsisTxt } from "../../../utils/format";
-import Blockie from "./Blockie";
-
-const styles = {
-    address: {
-        height: "42px",
-        display: "flex",
-        gap: "15px",
-        backgroundColor: "rgba(255, 255, 255, 0.1)",
-        borderRadius: "9px",
-        alignItems: "center",
-        paddingLeft: "20px",
-    },
-};
+import Jazzicons from "./Jazzicons";
 
 interface AddressProps {
     style: CSSProperties | undefined;
@@ -56,12 +44,20 @@ const Address: React.FC<AddressProps> = (props) => {
     );
 
     return (
-        <div style={{ ...props.style, ...styles.address, borderRadius: "50px" }}>
-            {props.avatar === "left" && <Blockie seed={address} size={7} />}
+        <Flex
+            h={"42px"}
+            pl="15px"
+            gap={"15px"}
+            bgColor="rgba(255, 255, 255, 0.1)"
+            borderRadius={"10px"}
+            alignItems="center"
+            style={{ ...props.style }}
+        >
+            {props.avatar === "left" && <Jazzicons seed={address} />}
             <p>{props.size ? getEllipsisTxt(address, props.size) : address}</p>
-            {props.avatar === "right" && <Blockie seed={address} size={7} />}
+            {props.avatar === "right" && <Jazzicons seed={address} />}
             {props.copyable && (isClicked ? <Check /> : <Copy />)}
-        </div>
+        </Flex>
     );
 };
 

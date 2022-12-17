@@ -19,7 +19,7 @@ export const client = createClient({
         new CoinbaseWalletConnector({
             chains,
             options: {
-                appName: "wagmi",
+                appName: "CryptoCats",
             },
         }),
         new WalletConnectConnector({

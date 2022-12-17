@@ -22,7 +22,7 @@ function App({ Component, pageProps }: AppProps) {
         <ChakraProvider resetCSS theme={theme}>
             <WagmiConfig client={client}>
                 <NextHead>
-                    <title>wagmi</title>
+                    <title>CryptoCats</title>
                 </NextHead>
 
                 {mounted && <Component {...pageProps} />}

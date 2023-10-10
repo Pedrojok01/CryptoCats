@@ -24,9 +24,7 @@ export const client = createClient({
         }),
         new WalletConnectConnector({
             chains,
-            options: {
-                qrcode: true,
-            },
+            options: undefined,
         }),
         // new InjectedConnector({
         //   chains,

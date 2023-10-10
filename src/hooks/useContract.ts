@@ -1,28 +1,21 @@
 import { useMemo } from "react";
 
-import { AddressZero } from "@ethersproject/constants";
+import { Contract as EthersContract, ContractInterface } from "@ethersproject/contracts";
 import { Provider } from "@ethersproject/providers";
-import { Contract, ContractInterface, Signer } from "ethers";
-import { isAddress } from "ethers/lib/utils";
+import { ZeroAddress, isAddress } from "ethers";
 
 import { useSignerOrProvider } from "./useSignerOrProvider";
 
-function getContract<T = Contract>(address: string, abi: ContractInterface, provider: Signer | Provider) {
-    return <T>(<unknown>new Contract(address, abi, provider));
+function getContract<T extends EthersContract>(address: string, abi: ContractInterface, provider: Provider): T {
+    return new EthersContract(address, abi, provider) as T;
 }
 
-// heavily inspired by uniswaps interface, thanks Noah, great work!
-export function useContract<Contract>(address: string, abi: ContractInterface) {
+export function useContract<T extends EthersContract>(address: string, abi: ContractInterface): T | null {
     const signerOrProvider = useSignerOrProvider();
 
-    if (!isAddress(address) || address === AddressZero) {
+    if (!isAddress(address) || address === ZeroAddress) {
         throw Error(`Invalid 'address' parameter '${address}'.`);
     }
 
-    const contract = useMemo(
-        () => getContract<Contract>(address, abi, signerOrProvider),
-        [address, abi, signerOrProvider]
-    );
-
-    return contract;
+    return useMemo(() => getContract<T>(address, abi, signerOrProvider), [address, abi, signerOrProvider]);
 }

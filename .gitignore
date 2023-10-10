@@ -50,6 +50,10 @@ next-env.d.ts
 
 #Hardhat files
 
+hardhat/.env
+hardhat/.env.local
+hardhat/node_modules
+
 hardhat/coverage
 hardhat/coverage.json
 hardhat/typechain

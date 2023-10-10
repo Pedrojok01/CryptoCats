@@ -3,10 +3,10 @@ import { FC } from "react";
 import { Button, useDisclosure } from "@chakra-ui/react";
 import { useAccount } from "wagmi";
 
-import { useWindowWidthAndHeight } from "../../../hooks/useWindowWidthAndHeight";
-import { getEllipsisTxt } from "../../../utils/format";
 import ConnectModal from "./ConnectModal";
 import DisconnectModal from "./DisconnectModal";
+import { useWindowWidthAndHeight } from "../../../hooks/useWindowWidthAndHeight";
+import { getEllipsisTxt } from "../../../utils/format";
 
 const ConnectButton: FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();

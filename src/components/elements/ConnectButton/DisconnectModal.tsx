@@ -4,8 +4,8 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Button, Card, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay } from "@chakra-ui/react";
 import { useAccount, useDisconnect, useNetwork } from "wagmi";
 
-import { getExplorer } from "../../../utils/getExplorerByChain";
 import Address from "./Address";
+import { getExplorer } from "../../../utils/getExplorerByChain";
 
 type DisconnectModalProps = {
     isOpen: boolean;

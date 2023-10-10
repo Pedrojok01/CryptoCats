@@ -2,8 +2,8 @@ import { FC } from "react";
 
 import { Box, Button, Center, useColorMode, useDisclosure, VStack } from "@chakra-ui/react";
 
-import { RenderCat } from "../../../elements";
 import CatSelectModal from "./CatSelectModal";
+import { RenderCat } from "../../../elements";
 
 const CatSelection: FC<CatSelectionProps> = ({ parent, setParent, name, otherParent, loading }) => {
     const { colorMode } = useColorMode();

@@ -2,8 +2,8 @@ import { FC, useState } from "react";
 
 import { HStack, Button, Box } from "@chakra-ui/react";
 
-import { getAnimBadge, getBgBadge, getEyesBadge, getShapeBadge } from "../../../../utils/getBadge";
 import Selector from "./Selector";
+import { getAnimBadge, getBgBadge, getEyesBadge, getShapeBadge } from "../../../../utils/getBadge";
 
 const Attributes: FC<AttributesProps> = ({
     dna,

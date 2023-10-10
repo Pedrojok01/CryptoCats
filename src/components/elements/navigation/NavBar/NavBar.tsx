@@ -1,7 +1,7 @@
 import { HStack } from "@chakra-ui/react";
 
-import { NavItem } from "../NavItem";
 import NAV_LINKS from "./paths";
+import { NavItem } from "../NavItem";
 
 const NavBar = () => {
     return (

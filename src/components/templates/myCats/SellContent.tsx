@@ -20,11 +20,11 @@ import {
 import { parseEther } from "ethers/lib/utils.js";
 import { useAccount } from "wagmi";
 
+import CatSelectModal from "./components/CatSelectModal";
+import NoCatFound from "./components/NoCatFound";
 import useReadContract from "../../../hooks/useReadContract";
 import useWriteContract from "../../../hooks/useWriteContract";
 import { Loading, RenderCat } from "../../elements";
-import CatSelectModal from "./components/CatSelectModal";
-import NoCatFound from "./components/NoCatFound";
 
 const SellContent: FC = () => {
     const { address } = useAccount();

@@ -122,7 +122,7 @@ export interface CatcontractInterface extends utils.Interface {
             PromiseOrValue<string>,
             PromiseOrValue<string>,
             PromiseOrValue<BigNumberish>,
-            PromiseOrValue<BytesLike>
+            PromiseOrValue<BytesLike>,
         ]
     ): string;
     encodeFunctionData(

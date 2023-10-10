@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-dotenv.config();
 import "@nomicfoundation/hardhat-toolbox";
 import "@nomiclabs/hardhat-etherscan";
 import { HardhatUserConfig } from "hardhat/config";
@@ -10,7 +8,7 @@ const privateKey: string | undefined = process.env.PRIVATE_KEY;
 
 const config: HardhatUserConfig = {
     solidity: {
-        version: "0.8.16",
+        version: "0.8.19",
         settings: {
             optimizer: {
                 enabled: true,
@@ -62,13 +60,13 @@ const config: HardhatUserConfig = {
     etherscan: {
         apiKey: process.env.ETHERSCAN_API_KEY,
     },
-    paths: {
-        root: "./hardhat/",
-        sources: "./contracts",
-        tests: "./test",
-        cache: "./cache",
-        artifacts: "./artifacts",
-    },
+    // paths: {
+    //     root: "./hardhat/",
+    //     sources: "./contracts",
+    //     tests: "./test",
+    //     cache: "./cache",
+    //     artifacts: "./artifacts",
+    // },
     // docgen: {
     //   path: "./docs",
     //   clear: true,

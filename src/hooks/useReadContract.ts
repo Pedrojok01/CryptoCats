@@ -3,12 +3,12 @@ import { useCallback, useEffect, useState } from "react";
 import { BigNumber } from "ethers";
 import { useAccount } from "wagmi";
 
+import { useContract } from "./useContract";
 import { Catcontract } from "../../types/Catcontract";
 import { CatMarketplace } from "../../types/CatMarketplace";
 import { CAT_ABI } from "../data/abis/catContract_abi";
 import { MARKET_ABI } from "../data/abis/marketplace_abi";
 import { getContractAddresses } from "../data/constant";
-import { useContract } from "./useContract";
 
 const useReadContract = () => {
     const { address } = useAccount();
@@ -31,7 +31,7 @@ const useReadContract = () => {
             const symbol = await catInstance.symbol();
             return symbol;
         } catch (error) {
-            console.log(error);
+            console.error(error);
             return undefined;
         }
     };
@@ -43,7 +43,7 @@ const useReadContract = () => {
             const count = await catInstance.gen0Count();
             setGen0Count(count);
         } catch (error: any) {
-            console.log(error.reason ? error.reason : error.message ? error.message : error);
+            console.error(error.reason ? error.reason : error.message ? error.message : error);
             setGen0Count(0);
         }
     };
@@ -55,7 +55,7 @@ const useReadContract = () => {
             const maxCount = await catInstance.CREATION_LIMIT_GEN0();
             setMaxGen0Supply(maxCount);
         } catch (error: any) {
-            console.log(error.reason ? error.reason : error.message ? error.message : error);
+            console.error(error.reason ? error.reason : error.message ? error.message : error);
             setMaxGen0Supply(0);
         }
     };
@@ -67,7 +67,7 @@ const useReadContract = () => {
             const allowance = await catInstance.isApprovedForAll(user, marketplaceAddress);
             return allowance;
         } catch (error: any) {
-            console.log(error.reason ? error.reason : error.message);
+            console.error(error.reason ? error.reason : error.message);
             return false;
         }
     };
@@ -85,7 +85,7 @@ const useReadContract = () => {
             }
             setUserCats(cats);
         } catch (error: any) {
-            console.log(error.reason ? error.reason : error.message ? error.message : error);
+            console.error(error.reason ? error.reason : error.message ? error.message : error);
         }
     };
 
@@ -105,7 +105,7 @@ const useReadContract = () => {
             }
             setCatsWithoutoffer(noOffer);
         } catch (error: any) {
-            console.log(error.reason ? error.reason : error.message ? error.message : error);
+            console.error(error.reason ? error.reason : error.message ? error.message : error);
         }
     };
 
@@ -135,7 +135,7 @@ const useReadContract = () => {
             }
             setCatsOffersForMarket(catOffers);
         } catch (error: any) {
-            console.log(error.reason ? error.reason : error.message ? error.message : error);
+            console.error(error.reason ? error.reason : error.message ? error.message : error);
         }
     };
 

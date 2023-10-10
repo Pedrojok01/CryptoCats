@@ -2,11 +2,11 @@ import { FC, useState } from "react";
 
 import { Box, Button, Center, Heading, HStack, VStack, Wrap } from "@chakra-ui/react";
 
+import CatSelection from "./components/CatSelection";
+import NoCatFound from "./components/NoCatFound";
 import useReadContract from "../../../hooks/useReadContract";
 import useWriteContract from "../../../hooks/useWriteContract";
 import { Loading } from "../../elements";
-import CatSelection from "./components/CatSelection";
-import NoCatFound from "./components/NoCatFound";
 
 const BreedContent: FC = () => {
     const { userCats, syncUserCats } = useReadContract();

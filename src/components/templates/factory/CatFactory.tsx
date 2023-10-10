@@ -2,12 +2,12 @@ import React, { FC, useState } from "react";
 
 import { Box, Button, Card, Flex, Heading, useColorMode } from "@chakra-ui/react";
 
+import Attributes from "./components/Attributes";
 import { defaultDNA } from "../../../data/catStettings";
 import useReadContract from "../../../hooks/useReadContract";
 import { useWindowWidthAndHeight } from "../../../hooks/useWindowWidthAndHeight";
 import useWriteContract from "../../../hooks/useWriteContract";
 import { RenderCat } from "../../elements";
-import Attributes from "./components/Attributes";
 
 const CatFactory: FC = () => {
     const { colorMode } = useColorMode();

@@ -2,17 +2,16 @@ import { useState } from "react";
 
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { useToast } from "@chakra-ui/react";
-import { BigNumber } from "ethers";
-import { parseUnits } from "ethers/lib/utils.js";
+import { BigNumberish, parseUnits } from "ethers";
 
+import { useContract } from "./useContract";
+import useReadContract from "./useReadContract";
 import { Catcontract } from "../../types/Catcontract";
 import { CatMarketplace } from "../../types/CatMarketplace";
 import { CAT_ABI } from "../data/abis/catContract_abi";
 import { MARKET_ABI } from "../data/abis/marketplace_abi";
 import { getContractAddresses } from "../data/constant";
 import { getExplorer } from "../utils/getExplorerByChain";
-import { useContract } from "./useContract";
-import useReadContract from "./useReadContract";
 
 const useWriteContract = () => {
     const toast = useToast();
@@ -147,7 +146,7 @@ const useWriteContract = () => {
 
     /* Add a cat offer to the marketplace :
      *****************************************/
-    const sellCat = async (price: BigNumber, id: number): Promise<any> => {
+    const sellCat = async (price: BigNumberish, id: number): Promise<any> => {
         setLoading(true);
         try {
             const tx = await marketplaceInstance.setOffer(price, id);
@@ -237,7 +236,7 @@ const useWriteContract = () => {
 
     /* Remove a cat offer from the marketplace :
      *********************************************/
-    const buyOffer = async (id: number, price: BigNumber): Promise<any> => {
+    const buyOffer = async (id: number, price: BigNumberish): Promise<any> => {
         setLoading(true);
         try {
             const tx = await marketplaceInstance.buyCat(id, { value: parseUnits(price.toString(), "ether") });

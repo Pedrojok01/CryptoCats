@@ -24,7 +24,8 @@
         "react-dom": "18.2.0",
         "react-jazzicon": "1.0.4",
         "viem": "^1.16.2",
-        "wagmi": "1.4.3"
+        "wagmi": "1.4.3",
+        "zustand": "^4.4.3"
     },
     "devDependencies": {
         "@types/jquery": "3.5.22",

@@ -1,32 +1,27 @@
 import { useState } from "react";
 
-import { ExternalLinkIcon } from "@chakra-ui/icons";
-import { useToast } from "@chakra-ui/react";
-import { BigNumberish, parseUnits } from "ethers";
-
 import { useContract } from "./useContract";
+import useNotify from "./useNotify";
 import useReadContract from "./useReadContract";
-import { Catcontract } from "../../types/Catcontract";
-import { CatMarketplace } from "../../types/CatMarketplace";
-import { CAT_ABI } from "../data/abis/catContract_abi";
-import { MARKET_ABI } from "../data/abis/marketplace_abi";
-import { getContractAddresses } from "../data/constant";
-import { getExplorer } from "../utils/getExplorerByChain";
+import useTransactionReceipt from "./useTransactionReceipt";
+import { ExplorerLink } from "../components/elements/ExplorerLink";
+import { contracts } from "../data/contracts";
+import { logError } from "../utils/errorUtil";
 
 const useWriteContract = () => {
-    const toast = useToast();
-    const { catAddress, marketplaceAddress } = getContractAddresses();
-    const catInstance: Catcontract | null = useContract<Catcontract>(catAddress, CAT_ABI);
-    const marketplaceInstance: CatMarketplace | null = useContract<CatMarketplace>(marketplaceAddress, MARKET_ABI);
+    const { awaitTransactionReceipt } = useTransactionReceipt();
+    const notify = useNotify();
+    const catInstance = useContract({ address: contracts.cat.address, abi: contracts.cat.abi, clientType: "public" });
+    const marketplaceInstance = useContract({
+        address: contracts.marketplace.address,
+        abi: contracts.marketplace.abi,
+        clientType: "wallet",
+    });
     const { syncCatsOffersForMarket, syncCatsWithoutOffer } = useReadContract();
     const [loading, setLoading] = useState<boolean>(false);
 
-    if (!catInstance) {
-        throw new Error("Failed to initialize cat contract instance");
-    }
-
-    if (!marketplaceInstance) {
-        throw new Error("Failed to initialize marketplace contract instance");
+    if (!catInstance || !marketplaceInstance) {
+        throw Error("Contract instance missing.");
     }
 
     /* Set Token Allowance:
@@ -34,32 +29,24 @@ const useWriteContract = () => {
     const approveNft = async () => {
         setLoading(true);
         try {
-            const tx = await catInstance.setApprovalForAll(marketplaceAddress, true);
-            await tx.wait();
-            const title = "NFT Approval set";
-            const msg = `Allowance succesfully set.`;
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            const hash: `0x${string}` = await catInstance.write.setApprovalForAll([
+                contracts.marketplace.address,
+                true,
+            ]);
+            awaitTransactionReceipt({ hash });
+            notify({
+                title: "NFT Approval set",
+                message: "Allowance successfully set.",
                 status: "success",
-                duration: 10000,
-                isClosable: true,
             });
-            setLoading(false);
-        } catch (error: any) {
-            const title = "NFT Approval denied";
-            const msg = "Something went wrong while setting the allowance. Please try again.";
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+        } catch (error: unknown) {
+            notify({
+                title: "NFT Approval denied",
+                message: "Something went wrong while setting the allowance. Please try again.",
                 status: "error",
-                duration: 10000,
-                isClosable: true,
             });
-
-            console.log(error.reason ? error.reason : error.message);
+            logError(error);
+        } finally {
             setLoading(false);
         }
     };
@@ -69,42 +56,28 @@ const useWriteContract = () => {
     const mintCat = async (dna: string): Promise<any> => {
         setLoading(true);
         try {
-            const tx = await catInstance.createCatGen0(dna);
-            const receipt = await tx.wait();
-            const link = `${getExplorer()}tx/${receipt.transactionHash}`;
-            const title = "Mint Successfully";
+            const hash: `0x${string}` = await catInstance.write.createCatGen0(dna);
+            awaitTransactionReceipt({ hash });
             const msg = (
                 <>
                     Your cat has been succesfully created!
-                    <br></br>
-                    <a href={link} target="_blank" rel="noreferrer noopener">
-                        View in explorer: &nbsp;
-                        <ExternalLinkIcon style={{ transform: "scale(1.3)", color: "purple" }} />
-                    </a>
+                    <ExplorerLink hash={hash} />
                 </>
             );
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            notify({
+                title: "Mint Successfully",
+                message: msg,
                 status: "success",
-                duration: 10000,
-                isClosable: true,
             });
-            setLoading(false);
         } catch (error: any) {
-            const title = "An error occured";
-            const msg = error.reason ? error.reason : "An unexpected error occured while minting.";
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            notify({
+                title: "An error occured",
+                message: error.reason ? error.reason : "An unexpected error occured while minting.",
                 status: "error",
-                duration: 10000,
-                isClosable: true,
             });
-            setLoading(false);
             return error.reason ? error.reason : error.message ? error.message : "Unexpected error";
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -113,87 +86,59 @@ const useWriteContract = () => {
     const breedCat = async (id1: number, id2: number): Promise<any> => {
         setLoading(true);
         try {
-            const tx = await catInstance.breed(id1, id2);
-            const receipt = await tx.wait();
-            const link = `${getExplorer()}tx/${receipt.transactionHash}`;
-            const title = "Breed Successful";
+            const hash: `0x${string}` = await catInstance.write.breed(id1, id2);
+            awaitTransactionReceipt({ hash });
             const msg = (
                 <>
                     Your seebling is born!
-                    <br></br>
-                    <a href={link} target="_blank" rel="noreferrer noopener">
-                        View in explorer: &nbsp;
-                        <ExternalLinkIcon style={{ transform: "scale(1.3)", color: "purple" }} />
-                    </a>
+                    <ExplorerLink hash={hash} />
                 </>
             );
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            notify({
+                title: "Breed Successful",
+                message: msg,
                 status: "success",
-                duration: 10000,
-                isClosable: true,
             });
-            setLoading(false);
         } catch (error: any) {
-            const title = "An error occured";
-            const msg = error.reason ? error.reason : "An unexpected error occured while breeding.";
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            notify({
+                title: "An error occured",
+                message: error.reason ? error.reason : "An unexpected error occured while breeding.",
                 status: "error",
-                duration: 10000,
-                isClosable: true,
             });
-            setLoading(false);
             return error.reason ? error.reason : error.message ? error.message : "Unexpected error";
+        } finally {
+            setLoading(false);
         }
     };
 
     /* Add a cat offer to the marketplace :
      *****************************************/
-    const sellCat = async (price: BigNumberish, id: number): Promise<any> => {
+    const sellCat = async (price: bigint, id: number): Promise<any> => {
         setLoading(true);
         try {
-            const tx = await marketplaceInstance.setOffer(price, id);
-            const receipt = await tx.wait();
-            const link = `${getExplorer()}tx/${receipt.transactionHash}`;
-            const title = "Offer Successful";
+            const hash: `0x${string}` = await marketplaceInstance.write.setOffer(price, id);
+            awaitTransactionReceipt({ hash });
             const msg = (
                 <>
                     Your cat offer has been added to the marketplace!
-                    <br></br>
-                    <a href={link} target="_blank" rel="noreferrer noopener">
-                        View in explorer: &nbsp;
-                        <ExternalLinkIcon style={{ transform: "scale(1.3)", color: "purple" }} />
-                    </a>
+                    <ExplorerLink hash={hash} />
                 </>
             );
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            notify({
+                title: "Offer Successful",
+                message: msg,
                 status: "success",
-                duration: 10000,
-                isClosable: true,
             });
             syncCatsWithoutOffer();
-            setLoading(false);
         } catch (error: any) {
-            const title = "An error occured";
-            const msg = error.reason ? error.reason : "An unexpected error occured while setting the offer.";
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            notify({
+                title: "An error occured",
+                message: error.reason ? error.reason : "An unexpected error occured while setting the offer.",
                 status: "error",
-                duration: 10000,
-                isClosable: true,
             });
-            setLoading(false);
             return error.reason ? error.reason : error.message ? error.message : "Unexpected error";
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -202,88 +147,62 @@ const useWriteContract = () => {
     const cancelOffer = async (id: number): Promise<any> => {
         setLoading(true);
         try {
-            const tx = await marketplaceInstance.removeOffer(id);
-            const receipt = await tx.wait();
-            const link = `${getExplorer()}tx/${receipt.transactionHash}`;
-            const title = "Offer Successfully Removed";
+            const hash: `0x${string}` = await marketplaceInstance.write.removeOffer(id);
+            awaitTransactionReceipt({ hash });
             const msg = (
                 <>
                     Your cat id:{id} has been successfully removed from the marketplace!
-                    <br></br>
-                    <a href={link} target="_blank" rel="noreferrer noopener">
-                        View in explorer: &nbsp;
-                        <ExternalLinkIcon style={{ transform: "scale(1.3)", color: "purple" }} />
-                    </a>
+                    <ExplorerLink hash={hash} />
                 </>
             );
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            notify({
+                title: "Offer Successfully Removed",
+                message: msg,
                 status: "success",
-                duration: 10000,
-                isClosable: true,
             });
             syncCatsOffersForMarket();
-            setLoading(false);
         } catch (error: any) {
-            const title = "An error occured";
-            const msg = error.reason ? error.reason : "An unexpected error occured while removing the offer.";
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            notify({
+                title: "An error occured",
+                message: error.reason ? error.reason : "An unexpected error occured while removing the offer.",
                 status: "error",
-                duration: 10000,
-                isClosable: true,
             });
-            setLoading(false);
             return error.reason ? error.reason : error.message ? error.message : "Unexpected error";
+        } finally {
+            setLoading(false);
         }
     };
 
     /* Remove a cat offer from the marketplace :
      *********************************************/
-    const buyOffer = async (id: number, price: BigNumberish): Promise<any> => {
+    const buyOffer = async (id: number, price: bigint): Promise<any> => {
         setLoading(true);
         try {
-            const tx = await marketplaceInstance.buyCat(id, { value: parseUnits(price.toString(), "ether") });
-            const receipt = await tx.wait();
-            const link = `${getExplorer()}tx/${receipt.transactionHash}`;
-            const title = "Buy Success";
+            const hash: `0x${string}` = await marketplaceInstance.write.buyCat(id, {
+                value: parseUnits(price.toString(), "ether"),
+            });
+            awaitTransactionReceipt({ hash });
             const msg = (
                 <>
                     Your have successfully purchased the cat id:{id} from the marketplace!
-                    <br></br>
-                    <a href={link} target="_blank" rel="noreferrer noopener">
-                        View in explorer: &nbsp;
-                        <ExternalLinkIcon style={{ transform: "scale(1.3)", color: "purple" }} />
-                    </a>
+                    <ExplorerLink hash={hash} />
                 </>
             );
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            notify({
+                title: "Buy Success",
+                message: msg,
                 status: "success",
-                duration: 10000,
-                isClosable: true,
             });
             syncCatsOffersForMarket();
-            setLoading(false);
         } catch (error: any) {
-            const title = "An error occured";
-            const msg = error.reason ? error.reason : "An unexpected error occured while buying the cat.";
-            toast({
-                title: title,
-                description: msg,
-                position: "top-right",
+            notify({
+                title: "An error occured",
+                message: error.reason ? error.reason : "An unexpected error occured while buying the cat.",
                 status: "error",
-                duration: 10000,
-                isClosable: true,
             });
-            setLoading(false);
             return error.reason ? error.reason : error.message ? error.message : "Unexpected error";
+        } finally {
+            setLoading(false);
         }
     };
 

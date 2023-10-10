@@ -1,7 +1,6 @@
 import { FC } from "react";
 
 import { Badge, Box, Button, HStack, VStack } from "@chakra-ui/react";
-import { BigNumber } from "ethers";
 
 import { RenderCat } from "../../../elements";
 
@@ -18,7 +17,7 @@ const DisplayCat: FC<DisplayCatProps> = ({
     loading,
 }) => {
     //Split the cat DNA to use in the render
-    const catDna = (dnaBN: BigNumber) => {
+    const catDna = (dnaBN: bigint) => {
         const dnaStr = dnaBN.toString();
         const dna: DNA = {
             //Colors

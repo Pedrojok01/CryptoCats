@@ -1,13 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import { useAccount } from "wagmi";
 
 import { useContract } from "./useContract";
 import { contracts } from "../data/contracts";
+import { useStore } from "../store/store";
+import { logError } from "../utils/errorUtil";
 
 const useReadContract = () => {
     const { address } = useAccount();
-
     const catInstance = useContract({ address: contracts.cat.address, abi: contracts.cat.abi, clientType: "public" });
     const marketplaceInstance = useContract({
         address: contracts.marketplace.address,
@@ -15,11 +16,8 @@ const useReadContract = () => {
         clientType: "public",
     });
 
-    const [gen0Count, setGen0Count] = useState<number>(0);
-    const [maxGen0Supply, setMaxGen0Supply] = useState<number>(0);
-    const [userCats, setUserCats] = useState<Cat[]>();
-    const [catsWithoutoffer, setCatsWithoutoffer] = useState<Cat[]>();
-    const [catsOffersForMarket, setCatsOffersForMarket] = useState<CatOffersForMarket[]>();
+    const { userCats, setGen0Count, setMaxGen0Supply, setUserCats, setCatsWithoutOffer, setCatsOffersForMarket } =
+        useStore();
 
     if (!catInstance || !marketplaceInstance) {
         throw Error("Contract instance missing.");
@@ -31,8 +29,8 @@ const useReadContract = () => {
         try {
             const symbol = (await catInstance.read.symbol()) as string;
             return symbol;
-        } catch (error) {
-            console.error(error);
+        } catch (error: unknown) {
+            logError(error);
             return undefined;
         }
     }, [catInstance]);
@@ -43,9 +41,8 @@ const useReadContract = () => {
         try {
             const count = (await catInstance.read.gen0Count()) as number;
             setGen0Count(count);
-        } catch (error: any) {
-            console.error(error.reason ? error.reason : error.message ? error.message : error);
-            setGen0Count(0);
+        } catch (error: unknown) {
+            logError(error);
         }
     };
 
@@ -55,8 +52,8 @@ const useReadContract = () => {
         try {
             const maxCount = (await catInstance.read.CREATION_LIMIT_GEN0()) as number;
             setMaxGen0Supply(maxCount);
-        } catch (error: any) {
-            console.error(error.reason ? error.reason : error.message ? error.message : error);
+        } catch (error: unknown) {
+            logError(error);
             setMaxGen0Supply(0);
         }
     }, [catInstance]);
@@ -67,8 +64,8 @@ const useReadContract = () => {
         try {
             const allowance = await catInstance.read.isApprovedForAll([user, contracts.marketplace.address]);
             return allowance;
-        } catch (error: any) {
-            console.error(error.reason ? error.reason : error.message);
+        } catch (error: unknown) {
+            logError(error);
             return false;
         }
     };
@@ -85,8 +82,8 @@ const useReadContract = () => {
                 cats.push(temp);
             }
             setUserCats(cats);
-        } catch (error: any) {
-            console.error(error.reason ? error.reason : error.message ? error.message : error);
+        } catch (error: unknown) {
+            logError(error);
         }
     };
 
@@ -106,9 +103,9 @@ const useReadContract = () => {
                 const isOffer = (await marketplaceInstance.read.isOffer([Number(cats[i].indexId)])) as boolean;
                 if (!isOffer) noOffer.push(cats[i]);
             }
-            setCatsWithoutoffer(noOffer);
-        } catch (error: any) {
-            console.error(error.reason ? error.reason : error.message ? error.message : error);
+            setCatsWithoutOffer(noOffer);
+        } catch (error: unknown) {
+            logError(error);
         }
     };
 
@@ -121,7 +118,7 @@ const useReadContract = () => {
      ************************************************************/
     const getCatsOffersForMarket = async () => {
         try {
-            const offers = (await marketplaceInstance.read.getAllTokenOnSale()) as BigInt[];
+            const offers = (await marketplaceInstance.read.getAllTokenOnSale()) as bigint[];
 
             const catOffers: CatOffersForMarket[] = [];
             for (let i = 0; i < offers.length; i++) {
@@ -137,8 +134,8 @@ const useReadContract = () => {
                 catOffers.push(offer);
             }
             setCatsOffersForMarket(catOffers);
-        } catch (error: any) {
-            console.error(error.reason ? error.reason : error.message ? error.message : error);
+        } catch (error: unknown) {
+            logError(error);
         }
     };
 
@@ -165,16 +162,11 @@ const useReadContract = () => {
 
     return {
         getTokenName,
-        gen0Count,
         getGen0Count,
-        maxGen0Supply,
         getMaxGen0Supply,
-        userCats,
         syncUserCats,
-        catsWithoutoffer,
         syncCatsWithoutOffer,
         checkNftAllowance,
-        catsOffersForMarket,
         syncCatsOffersForMarket,
     };
 };

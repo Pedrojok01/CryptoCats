@@ -17,18 +17,20 @@ import {
     VStack,
     Wrap,
 } from "@chakra-ui/react";
-import { parseEther } from "ethers/lib/utils.js";
+import { parseEther } from "viem";
 import { useAccount } from "wagmi";
 
 import CatSelectModal from "./components/CatSelectModal";
 import NoCatFound from "./components/NoCatFound";
 import useReadContract from "../../../hooks/useReadContract";
 import useWriteContract from "../../../hooks/useWriteContract";
+import { useStore } from "../../../store/store";
 import { Loading, RenderCat } from "../../elements";
 
 const SellContent: FC = () => {
     const { address } = useAccount();
-    const { catsWithoutoffer, checkNftAllowance } = useReadContract();
+    const { checkNftAllowance } = useReadContract();
+    const { catsWithoutOffer } = useStore();
     const { approveNft, sellCat, loading } = useWriteContract();
     const { colorMode } = useColorMode();
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -61,11 +63,11 @@ const SellContent: FC = () => {
                 </Heading>
             </Box>
 
-            <Loading props={catsWithoutoffer} />
+            <Loading props={catsWithoutOffer} />
 
-            {catsWithoutoffer && catsWithoutoffer.length === 0 && <NoCatFound />}
+            {catsWithoutOffer?.length === 0 && <NoCatFound />}
 
-            {catsWithoutoffer && catsWithoutoffer.length > 0 && (
+            {catsWithoutOffer?.length > 0 && (
                 <Center>
                     <Wrap>
                         <Box

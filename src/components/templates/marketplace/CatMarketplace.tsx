@@ -1,16 +1,18 @@
 import { FC, useEffect } from "react";
 
 import { Box, Heading, Wrap } from "@chakra-ui/react";
-import { formatEther } from "ethers/lib/utils.js";
+import { formatEther } from "viem";
 
 import useReadContract from "../../../hooks/useReadContract";
 import useWriteContract from "../../../hooks/useWriteContract";
+import { useStore } from "../../../store/store";
 import { Loading } from "../../elements";
 import DisplayCat from "../myCats/components/DisplayCat";
 import NoCatFound from "../myCats/components/NoCatFound";
 
 const CatMarketplace: FC = () => {
-    const { catsOffersForMarket, syncCatsOffersForMarket } = useReadContract();
+    const { syncCatsOffersForMarket } = useReadContract();
+    const { catsOffersForMarket } = useStore();
     const { cancelOffer, buyOffer, loading } = useWriteContract();
 
     useEffect(() => {

@@ -33,7 +33,7 @@
         "prettier"
     ],
     "rules": {
-        "no-console": "warn",
+        "no-console": "off",
         "@typescript-eslint/no-explicit-any": "warn",
         "import/order": [
             "error",

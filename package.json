@@ -18,17 +18,15 @@
         "@emotion/react": "11.11.1",
         "@emotion/styled": "11.11.0",
         "@netlify/plugin-nextjs": "4.40.2",
-        "ethers": "6.7.1",
         "framer-motion": "10.16.4",
         "next": "13.5.4",
         "react": "18.2.0",
         "react-dom": "18.2.0",
         "react-jazzicon": "1.0.4",
+        "viem": "^1.16.2",
         "wagmi": "1.4.3"
     },
     "devDependencies": {
-        "@ethersproject/contracts": "^5.7.0",
-        "@ethersproject/providers": "^5.7.2",
         "@types/jquery": "3.5.22",
         "@types/react": "18.2.27",
         "@types/react-blockies": "1.4.2",

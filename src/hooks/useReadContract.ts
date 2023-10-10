@@ -1,20 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { BigNumber } from "ethers";
 import { useAccount } from "wagmi";
 
 import { useContract } from "./useContract";
-import { Catcontract } from "../../types/Catcontract";
-import { CatMarketplace } from "../../types/CatMarketplace";
-import { CAT_ABI } from "../data/abis/catContract_abi";
-import { MARKET_ABI } from "../data/abis/marketplace_abi";
-import { getContractAddresses } from "../data/constant";
+import { contracts } from "../data/contracts";
 
 const useReadContract = () => {
     const { address } = useAccount();
-    const { catAddress, marketplaceAddress } = getContractAddresses();
-    const catInstance: Catcontract = useContract(catAddress, CAT_ABI);
-    const marketplaceInstance: CatMarketplace = useContract(marketplaceAddress, MARKET_ABI);
+
+    const catInstance = useContract({ address: contracts.cat.address, abi: contracts.cat.abi, clientType: "public" });
+    const marketplaceInstance = useContract({
+        address: contracts.marketplace.address,
+        abi: contracts.marketplace.abi,
+        clientType: "public",
+    });
 
     const [gen0Count, setGen0Count] = useState<number>(0);
     const [maxGen0Supply, setMaxGen0Supply] = useState<number>(0);
@@ -22,25 +21,27 @@ const useReadContract = () => {
     const [catsWithoutoffer, setCatsWithoutoffer] = useState<Cat[]>();
     const [catsOffersForMarket, setCatsOffersForMarket] = useState<CatOffersForMarket[]>();
 
-    maxGen0Supply;
+    if (!catInstance || !marketplaceInstance) {
+        throw Error("Contract instance missing.");
+    }
 
     /* Get the name of a specific NFT :
      ************************************/
-    const getTokenName = async (): Promise<string | undefined> => {
+    const getTokenName = useCallback(async (): Promise<string | undefined> => {
         try {
-            const symbol = await catInstance.symbol();
+            const symbol = (await catInstance.read.symbol()) as string;
             return symbol;
         } catch (error) {
             console.error(error);
             return undefined;
         }
-    };
+    }, [catInstance]);
 
     /* Get the number of gen0 cats already minted:
      ***********************************************/
     const getGen0Count = async () => {
         try {
-            const count = await catInstance.gen0Count();
+            const count = (await catInstance.read.gen0Count()) as number;
             setGen0Count(count);
         } catch (error: any) {
             console.error(error.reason ? error.reason : error.message ? error.message : error);
@@ -50,21 +51,21 @@ const useReadContract = () => {
 
     /* Get the max supply number of gen0 cats:
      *******************************************/
-    const getMaxGen0Supply = async () => {
+    const getMaxGen0Supply = useCallback(async () => {
         try {
-            const maxCount = await catInstance.CREATION_LIMIT_GEN0();
+            const maxCount = (await catInstance.read.CREATION_LIMIT_GEN0()) as number;
             setMaxGen0Supply(maxCount);
         } catch (error: any) {
             console.error(error.reason ? error.reason : error.message ? error.message : error);
             setMaxGen0Supply(0);
         }
-    };
+    }, [catInstance]);
 
     /* Check if existing allowance of NFT 1155 :
      ***********************************************/
     const checkNftAllowance = async (user: string) => {
         try {
-            const allowance = await catInstance.isApprovedForAll(user, marketplaceAddress);
+            const allowance = await catInstance.read.isApprovedForAll([user, contracts.marketplace.address]);
             return allowance;
         } catch (error: any) {
             console.error(error.reason ? error.reason : error.message);
@@ -74,13 +75,13 @@ const useReadContract = () => {
 
     /* Get all cats per user :
      ***************************/
-    const getUserCats = async (user: string) => {
+    const getUserCats = async (user: `0x${string}`) => {
         try {
-            const amount = await catInstance.getCatPerOwner(user);
+            const amount = (await catInstance.read.getCatPerOwner([user])) as string;
 
             const cats = [];
             for (let i = 0; i < amount.length; i++) {
-                const temp: any = await catInstance.getCat(Number(amount[i]));
+                const temp: any = await catInstance.read.getCat([Number(amount[i])]);
                 cats.push(temp);
             }
             setUserCats(cats);
@@ -90,7 +91,9 @@ const useReadContract = () => {
     };
 
     const syncUserCats = useCallback(() => {
-        getUserCats(address as string);
+        if (address) {
+            getUserCats(address);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [address]);
 
@@ -100,7 +103,7 @@ const useReadContract = () => {
         try {
             const noOffer = [];
             for (let i = 0; i < cats.length; i++) {
-                const isOffer: boolean = await marketplaceInstance.isOffer(Number(cats[i].indexId));
+                const isOffer = (await marketplaceInstance.read.isOffer([Number(cats[i].indexId)])) as boolean;
                 if (!isOffer) noOffer.push(cats[i]);
             }
             setCatsWithoutoffer(noOffer);
@@ -118,12 +121,12 @@ const useReadContract = () => {
      ************************************************************/
     const getCatsOffersForMarket = async () => {
         try {
-            const offers: BigNumber[] = await marketplaceInstance.getAllTokenOnSale();
+            const offers = (await marketplaceInstance.read.getAllTokenOnSale()) as BigInt[];
 
             const catOffers: CatOffersForMarket[] = [];
             for (let i = 0; i < offers.length; i++) {
-                const tempCat: Cat = await catInstance.getCat(Number(offers[i]));
-                const tempMarket: Offer = await marketplaceInstance.getOffer(Number(offers[i]));
+                const tempCat = (await catInstance.read.getCat([Number(offers[i])])) as Cat;
+                const tempMarket = (await marketplaceInstance.read.getOffer([Number(offers[i])])) as Offer;
                 const marketData: Offer = { ...tempMarket, ownOffer: false };
 
                 if (marketData.seller === address) {
@@ -158,8 +161,7 @@ const useReadContract = () => {
 
     useEffect(() => {
         syncCatsWithoutOffer();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userCats]);
+    }, [userCats, syncCatsWithoutOffer]);
 
     return {
         getTokenName,

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
@@ -16,11 +16,13 @@ const config = {
 const theme = extendTheme(config);
 
 function App({ Component, pageProps }: AppProps) {
-    const [mounted, setMounted] = React.useState(false);
-    React.useEffect(() => setMounted(true), []);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => setMounted(true), []);
+
     return (
         <ChakraProvider resetCSS theme={theme}>
-            <WagmiConfig client={client}>
+            <WagmiConfig config={client}>
                 <NextHead>
                     <title>CryptoCats</title>
                 </NextHead>

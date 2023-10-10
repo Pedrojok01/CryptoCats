@@ -6870,7 +6870,7 @@ valtio@1.11.2:
     proxy-compare "2.5.1"
     use-sync-external-store "1.2.0"
 
-viem@^1.0.0:
+viem@^1.0.0, viem@^1.16.2:
   version "1.16.2"
   resolved "https://registry.yarnpkg.com/viem/-/viem-1.16.2.tgz#7e9719dd19e7464284b94d9c00f94f86f5858ccd"
   integrity sha512-ZQ8kemNvRVwucwcsj4/SjKohK+wZv9Vxx/gXAlwqGMCW7r+niOeECtFku/1L7UPTmPgdmq4kic9R71t6XQDmGw==

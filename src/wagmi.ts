@@ -1,18 +1,30 @@
-import { configureChains, createClient } from "wagmi";
+import { configureChains, createConfig } from "wagmi";
 import { goerli, mainnet } from "wagmi/chains";
 import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { alchemyProvider } from "wagmi/providers/alchemy";
+import { publicProvider } from "wagmi/providers/public";
 
 import { isProdEnv } from "./data/constant";
 
-const { chains, provider, webSocketProvider } = configureChains(
+const alchemyApiKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY;
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
+
+if (!alchemyApiKey) {
+    throw Error("Alchemy API key missing.");
+}
+
+if (!projectId) {
+    throw Error("WalletConnect project ID missing.");
+}
+
+const { chains, publicClient } = configureChains(
     [goerli, mainnet, ...(isProdEnv ? [goerli] : [mainnet])],
-    [alchemyProvider({ apiKey: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY! })]
+    [alchemyProvider({ apiKey: alchemyApiKey }), publicProvider()]
 );
 
-export const client = createClient({
+export const client = createConfig({
     autoConnect: true,
     connectors: [
         new MetaMaskConnector({ chains }),
@@ -24,16 +36,8 @@ export const client = createClient({
         }),
         new WalletConnectConnector({
             chains,
-            options: undefined,
+            options: { projectId: projectId },
         }),
-        // new InjectedConnector({
-        //   chains,
-        //   options: {
-        //     name: 'Injected',
-        //     shimDisconnect: true,
-        //   },
-        // }),
     ],
-    provider,
-    webSocketProvider,
+    publicClient,
 });

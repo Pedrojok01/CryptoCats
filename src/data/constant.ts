@@ -7,12 +7,12 @@ export const SUPPORTED_CHAIN = {
 };
 
 // Goerli Testnet
-export const CAT_CONTRACT_ADD_TEST = "0x1755308f558C1ec14d54Fd12D0588E626148a679";
-export const MARKETPLACE_CONTRACT_ADD_TEST = "0x3ed18F523e16888eC4D44F6fa25ccD12137605Fa";
+export const CAT_CONTRACT_ADD_TEST = "0x1755308f558C1ec14d54Fd12D0588E626148a679" as `0x${string}`;
+export const MARKETPLACE_CONTRACT_ADD_TEST = "0x3ed18F523e16888eC4D44F6fa25ccD12137605Fa" as `0x${string}`;
 
 // Ethereum Mainnet
-export const CAT_CONTRACT_ADD = "";
-export const MARKETPLACE_CONTRACT_ADD = "";
+export const CAT_CONTRACT_ADD = "" as `0x${string}`;
+export const MARKETPLACE_CONTRACT_ADD = "" as `0x${string}`;
 
 export const getContractAddresses = () => {
     if (isProdEnv) {

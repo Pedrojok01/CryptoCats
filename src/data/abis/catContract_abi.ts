@@ -1,4 +1,6 @@
-export const CAT_ABI = [
+import { Abi } from "viem";
+
+export const CAT_ABI: Abi = [
     {
         inputs: [
             { internalType: "uint256", name: "_maxCatsSupply", type: "uint256" },

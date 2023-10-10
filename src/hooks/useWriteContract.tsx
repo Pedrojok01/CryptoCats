@@ -16,10 +16,18 @@ import { getExplorer } from "../utils/getExplorerByChain";
 const useWriteContract = () => {
     const toast = useToast();
     const { catAddress, marketplaceAddress } = getContractAddresses();
-    const catInstance: Catcontract = useContract(catAddress, CAT_ABI);
-    const marketplaceInstance: CatMarketplace = useContract(marketplaceAddress, MARKET_ABI);
+    const catInstance: Catcontract | null = useContract<Catcontract>(catAddress, CAT_ABI);
+    const marketplaceInstance: CatMarketplace | null = useContract<CatMarketplace>(marketplaceAddress, MARKET_ABI);
     const { syncCatsOffersForMarket, syncCatsWithoutOffer } = useReadContract();
     const [loading, setLoading] = useState<boolean>(false);
+
+    if (!catInstance) {
+        throw new Error("Failed to initialize cat contract instance");
+    }
+
+    if (!marketplaceInstance) {
+        throw new Error("Failed to initialize marketplace contract instance");
+    }
 
     /* Set Token Allowance:
      *************************/

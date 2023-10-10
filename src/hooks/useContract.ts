@@ -1,21 +1,28 @@
+// useContract.ts
 import { useMemo } from "react";
+import { Abi, getContract } from "viem";
+import { usePublicClient, useWalletClient } from "wagmi";
 
-import { Contract as EthersContract, ContractInterface } from "@ethersproject/contracts";
-import { Provider } from "@ethersproject/providers";
-import { ZeroAddress, isAddress } from "ethers";
-
-import { useSignerOrProvider } from "./useSignerOrProvider";
-
-function getContract<T extends EthersContract>(address: string, abi: ContractInterface, provider: Provider): T {
-    return new EthersContract(address, abi, provider) as T;
+interface UseContractProps {
+    address: `0x${string}`;
+    abi: Abi;
+    clientType: "public" | "wallet";
 }
 
-export function useContract<T extends EthersContract>(address: string, abi: ContractInterface): T | null {
-    const signerOrProvider = useSignerOrProvider();
+export const useContract = ({ address, abi, clientType }: UseContractProps) => {
+    const publicClient = usePublicClient();
+    const { data: walletClient } = useWalletClient();
 
-    if (!isAddress(address) || address === ZeroAddress) {
-        throw Error(`Invalid 'address' parameter '${address}'.`);
-    }
+    const client = clientType === "public" ? publicClient : walletClient;
 
-    return useMemo(() => getContract<T>(address, abi, signerOrProvider), [address, abi, signerOrProvider]);
-}
+    const contractInstance = useMemo(() => {
+        return getContract({
+            address,
+            abi,
+            publicClient: client ? client : undefined,
+            walletClient: client ? client : undefined,
+        });
+    }, [address, abi, client]);
+
+    return contractInstance;
+};

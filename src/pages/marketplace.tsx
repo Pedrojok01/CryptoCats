@@ -6,9 +6,9 @@ import { Default } from "../components/layouts";
 import { CatMarketplace } from "../components/templates/marketplace";
 
 const Marketplace: NextPage = () => {
-    const { isConnected } = useAccount();
+  const { isConnected } = useAccount();
 
-    return <Default pageName="Marketplace">{!isConnected ? <NotConnected /> : <CatMarketplace />}</Default>;
+  return <Default pageName="Marketplace">{!isConnected ? <NotConnected /> : <CatMarketplace />}</Default>;
 };
 
 export default Marketplace;

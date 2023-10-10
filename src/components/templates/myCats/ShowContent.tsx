@@ -8,39 +8,39 @@ import useReadContract from "../../../hooks/useReadContract";
 import { Loading } from "../../elements";
 
 const ShowContent: FC = () => {
-    const { userCats } = useReadContract();
+  const { userCats } = useReadContract();
 
-    return (
-        <>
-            <Box textAlign="center">
-                <Heading as="h1" size="lg" marginBottom={6}>
-                    Cats Inventory
-                </Heading>
-                <Heading as="h4" size="sm" fontWeight="normal">
-                    Display all the cats NFTs that you own.
-                </Heading>
-            </Box>
+  return (
+    <>
+      <Box textAlign="center">
+        <Heading as="h1" size="lg" marginBottom={6}>
+          Cats Inventory
+        </Heading>
+        <Heading as="h4" size="sm" fontWeight="normal">
+          Display all the cats NFTs that you own.
+        </Heading>
+      </Box>
 
-            <Loading props={userCats} />
+      <Loading props={userCats} />
 
-            {userCats && userCats?.length === 0 ? (
-                <NoCatFound />
-            ) : (
-                <Wrap w={"80%"} justify="center" m="auto" p={5}>
-                    {userCats?.map((cat: Cat, index: number) => {
-                        return (
-                            <DisplayCat
-                                dnaBN={Number(cat.genes)}
-                                key={index}
-                                id={Number(cat.indexId)}
-                                generation={Number(cat.generation)}
-                            />
-                        );
-                    })}
-                </Wrap>
-            )}
-        </>
-    );
+      {userCats && userCats?.length === 0 ? (
+        <NoCatFound />
+      ) : (
+        <Wrap w={"80%"} justify="center" m="auto" p={5}>
+          {userCats?.map((cat: Cat, index: number) => {
+            return (
+              <DisplayCat
+                dnaBN={Number(cat.genes)}
+                key={index}
+                id={Number(cat.indexId)}
+                generation={Number(cat.generation)}
+              />
+            );
+          })}
+        </Wrap>
+      )}
+    </>
+  );
 };
 
 export default ShowContent;

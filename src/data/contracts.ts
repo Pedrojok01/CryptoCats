@@ -7,12 +7,12 @@ import { MARKET_ABI } from "../data/abis/marketplace_abi";
 const { catAddress, marketplaceAddress } = getContractAddresses();
 
 export const contracts = {
-    cat: {
-        address: catAddress,
-        abi: CAT_ABI as Abi,
-    },
-    marketplace: {
-        address: marketplaceAddress,
-        abi: MARKET_ABI as Abi,
-    },
+  cat: {
+    address: catAddress,
+    abi: CAT_ABI as Abi,
+  },
+  marketplace: {
+    address: marketplaceAddress,
+    abi: MARKET_ABI as Abi,
+  },
 };

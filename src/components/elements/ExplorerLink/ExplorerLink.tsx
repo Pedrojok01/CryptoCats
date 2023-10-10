@@ -6,21 +6,21 @@ import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { getExplorer } from "../../../utils/getExplorerByChain";
 
 interface ExplorerLinkProps {
-    hash: string;
+  hash: string;
 }
 
 const ExplorerLink: React.FC<ExplorerLinkProps> = ({ hash }) => {
-    const link = `${getExplorer()}tx/${hash}`;
+  const link = `${getExplorer()}tx/${hash}`;
 
-    return (
-        <>
-            <br></br>
-            View in explorer: &nbsp;
-            <a href={link} target="_blank" rel="noopener noreferrer">
-                <ExternalLinkIcon style={{ transform: "scale(1.3)", color: "purple" }} />
-            </a>
-        </>
-    );
+  return (
+    <>
+      <br></br>
+      View in explorer: &nbsp;
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        <ExternalLinkIcon style={{ transform: "scale(1.3)", color: "purple" }} />
+      </a>
+    </>
+  );
 };
 
 export default ExplorerLink;

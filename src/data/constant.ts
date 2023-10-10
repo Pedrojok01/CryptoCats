@@ -2,8 +2,8 @@
 export const isProdEnv = false; // Bypass Netlify prod deployment
 
 export const SUPPORTED_CHAIN = {
-    mainnet: 1,
-    testnet: 5,
+  mainnet: 1,
+  testnet: 5,
 };
 
 // Goerli Testnet
@@ -15,22 +15,22 @@ export const CAT_CONTRACT_ADD = "" as `0x${string}`;
 export const MARKETPLACE_CONTRACT_ADD = "" as `0x${string}`;
 
 export const getContractAddresses = () => {
-    if (isProdEnv) {
-        return {
-            catAddress: CAT_CONTRACT_ADD,
-            marketplaceAddress: MARKETPLACE_CONTRACT_ADD,
-        };
-    } else
-        return {
-            catAddress: CAT_CONTRACT_ADD_TEST,
-            marketplaceAddress: MARKETPLACE_CONTRACT_ADD_TEST,
-        };
+  if (isProdEnv) {
+    return {
+      catAddress: CAT_CONTRACT_ADD,
+      marketplaceAddress: MARKETPLACE_CONTRACT_ADD,
+    };
+  } else
+    return {
+      catAddress: CAT_CONTRACT_ADD_TEST,
+      marketplaceAddress: MARKETPLACE_CONTRACT_ADD_TEST,
+    };
 };
 
 export const getChain = () => {
-    if (isProdEnv) {
-        return SUPPORTED_CHAIN.mainnet;
-    } else {
-        return SUPPORTED_CHAIN.testnet;
-    }
+  if (isProdEnv) {
+    return SUPPORTED_CHAIN.mainnet;
+  } else {
+    return SUPPORTED_CHAIN.testnet;
+  }
 };

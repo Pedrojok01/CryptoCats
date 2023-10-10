@@ -6,9 +6,9 @@ import { Default } from "../../components/layouts";
 import ShowContent from "../../components/templates/myCats/ShowContent";
 
 const Show: NextPage = () => {
-    const { isConnected } = useAccount();
+  const { isConnected } = useAccount();
 
-    return <Default pageName="Show">{!isConnected ? <NotConnected /> : <ShowContent />}</Default>;
+  return <Default pageName="Show">{!isConnected ? <NotConnected /> : <ShowContent />}</Default>;
 };
 
 export default Show;

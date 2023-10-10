@@ -9,34 +9,34 @@ import { useWindowWidthAndHeight } from "../../../hooks/useWindowWidthAndHeight"
 import { getEllipsisTxt } from "../../../utils/format";
 
 const ConnectButton: FC = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const { connector: isConnected, address } = useAccount();
-    const { isMobile } = useWindowWidthAndHeight();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { connector: isConnected, address } = useAccount();
+  const { isMobile } = useWindowWidthAndHeight();
 
-    return (
+  return (
+    <>
+      {!isConnected ? (
         <>
-            {!isConnected ? (
-                <>
-                    <Button size="sm" className="custom-button" onClick={onOpen}>
-                        Connect Wallet
-                    </Button>
-                    <ConnectModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
-                </>
-            ) : (
-                <>
-                    <Button size="sm" className="connected-address" onClick={onOpen}>
-                        {address && typeof address === "string" && (
-                            <p className="connected-address-text">
-                                {isMobile ? getEllipsisTxt(address, 5) : getEllipsisTxt(address, 4)}
-                            </p>
-                        )}
-                    </Button>
-
-                    <DisconnectModal isOpen={isOpen} onClose={onClose} />
-                </>
-            )}
+          <Button size="sm" className="custom-button" onClick={onOpen}>
+            Connect Wallet
+          </Button>
+          <ConnectModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
         </>
-    );
+      ) : (
+        <>
+          <Button size="sm" className="connected-address" onClick={onOpen}>
+            {address && typeof address === "string" && (
+              <p className="connected-address-text">
+                {isMobile ? getEllipsisTxt(address, 5) : getEllipsisTxt(address, 4)}
+              </p>
+            )}
+          </Button>
+
+          <DisconnectModal isOpen={isOpen} onClose={onClose} />
+        </>
+      )}
+    </>
+  );
 };
 
 export default ConnectButton;

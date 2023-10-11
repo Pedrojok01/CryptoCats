@@ -11,7 +11,7 @@ contract Catcontract is ERC721Enumerable, Ownable {
 
     uint8 public immutable CREATION_LIMIT_GEN0; // Max Gen0 supply, definied in constructor
     uint8 public gen0Count = 0; // Actual number of Gen0 cats
-    uint256 public maxCatsSupply; // Max cats supply, definied in constructor
+    uint256 public immutable maxCatsSupply; // Max cats supply, definied in constructor
     uint256 public catsSupplyCount; // Actual cats supply
 
     struct Cat {

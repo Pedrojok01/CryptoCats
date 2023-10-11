@@ -1,5 +1,4 @@
 import "@nomicfoundation/hardhat-toolbox";
-import "@nomiclabs/hardhat-etherscan";
 import { HardhatUserConfig } from "hardhat/config";
 import "hardhat-contract-sizer";
 // require("hardhat-docgen");
@@ -60,13 +59,12 @@ const config: HardhatUserConfig = {
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
   },
-  // paths: {
-  //     root: "./hardhat/",
-  //     sources: "./contracts",
-  //     tests: "./test",
-  //     cache: "./cache",
-  //     artifacts: "./artifacts",
-  // },
+  paths: {
+    sources: "./contracts",
+    tests: "./test",
+    cache: "./cache",
+    artifacts: "./artifacts",
+  },
   // docgen: {
   //   path: "./docs",
   //   clear: true,

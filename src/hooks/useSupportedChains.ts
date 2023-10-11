@@ -14,6 +14,5 @@ export function useSuportedChains() {
       } else return false;
     }
     return false;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chain]);
 }

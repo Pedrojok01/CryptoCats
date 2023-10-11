@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { useAccount } from "wagmi";
+import { useAccount, usePublicClient } from "wagmi";
 
 import { contracts } from "@/data/contracts";
 import { mapArrayToCatObject, mapArrayToOfferObject } from "@/utils/formatArrayToObject";
@@ -11,6 +11,7 @@ import { logError } from "../utils/errorUtil";
 
 const useReadContract = () => {
   const { address } = useAccount();
+  const publicClient = usePublicClient();
   const { catInstance, marketplaceInstance } = useContractInstances({ clientType: "public" });
   const { userCats, setGen0Count, setMaxGen0Supply, setUserCats, setCatsWithoutOffer, setCatsOffersForMarket } =
     useStore();
@@ -99,23 +100,29 @@ const useReadContract = () => {
 
   /* Get all cats without offer on the marketplace per user :
    ************************************************************/
+
   const getCatsOffersForMarket = useCallback(async () => {
     try {
       const offers = (await marketplaceInstance.read.getAllTokenOnSale()) as bigint[];
-      const catPromises = offers.map((id) => catInstance.read.getCat([Number(id)])) as Promise<bigint[]>[];
-      const offerPromises = offers.map((id) => marketplaceInstance.read.getOffer([Number(id)])) as Promise<OfferAbi>[];
-      const [catsArray, offersArray] = await Promise.all([Promise.all(catPromises), Promise.all(offerPromises)]);
-
-      const catOffers = catsArray.map((cat, index) => {
-        const offer = mapArrayToOfferObject(offersArray[index]);
-        offer.ownOffer = offer.seller === address;
-        return { catData: mapArrayToCatObject(cat), marketData: offer };
+      const results = await publicClient.multicall({
+        contracts: offers.flatMap((id) => [
+          { ...contracts.cat, functionName: "getCat", args: [Number(id)] },
+          { ...contracts.marketplace, functionName: "getOffer", args: [Number(id)] },
+        ]),
       });
+
+      const catOffers: CatOffersForMarket[] = [];
+      for (let i = 0; i < results.length; i += 2) {
+        const catData = mapArrayToCatObject(results[i].result as bigint[]);
+        const offerData = mapArrayToOfferObject(results[i + 1].result as OfferAbi);
+        offerData.ownOffer = offerData.seller === address;
+        catOffers.push({ catData, marketData: offerData });
+      }
       setCatsOffersForMarket(catOffers);
     } catch (error: unknown) {
       logError(error);
     }
-  }, [address, catInstance, marketplaceInstance, setCatsOffersForMarket]);
+  }, [address, marketplaceInstance.read, publicClient, setCatsOffersForMarket]);
 
   return {
     getTokenName,

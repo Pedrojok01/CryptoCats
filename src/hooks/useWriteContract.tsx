@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { formatEther, parseEther } from "viem";
+import { parseEther } from "viem";
 
 import { useContractInstances } from "./useContractInstances";
 import useNotify from "./useNotify";

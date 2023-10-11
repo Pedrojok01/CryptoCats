@@ -5,7 +5,10 @@ import type { AppProps } from "next/app";
 import NextHead from "next/head";
 import { WagmiConfig } from "wagmi";
 
+import { UserCatsProvider } from "@/context/UserCatsProvider";
+
 import { client } from "../wagmi";
+
 import "../styles/globals.css";
 
 const config = {
@@ -26,7 +29,11 @@ function App({ Component, pageProps }: AppProps) {
         <NextHead>
           <title>CryptoCats</title>
         </NextHead>
-        {mounted && <Component {...pageProps} />}
+        {mounted && (
+          <UserCatsProvider>
+            <Component {...pageProps} />
+          </UserCatsProvider>
+        )}
       </WagmiConfig>
     </ChakraProvider>
   );

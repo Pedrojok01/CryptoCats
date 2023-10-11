@@ -1,23 +1,15 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 
 import { Box, Heading, Wrap } from "@chakra-ui/react";
 
 import { Loading } from "@/components/elements";
-import { useReadContract } from "@/hooks";
 import { useStore } from "@/store/store";
 
 import DisplayCat from "./components/DisplayCat";
 import NoCatFound from "./components/NoCatFound";
 
 const ShowContent: FC = () => {
-  const { getUserCats } = useReadContract();
   const { userCats } = useStore();
-
-  useEffect(() => {
-    getUserCats();
-  }, [getUserCats]);
-
-  console.log("userCats", userCats);
 
   return (
     <>

@@ -11,14 +11,13 @@ import DisplayCat from "../myCats/components/DisplayCat";
 import NoCatFound from "../myCats/components/NoCatFound";
 
 const CatMarketplace: FC = () => {
-  const { syncCatsOffersForMarket } = useReadContract();
+  const { getCatsOffersForMarket } = useReadContract();
   const { catsOffersForMarket } = useStore();
   const { cancelOffer, buyOffer, loading } = useWriteContract();
 
   useEffect(() => {
-    syncCatsOffersForMarket();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [catsOffersForMarket]);
+    getCatsOffersForMarket();
+  }, [getCatsOffersForMarket]);
 
   return (
     <>

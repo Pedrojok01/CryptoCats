@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { Box, Button, Card, Flex, Heading, useColorMode } from "@chakra-ui/react";
 
@@ -12,9 +12,14 @@ import Attributes from "./components/Attributes";
 const CatFactory: FC = () => {
   const { colorMode } = useColorMode();
   const { isMobile, isMediumScreen } = useWindowWidthAndHeight();
-  const { getGen0Count } = useReadContract();
+  const { getGen0Count, getMaxGen0Supply } = useReadContract();
   const { gen0Count, maxGen0Supply } = useStore();
   const { mintCat, loading } = useWriteContract();
+
+  useEffect(() => {
+    getGen0Count();
+    getMaxGen0Supply();
+  }, [getGen0Count, getMaxGen0Supply]);
 
   // Color
   const [headColor, setHeadColor] = useState<number>(defaultDNA.bodyColor);

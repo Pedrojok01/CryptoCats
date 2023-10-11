@@ -19,7 +19,7 @@ const useWriteContract = () => {
     abi: contracts.marketplace.abi,
     clientType: "wallet",
   });
-  const { syncCatsOffersForMarket, syncCatsWithoutOffer } = useReadContract();
+  const { getCatsWithoutOffer, getCatsOffersForMarket } = useReadContract();
   const [loading, setLoading] = useState<boolean>(false);
 
   if (!catInstance || !marketplaceInstance) {
@@ -130,7 +130,7 @@ const useWriteContract = () => {
         message: msg,
         status: "success",
       });
-      syncCatsWithoutOffer();
+      getCatsWithoutOffer();
     } catch (error: any) {
       notify({
         title: "An error occured",
@@ -161,7 +161,7 @@ const useWriteContract = () => {
         message: msg,
         status: "success",
       });
-      syncCatsOffersForMarket();
+      getCatsOffersForMarket();
     } catch (error: any) {
       notify({
         title: "An error occured",
@@ -194,7 +194,7 @@ const useWriteContract = () => {
         message: msg,
         status: "success",
       });
-      syncCatsOffersForMarket();
+      getCatsOffersForMarket();
     } catch (error: any) {
       notify({
         title: "An error occured",

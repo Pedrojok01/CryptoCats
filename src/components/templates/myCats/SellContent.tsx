@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import {
   Box,
@@ -29,13 +29,17 @@ import NoCatFound from "./components/NoCatFound";
 
 const SellContent: FC = () => {
   const { address } = useAccount();
-  const { checkNftAllowance } = useReadContract();
+  const { checkNftAllowance, getCatsWithoutOffer } = useReadContract();
   const { catsWithoutOffer } = useStore();
   const { approveNft, sellCat, loading } = useWriteContract();
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [catToSell, setCatToSell] = useState<SelectedParent>();
   const [price, setPrice] = useState<string>("0");
+
+  useEffect(() => {
+    getCatsWithoutOffer();
+  }, [getCatsWithoutOffer]);
 
   const handleReset = async () => {
     setCatToSell(undefined);

@@ -3,14 +3,15 @@ import { FC, useState } from "react";
 import { Box, Button, Center, Heading, HStack, VStack, Wrap } from "@chakra-ui/react";
 
 import { Loading } from "@/components/elements";
-import useReadContract from "@/hooks/useReadContract";
-import useWriteContract from "@/hooks/useWriteContract";
+import { useReadContract, useWriteContract } from "@/hooks";
+import { useStore } from "@/store/store";
 
 import CatSelection from "./components/CatSelection";
 import NoCatFound from "./components/NoCatFound";
 
 const BreedContent: FC = () => {
-  const { userCats, syncUserCats } = useReadContract();
+  const { getUserCats } = useReadContract();
+  const { userCats } = useStore();
   const { breedCat, loading } = useWriteContract();
   const [mum, setMum] = useState<SelectedParent>();
   const [dad, setDad] = useState<SelectedParent>();
@@ -27,7 +28,7 @@ const BreedContent: FC = () => {
       await breedCat(mum.id, dad.id);
       setMum(undefined);
       setDad(undefined);
-      syncUserCats();
+      getUserCats();
     }
   };
 

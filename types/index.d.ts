@@ -123,6 +123,8 @@ type Cat = {
   mumId: BigNumber;
 };
 
+type OfferAbi = [seller: string, price: BigInt, index: BigInt, tokenId: BigInt];
+
 type Offer = {
   seller: string;
   price: BigNumber;

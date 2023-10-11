@@ -16,7 +16,6 @@ import {
 import Image from "next/image";
 import NextLink from "next/link";
 
-
 import { ChainVerification, ColorModeButton, ConnectButton, NavBar } from "@/components/elements";
 import { useWindowWidthAndHeight } from "@/hooks/useWindowWidthAndHeight";
 import logo from "public/img/cryptocats_logo_transparent.png";

@@ -2,14 +2,14 @@ import { FC } from "react";
 
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Wrap } from "@chakra-ui/react";
 
-import useReadContract from "@/hooks/useReadContract";
+import { useStore } from "@/store/store";
 
 import DisplayCat from "./DisplayCat";
 
 const CatSelectModal: FC<CatSelectModalProps> = ({ isOpen, onClose, setParent, otherParent, isMarket }) => {
-  const { userCats, catsWithoutoffer } = useReadContract();
+  const { userCats, catsWithoutOffer } = useStore();
 
-  const catToRender = isMarket ? catsWithoutoffer : userCats;
+  const catToRender = isMarket ? catsWithoutOffer : userCats;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size={"3xl"}>

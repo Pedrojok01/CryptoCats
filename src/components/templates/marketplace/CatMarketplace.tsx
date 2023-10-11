@@ -4,8 +4,7 @@ import { Box, Heading, Wrap } from "@chakra-ui/react";
 import { formatEther } from "viem";
 
 import { Loading } from "@/components/elements";
-import useReadContract from "@/hooks/useReadContract";
-import useWriteContract from "@/hooks/useWriteContract";
+import { useReadContract, useWriteContract } from "@/hooks";
 import { useStore } from "@/store/store";
 
 import DisplayCat from "../myCats/components/DisplayCat";

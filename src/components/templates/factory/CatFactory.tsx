@@ -4,16 +4,16 @@ import { Box, Button, Card, Flex, Heading, useColorMode } from "@chakra-ui/react
 
 import { RenderCat } from "@/components/elements";
 import { defaultDNA } from "@/data/catStettings";
-import useReadContract from "@/hooks/useReadContract";
-import { useWindowWidthAndHeight } from "@/hooks/useWindowWidthAndHeight";
-import useWriteContract from "@/hooks/useWriteContract";
+import { useReadContract, useWriteContract, useWindowWidthAndHeight } from "@/hooks";
+import { useStore } from "@/store/store";
 
 import Attributes from "./components/Attributes";
 
 const CatFactory: FC = () => {
   const { colorMode } = useColorMode();
   const { isMobile, isMediumScreen } = useWindowWidthAndHeight();
-  const { gen0Count, getGen0Count, maxGen0Supply } = useReadContract();
+  const { getGen0Count } = useReadContract();
+  const { gen0Count, maxGen0Supply } = useStore();
   const { mintCat, loading } = useWriteContract();
 
   // Color

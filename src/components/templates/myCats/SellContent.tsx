@@ -21,8 +21,7 @@ import { parseEther } from "viem";
 import { useAccount } from "wagmi";
 
 import { Loading, RenderCat } from "@/components/elements";
-import useReadContract from "@/hooks/useReadContract";
-import useWriteContract from "@/hooks/useWriteContract";
+import { useReadContract, useWriteContract } from "@/hooks";
 import { useStore } from "@/store/store";
 
 import CatSelectModal from "./components/CatSelectModal";

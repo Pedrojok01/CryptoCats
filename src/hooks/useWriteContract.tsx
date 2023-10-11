@@ -26,14 +26,12 @@ const useWriteContract = () => {
     throw Error("Contract instance missing.");
   }
 
-  console.log("catInstance", catInstance);
-
   /* Set Token Allowance:
    *************************/
   const approveNft = async () => {
     setLoading(true);
     try {
-      const hash: `0x${string}` = await catInstance.setApprovalForAll([contracts.marketplace.address, true]);
+      const hash: `0x${string}` = await catInstance.write.setApprovalForAll([contracts.marketplace.address, true]);
       awaitTransactionReceipt({ hash });
       notify({
         title: "NFT Approval set",
@@ -59,7 +57,7 @@ const useWriteContract = () => {
   const mintCat = async (dna: string): Promise<any> => {
     setLoading(true);
     try {
-      const hash: `0x${string}` = await catInstance.write.createCatGen0(dna);
+      const hash: `0x${string}` = await catInstance.write.createCatGen0([dna]);
       awaitTransactionReceipt({ hash });
       const msg = (
         <>
@@ -89,7 +87,7 @@ const useWriteContract = () => {
   const breedCat = async (id1: number, id2: number): Promise<any> => {
     setLoading(true);
     try {
-      const hash: `0x${string}` = await catInstance.write.breed(id1, id2);
+      const hash: `0x${string}` = await catInstance.write.breed([id1, id2]);
       awaitTransactionReceipt({ hash });
       const msg = (
         <>
@@ -119,7 +117,7 @@ const useWriteContract = () => {
   const sellCat = async (price: bigint, id: number): Promise<any> => {
     setLoading(true);
     try {
-      const hash: `0x${string}` = await marketplaceInstance.write.setOffer(price, id);
+      const hash: `0x${string}` = await marketplaceInstance.write.setOffer([price, id]);
       awaitTransactionReceipt({ hash });
       const msg = (
         <>
@@ -150,7 +148,7 @@ const useWriteContract = () => {
   const cancelOffer = async (id: number): Promise<any> => {
     setLoading(true);
     try {
-      const hash: `0x${string}` = await marketplaceInstance.write.removeOffer(id);
+      const hash: `0x${string}` = await marketplaceInstance.write.removeOffer([id]);
       awaitTransactionReceipt({ hash });
       const msg = (
         <>
@@ -181,7 +179,7 @@ const useWriteContract = () => {
   const buyOffer = async (id: number, price: bigint): Promise<any> => {
     setLoading(true);
     try {
-      const hash: `0x${string}` = await marketplaceInstance.write.buyCat(id, {
+      const hash: `0x${string}` = await marketplaceInstance.write.buyCat([id], {
         value: formatEther(price),
       });
       awaitTransactionReceipt({ hash });

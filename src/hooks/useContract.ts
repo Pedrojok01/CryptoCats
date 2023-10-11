@@ -14,16 +14,17 @@ export const useContract = ({ address, abi, clientType }: UseContractProps) => {
   const publicClient = usePublicClient();
   const { data: walletClient } = useWalletClient();
 
-  const client = clientType === "public" ? publicClient : walletClient;
+  const isPublicClient = clientType === "public" ? publicClient : undefined;
+  const isWalletClient = clientType === "wallet" && walletClient ? walletClient : undefined;
 
   const contractInstance = useMemo(() => {
     return getContract({
       address,
       abi,
-      publicClient: client ? client : undefined,
-      walletClient: client ? client : undefined,
+      publicClient: isPublicClient,
+      walletClient: isWalletClient,
     });
-  }, [address, abi, client]);
+  }, [address, abi, isPublicClient, isWalletClient]);
 
   return contractInstance;
 };

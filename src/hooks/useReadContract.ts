@@ -2,26 +2,18 @@ import { useCallback, useEffect } from "react";
 
 import { useAccount } from "wagmi";
 
-import { useContract } from "./useContract";
-import { contracts } from "../data/contracts";
+import { contracts } from "@/data/contracts";
+import { mapArrayToCatObject, mapArrayToOfferObject } from "@/utils/formatArrayToObject";
+
+import { useContractInstances } from "./useContractInstances";
 import { useStore } from "../store/store";
 import { logError } from "../utils/errorUtil";
 
 const useReadContract = () => {
   const { address } = useAccount();
-  const catInstance = useContract({ address: contracts.cat.address, abi: contracts.cat.abi, clientType: "public" });
-  const marketplaceInstance = useContract({
-    address: contracts.marketplace.address,
-    abi: contracts.marketplace.abi,
-    clientType: "public",
-  });
-
+  const { catInstance, marketplaceInstance } = useContractInstances({ clientType: "public" });
   const { userCats, setGen0Count, setMaxGen0Supply, setUserCats, setCatsWithoutOffer, setCatsOffersForMarket } =
     useStore();
-
-  if (!catInstance || !marketplaceInstance) {
-    throw Error("Contract instance missing.");
-  }
 
   /* Get the name of a specific NFT :
    ************************************/
@@ -72,77 +64,60 @@ const useReadContract = () => {
 
   /* Get all cats per user :
    ***************************/
-  const getUserCats = async (user: `0x${string}`) => {
-    try {
-      const amount = (await catInstance.read.getCatPerOwner([user])) as string;
+  const getUserCats = useCallback(async () => {
+    console.log("Get cat starts...");
 
-      const cats = [];
-      for (let i = 0; i < amount.length; i++) {
-        const temp: any = await catInstance.read.getCat([Number(amount[i])]);
-        cats.push(temp);
-      }
+    try {
+      const amount = (await catInstance.read.getCatPerOwner([address])) as string[];
+      const catPromises = amount.map(async (id) => {
+        const array = (await catInstance.read.getCat([Number(id)])) as bigint[];
+        return mapArrayToCatObject(array);
+      });
+
+      const cats = await Promise.all(catPromises);
       setUserCats(cats);
     } catch (error: unknown) {
       logError(error);
     }
-  };
-
-  const syncUserCats = useCallback(() => {
-    if (address) {
-      getUserCats(address);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address]);
+  }, [address, catInstance, setUserCats]);
 
   /* Get all cats without offer on the marketplace per user :
    ************************************************************/
-  const getCatsWithoutOffer = async (cats: any[]) => {
-    try {
-      const noOffer = [];
-      for (let i = 0; i < cats.length; i++) {
-        const isOffer = (await marketplaceInstance.read.isOffer([Number(cats[i].indexId)])) as boolean;
-        if (!isOffer) noOffer.push(cats[i]);
+  const getCatsWithoutOffer = useCallback(
+    async (cats: Cat[]) => {
+      try {
+        const offerChecks = cats.map((cat) =>
+          marketplaceInstance.read.isOffer([Number(cat.indexId)])
+        ) as Promise<boolean>[];
+        const offerResults = await Promise.all(offerChecks);
+        const noOffer = cats.filter((_, index) => !offerResults[index]);
+        setCatsWithoutOffer(noOffer);
+      } catch (error: unknown) {
+        logError(error);
       }
-      setCatsWithoutOffer(noOffer);
-    } catch (error: unknown) {
-      logError(error);
-    }
-  };
-
-  const syncCatsWithoutOffer = useCallback(() => {
-    if (userCats) getCatsWithoutOffer(userCats);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userCats]);
+    },
+    [marketplaceInstance, setCatsWithoutOffer]
+  );
 
   /* Get all cats without offer on the marketplace per user :
    ************************************************************/
-  const getCatsOffersForMarket = async () => {
+  const getCatsOffersForMarket = useCallback(async () => {
     try {
       const offers = (await marketplaceInstance.read.getAllTokenOnSale()) as bigint[];
+      const catPromises = offers.map((id) => catInstance.read.getCat([Number(id)])) as Promise<bigint[]>[];
+      const offerPromises = offers.map((id) => marketplaceInstance.read.getOffer([Number(id)])) as Promise<OfferAbi>[];
+      const [catsArray, offersArray] = await Promise.all([Promise.all(catPromises), Promise.all(offerPromises)]);
 
-      const catOffers: CatOffersForMarket[] = [];
-      for (let i = 0; i < offers.length; i++) {
-        const tempCat = (await catInstance.read.getCat([Number(offers[i])])) as Cat;
-        const tempMarket = (await marketplaceInstance.read.getOffer([Number(offers[i])])) as Offer;
-        const marketData: Offer = { ...tempMarket, ownOffer: false };
-
-        if (marketData.seller === address) {
-          marketData.ownOffer = true;
-        }
-
-        const offer: CatOffersForMarket = { catData: tempCat, marketData: marketData };
-        catOffers.push(offer);
-      }
+      const catOffers = catsArray.map((cat, index) => {
+        const offer = mapArrayToOfferObject(offersArray[index]);
+        offer.ownOffer = offer.seller === address;
+        return { catData: mapArrayToCatObject(cat), marketData: offer };
+      });
       setCatsOffersForMarket(catOffers);
     } catch (error: unknown) {
       logError(error);
     }
-  };
-
-  const syncCatsOffersForMarket = useCallback(() => {
-    getCatsOffersForMarket();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address]);
+  }, [address, catInstance, marketplaceInstance, setCatsOffersForMarket]);
 
   useEffect(() => {
     getGen0Count();
@@ -151,23 +126,24 @@ const useReadContract = () => {
   }, []);
 
   useEffect(() => {
-    syncUserCats();
-    syncCatsOffersForMarket();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [address]);
+    if (address) {
+      getUserCats();
+      getCatsOffersForMarket();
+    }
+  }, [address, getUserCats, getCatsOffersForMarket]);
 
   useEffect(() => {
-    syncCatsWithoutOffer();
-  }, [userCats, syncCatsWithoutOffer]);
+    if (userCats) getCatsWithoutOffer(userCats);
+  }, [userCats, getCatsWithoutOffer]);
 
   return {
     getTokenName,
     getGen0Count,
     getMaxGen0Supply,
-    syncUserCats,
-    syncCatsWithoutOffer,
     checkNftAllowance,
-    syncCatsOffersForMarket,
+    getUserCats,
+    getCatsWithoutOffer,
+    getCatsOffersForMarket,
   };
 };
 

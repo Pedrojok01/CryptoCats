@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { formatEther, getContract } from "viem";
+import { formatEther, parseEther } from "viem";
 
-import { useContract } from "./useContract";
+import { useContractInstances } from "./useContractInstances";
 import useNotify from "./useNotify";
 import useReadContract from "./useReadContract";
 import useTransactionReceipt from "./useTransactionReceipt";
@@ -11,20 +11,11 @@ import { contracts } from "../data/contracts";
 import { logError } from "../utils/errorUtil";
 
 const useWriteContract = () => {
+  const { catInstance, marketplaceInstance } = useContractInstances({ clientType: "wallet" });
+  const { getCatsWithoutOffer, getCatsOffersForMarket } = useReadContract();
   const { awaitTransactionReceipt } = useTransactionReceipt();
   const notify = useNotify();
-  const catInstance = useContract({ address: contracts.cat.address, abi: contracts.cat.abi, clientType: "wallet" });
-  const marketplaceInstance = useContract({
-    address: contracts.marketplace.address,
-    abi: contracts.marketplace.abi,
-    clientType: "wallet",
-  });
-  const { getCatsWithoutOffer, getCatsOffersForMarket } = useReadContract();
   const [loading, setLoading] = useState<boolean>(false);
-
-  if (!catInstance || !marketplaceInstance) {
-    throw Error("Contract instance missing.");
-  }
 
   /* Set Token Allowance:
    *************************/
@@ -32,7 +23,7 @@ const useWriteContract = () => {
     setLoading(true);
     try {
       const hash: `0x${string}` = await catInstance.write.setApprovalForAll([contracts.marketplace.address, true]);
-      awaitTransactionReceipt({ hash });
+      await awaitTransactionReceipt({ hash });
       notify({
         title: "NFT Approval set",
         message: "Allowance successfully set.",
@@ -50,15 +41,13 @@ const useWriteContract = () => {
     }
   };
 
-  getContract;
-
   /* Mint a gen0 cat from the factory :
    *************************************/
   const mintCat = async (dna: string): Promise<any> => {
     setLoading(true);
     try {
       const hash: `0x${string}` = await catInstance.write.createCatGen0([dna]);
-      awaitTransactionReceipt({ hash });
+      await awaitTransactionReceipt({ hash });
       const msg = (
         <>
           Your cat has been succesfully created!
@@ -88,7 +77,7 @@ const useWriteContract = () => {
     setLoading(true);
     try {
       const hash: `0x${string}` = await catInstance.write.breed([id1, id2]);
-      awaitTransactionReceipt({ hash });
+      await awaitTransactionReceipt({ hash });
       const msg = (
         <>
           Your seebling is born!
@@ -118,7 +107,7 @@ const useWriteContract = () => {
     setLoading(true);
     try {
       const hash: `0x${string}` = await marketplaceInstance.write.setOffer([price, id]);
-      awaitTransactionReceipt({ hash });
+      await awaitTransactionReceipt({ hash });
       const msg = (
         <>
           Your cat offer has been added to the marketplace!
@@ -149,7 +138,7 @@ const useWriteContract = () => {
     setLoading(true);
     try {
       const hash: `0x${string}` = await marketplaceInstance.write.removeOffer([id]);
-      awaitTransactionReceipt({ hash });
+      await awaitTransactionReceipt({ hash });
       const msg = (
         <>
           Your cat id:{id} has been successfully removed from the marketplace!
@@ -176,13 +165,13 @@ const useWriteContract = () => {
 
   /* Remove a cat offer from the marketplace :
    *********************************************/
-  const buyOffer = async (id: number, price: bigint): Promise<any> => {
+  const buyOffer = async (id: number, price: number): Promise<any> => {
     setLoading(true);
     try {
       const hash: `0x${string}` = await marketplaceInstance.write.buyCat([id], {
-        value: formatEther(price),
+        value: parseEther(price.toString()),
       });
-      awaitTransactionReceipt({ hash });
+      await awaitTransactionReceipt({ hash });
       const msg = (
         <>
           Your have successfully purchased the cat id:{id} from the marketplace!

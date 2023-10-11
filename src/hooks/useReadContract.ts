@@ -51,7 +51,7 @@ const useReadContract = () => {
   }, [catInstance, setMaxGen0Supply]);
 
   /* Check if existing allowance of NFT 1155 :
-   ***********************************************/
+   *********************************************/
   const checkNftAllowance = useCallback(
     async (user: string) => {
       try {
@@ -116,10 +116,6 @@ const useReadContract = () => {
       logError(error);
     }
   }, [address, catInstance, marketplaceInstance, setCatsOffersForMarket]);
-
-  // useEffect(() => {
-  //   if (userCats) getCatsWithoutOffer();
-  // }, [userCats, getCatsWithoutOffer]);
 
   return {
     getTokenName,

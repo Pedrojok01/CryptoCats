@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 
 import { Box, Container } from "@chakra-ui/react";
 import Head from "next/head";
-// eslint-disable-next-line import/no-unresolved
+
 import banner from "public/img/banner.png";
 
 import { Footer, Header } from "..";

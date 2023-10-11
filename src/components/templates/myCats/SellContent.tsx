@@ -22,10 +22,10 @@ import { useAccount } from "wagmi";
 
 import CatSelectModal from "./components/CatSelectModal";
 import NoCatFound from "./components/NoCatFound";
-import useReadContract from "../../../hooks/useReadContract";
-import useWriteContract from "../../../hooks/useWriteContract";
-import { useStore } from "../../../store/store";
-import { Loading, RenderCat } from "../../elements";
+import { Loading, RenderCat } from "@/components/elements";
+import useReadContract from "@/hooks/useReadContract";
+import useWriteContract from "@/hooks/useWriteContract";
+import { useStore } from "@/store/store";
 
 const SellContent: FC = () => {
   const { address } = useAccount();

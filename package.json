@@ -28,7 +28,6 @@
         "zustand": "^4.4.3"
     },
     "devDependencies": {
-        "@types/jquery": "3.5.22",
         "@types/react": "18.2.27",
         "@types/react-blockies": "1.4.2",
         "@types/react-dom": "18.2.12",

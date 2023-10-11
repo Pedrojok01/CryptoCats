@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { Center, Spinner } from "@chakra-ui/react";
 
-import { useSuportedChains } from "../../../hooks/useSupportedChains";
+import { useSuportedChains } from "@/hooks/useSupportedChains";
 
 const Loading: FC<any> = ({ props }) => {
   const isSupportedChain = useSuportedChains();

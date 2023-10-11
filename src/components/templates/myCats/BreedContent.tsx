@@ -4,9 +4,9 @@ import { Box, Button, Center, Heading, HStack, VStack, Wrap } from "@chakra-ui/r
 
 import CatSelection from "./components/CatSelection";
 import NoCatFound from "./components/NoCatFound";
-import useReadContract from "../../../hooks/useReadContract";
-import useWriteContract from "../../../hooks/useWriteContract";
-import { Loading } from "../../elements";
+import { Loading } from "@/components/elements";
+import useReadContract from "@/hooks/useReadContract";
+import useWriteContract from "@/hooks/useWriteContract";
 
 const BreedContent: FC = () => {
   const { userCats, syncUserCats } = useReadContract();

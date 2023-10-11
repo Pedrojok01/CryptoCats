@@ -1861,13 +1861,6 @@
   dependencies:
     "@types/ms" "*"
 
-"@types/jquery@3.5.22":
-  version "3.5.22"
-  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.22.tgz#893273736f5695a520986c019c873b75b157f26a"
-  integrity sha512-ISQFeUK5GwRftLK4PVvKTWEVCxZ2BpaqBz0TWkIq5w4vGojxZP9+XkqgcPjxoqmPeew+HLyWthCBvK7GdF5NYA==
-  dependencies:
-    "@types/sizzle" "*"
-
 "@types/json-schema@^7.0.12":
   version "7.0.13"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.13.tgz#02c24f4363176d2d18fc8b70b9f3c54aba178a85"
@@ -1956,11 +1949,6 @@
   version "7.5.3"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.3.tgz#9a726e116beb26c24f1ccd6850201e1246122e04"
   integrity sha512-OxepLK9EuNEIPxWNME+C6WwbRAOOI2o2BaQEGzz5Lu2e4Z5eDnEo+/aVEDMIXywoJitJ7xWd641wrGLZdtwRyw==
-
-"@types/sizzle@*":
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.3.tgz#ff5e2f1902969d305225a047c8a0fd5c915cebef"
-  integrity sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==
 
 "@types/trusted-types@^2.0.2":
   version "2.0.4"

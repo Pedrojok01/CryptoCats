@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { Badge, Box, Button, HStack, VStack } from "@chakra-ui/react";
 
-import { RenderCat } from "../../../elements";
+import { RenderCat } from "@/components/elements";
 
 const DisplayCat: FC<DisplayCatProps> = ({
   dnaBN,

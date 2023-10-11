@@ -3,12 +3,12 @@ import { FC, useEffect } from "react";
 import { Box, Heading, Wrap } from "@chakra-ui/react";
 import { formatEther } from "viem";
 
-import useReadContract from "../../../hooks/useReadContract";
-import useWriteContract from "../../../hooks/useWriteContract";
-import { useStore } from "../../../store/store";
-import { Loading } from "../../elements";
 import DisplayCat from "../myCats/components/DisplayCat";
 import NoCatFound from "../myCats/components/NoCatFound";
+import { Loading } from "@/components/elements";
+import useReadContract from "@/hooks/useReadContract";
+import useWriteContract from "@/hooks/useWriteContract";
+import { useStore } from "@/store/store";
 
 const CatMarketplace: FC = () => {
   const { syncCatsOffersForMarket } = useReadContract();

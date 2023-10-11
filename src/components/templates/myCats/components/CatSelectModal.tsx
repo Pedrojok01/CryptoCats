@@ -3,7 +3,7 @@ import { FC } from "react";
 import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Wrap } from "@chakra-ui/react";
 
 import DisplayCat from "./DisplayCat";
-import useReadContract from "../../../../hooks/useReadContract";
+import useReadContract from "@/../hooks/useReadContract";
 
 const CatSelectModal: FC<CatSelectModalProps> = ({ isOpen, onClose, setParent, otherParent, isMarket }) => {
   const { userCats, catsWithoutoffer } = useReadContract();

@@ -4,8 +4,8 @@ import { Box, Heading, Wrap } from "@chakra-ui/react";
 
 import DisplayCat from "./components/DisplayCat";
 import NoCatFound from "./components/NoCatFound";
-import useReadContract from "../../../hooks/useReadContract";
-import { Loading } from "../../elements";
+import { Loading } from "@/components/elements";
+import useReadContract from "@/hooks/useReadContract";
 
 const ShowContent: FC = () => {
   const { userCats } = useReadContract();

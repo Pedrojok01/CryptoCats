@@ -5,7 +5,7 @@ import { Button, Card, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOv
 import { useAccount, useDisconnect, useNetwork } from "wagmi";
 
 import Address from "./Address";
-import { getExplorer } from "../../../utils/getExplorerByChain";
+import { getExplorer } from "@/utils/getExplorerByChain";
 
 type DisconnectModalProps = {
   isOpen: boolean;

@@ -3,11 +3,11 @@ import { FC } from "react";
 import { Box, Card } from "@chakra-ui/react";
 
 import RenderCatInfo from "./RenderCatInfo";
-import styles from "../../../styles/Cat.module.css";
-import { getBgColorString, getColorString } from "../../../utils/catsUtils";
-import { useAnimation } from "../../templates/factory/hooks/useAnimation";
-import { useEyesShape } from "../../templates/factory/hooks/useEyesShape";
-import { useForeheadDecoration } from "../../templates/factory/hooks/useForeheadDecoration";
+import styles from "@/styles/Cat.module.css";
+import { useAnimation } from "@/templates/factory/hooks/useAnimation";
+import { useEyesShape } from "@/templates/factory/hooks/useEyesShape";
+import { useForeheadDecoration } from "@/templates/factory/hooks/useForeheadDecoration";
+import { getBgColorString, getColorString } from "@/utils/catsUtils";
 
 const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
   const { forehead } = useForeheadDecoration(dna.foreheadShape);

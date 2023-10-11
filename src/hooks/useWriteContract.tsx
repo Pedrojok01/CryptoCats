@@ -7,6 +7,7 @@ import useTransactionReceipt from "./useTransactionReceipt";
 import { ExplorerLink } from "../components/elements/ExplorerLink";
 import { contracts } from "../data/contracts";
 import { logError } from "../utils/errorUtil";
+import { getContract } from "viem";
 
 const useWriteContract = () => {
   const { awaitTransactionReceipt } = useTransactionReceipt();
@@ -23,6 +24,8 @@ const useWriteContract = () => {
   if (!catInstance || !marketplaceInstance) {
     throw Error("Contract instance missing.");
   }
+
+  console.log("catInstance", catInstance);
 
   /* Set Token Allowance:
    *************************/
@@ -47,6 +50,8 @@ const useWriteContract = () => {
       setLoading(false);
     }
   };
+
+  getContract;
 
   /* Mint a gen0 cat from the factory :
    *************************************/

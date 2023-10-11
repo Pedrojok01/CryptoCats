@@ -2,8 +2,8 @@ import { FC } from "react";
 
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 
-import { isProdEnv } from "../../../data/constant";
-import { useSuportedChains } from "../../../hooks/useSupportedChains";
+import { isProdEnv } from "@/data/constant";
+import { useSuportedChains } from "@/hooks/useSupportedChains";
 
 const ChainVerification: FC = () => {
   const isSupportedChain = useSuportedChains();

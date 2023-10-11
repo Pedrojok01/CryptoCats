@@ -14,8 +14,8 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 
-import { useWindowWidthAndHeight } from "../../../hooks/useWindowWidthAndHeight";
-import { ChainVerification, ColorModeButton, ConnectButton, NavBar } from "../../elements";
+import { ChainVerification, ColorModeButton, ConnectButton, NavBar } from "@/components/elements";
+import { useWindowWidthAndHeight } from "@/hooks/useWindowWidthAndHeight";
 
 const Header = () => {
   const { isMobile } = useWindowWidthAndHeight();

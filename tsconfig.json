@@ -20,13 +20,17 @@
         "jsx": "preserve",
         "noUnusedParameters": true,
         "noUnusedLocals": true,
-        "incremental": true
+        "incremental": true,
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        },
     },
     "include": [
         "next-env.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        "hardhat.config.cts"
     ],
     "exclude": [
         "node_modules"

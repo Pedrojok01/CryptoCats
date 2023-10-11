@@ -3,7 +3,7 @@ import React from "react";
 
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 
-import { getExplorer } from "../../../utils/getExplorerByChain";
+import { getExplorer } from "@/utils/getExplorerByChain";
 
 interface ExplorerLinkProps {
   hash: string;

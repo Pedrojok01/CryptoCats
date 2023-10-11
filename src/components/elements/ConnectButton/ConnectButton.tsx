@@ -5,8 +5,8 @@ import { useAccount } from "wagmi";
 
 import ConnectModal from "./ConnectModal";
 import DisconnectModal from "./DisconnectModal";
-import { useWindowWidthAndHeight } from "../../../hooks/useWindowWidthAndHeight";
-import { getEllipsisTxt } from "../../../utils/format";
+import { useWindowWidthAndHeight } from "@/hooks/useWindowWidthAndHeight";
+import { getEllipsisTxt } from "@/utils/format";
 
 const ConnectButton: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

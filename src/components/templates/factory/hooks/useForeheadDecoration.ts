@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { basic, crescendo, none, thirdEyes, wild } from "../../../../data/catStettings";
+import { basic, crescendo, none, thirdEyes, wild } from "@/../data/catStettings";
 
 export const useForeheadDecoration = (num: number) => {
   const [forehead, setForehead] = useState<ForeheadShape>(basic);

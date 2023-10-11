@@ -30,9 +30,9 @@ const CatMarketplace: FC = () => {
         </Heading>
       </Box>
 
-      <Loading props={catsOffersForMarket} />
+      {!catsOffersForMarket && <Loading />}
 
-      {catsOffersForMarket && catsOffersForMarket?.length === 0 ? (
+      {catsOffersForMarket?.length === 0 ? (
         <NoCatFound />
       ) : (
         <Wrap w={"80%"} justify="center" m="auto" p={5}>

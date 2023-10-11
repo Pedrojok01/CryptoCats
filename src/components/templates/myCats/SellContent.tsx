@@ -67,11 +67,11 @@ const SellContent: FC = () => {
         </Heading>
       </Box>
 
-      <Loading props={catsWithoutOffer} />
+      {!catsWithoutOffer && <Loading />}
 
-      {catsWithoutOffer?.length === 0 && <NoCatFound />}
-
-      {catsWithoutOffer?.length > 0 && (
+      {catsWithoutOffer?.length === 0 ? (
+        <NoCatFound />
+      ) : (
         <Center>
           <Wrap>
             <Box

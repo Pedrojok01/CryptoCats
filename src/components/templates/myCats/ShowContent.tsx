@@ -22,9 +22,9 @@ const ShowContent: FC = () => {
         </Heading>
       </Box>
 
-      <Loading props={userCats} />
+      {!userCats && <Loading />}
 
-      {userCats && userCats?.length === 0 ? (
+      {userCats?.length === 0 ? (
         <NoCatFound />
       ) : (
         <Wrap w={"80%"} justify="center" m="auto" p={5}>

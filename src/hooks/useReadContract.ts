@@ -86,12 +86,14 @@ const useReadContract = () => {
   /* Get all cats without offer on the marketplace per user :
    ************************************************************/
   const getCatsWithoutOffer = useCallback(async () => {
+    if (!userCats) return;
+
     try {
-      const offerChecks = userCats.map((cat) =>
+      const offerChecks = userCats?.map((cat) =>
         marketplaceInstance.read.isOffer([Number(cat.indexId)])
       ) as Promise<boolean>[];
       const offerResults = await Promise.all(offerChecks);
-      const noOffer = userCats.filter((_, index) => !offerResults[index]);
+      const noOffer = userCats?.filter((_, index) => !offerResults[index]);
       setCatsWithoutOffer(noOffer);
     } catch (error: unknown) {
       logError(error);

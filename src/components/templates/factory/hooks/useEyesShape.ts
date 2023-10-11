@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { basicEyes, chillEyes, tiredEyes, cyclopeEyes, aseanEyes, surprisedEyes } from "@/../data/catStettings";
+import { basicEyes, chillEyes, tiredEyes, cyclopeEyes, aseanEyes, surprisedEyes } from "@/data/catStettings";
 
 export const useEyesShape = (num: number) => {
   const [eyes, setEyes] = useState<EyesShape>(basicEyes);

@@ -7,12 +7,12 @@ import useTransactionReceipt from "./useTransactionReceipt";
 import { ExplorerLink } from "../components/elements/ExplorerLink";
 import { contracts } from "../data/contracts";
 import { logError } from "../utils/errorUtil";
-import { getContract } from "viem";
+import { formatEther, getContract } from "viem";
 
 const useWriteContract = () => {
   const { awaitTransactionReceipt } = useTransactionReceipt();
   const notify = useNotify();
-  const catInstance = useContract({ address: contracts.cat.address, abi: contracts.cat.abi, clientType: "public" });
+  const catInstance = useContract({ address: contracts.cat.address, abi: contracts.cat.abi, clientType: "wallet" });
   const marketplaceInstance = useContract({
     address: contracts.marketplace.address,
     abi: contracts.marketplace.abi,
@@ -32,7 +32,7 @@ const useWriteContract = () => {
   const approveNft = async () => {
     setLoading(true);
     try {
-      const hash: `0x${string}` = await catInstance.write.setApprovalForAll([contracts.marketplace.address, true]);
+      const hash: `0x${string}` = await catInstance.setApprovalForAll([contracts.marketplace.address, true]);
       awaitTransactionReceipt({ hash });
       notify({
         title: "NFT Approval set",
@@ -181,7 +181,7 @@ const useWriteContract = () => {
     setLoading(true);
     try {
       const hash: `0x${string}` = await marketplaceInstance.write.buyCat(id, {
-        value: parseUnits(price.toString(), "ether"),
+        value: formatEther(price),
       });
       awaitTransactionReceipt({ hash });
       const msg = (

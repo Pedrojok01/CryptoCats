@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { noAnim, movingHead, movingTail, movingPaws, movingEyes, movingAll } from "@/../data/catStettings";
+import { noAnim, movingHead, movingTail, movingPaws, movingEyes, movingAll } from "@/data/catStettings";
 
 export const useAnimation = (num: number) => {
   const [catAnimation, setCatAnimation] = useState<CatAnimation>(noAnim);

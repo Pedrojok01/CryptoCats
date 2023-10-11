@@ -1,6 +1,6 @@
-import coinbase from "@/../public/wallet/coinbase_Logo.png";
-import metamask from "@/../public/wallet/metamask_Logo.svg";
-import walletconnect from "@/../public/wallet/walletconnect_Logo.svg";
+import coinbase from "public/wallet/coinbase_Logo.png";
+import metamask from "public/wallet/metamask_Logo.svg";
+import walletconnect from "public/wallet/walletconnect_Logo.svg";
 
 const IMAGES = [
   {

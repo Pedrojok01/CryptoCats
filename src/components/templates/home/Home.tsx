@@ -3,7 +3,7 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { useAccount } from "wagmi";
 
-import homeCatsGroup from "@/../public/img/homeCatsGroup.png";
+import homeCatsGroup from "public/img/homeCatsGroup.png";
 import { ConnectButton } from "@/components/elements";
 import { useWindowWidthAndHeight } from "@/hooks/useWindowWidthAndHeight";
 

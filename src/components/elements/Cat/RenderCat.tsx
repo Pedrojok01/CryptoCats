@@ -4,9 +4,8 @@ import { Box, Card } from "@chakra-ui/react";
 
 import RenderCatInfo from "./RenderCatInfo";
 import styles from "@/styles/Cat.module.css";
-import { useAnimation } from "@/templates/factory/hooks/useAnimation";
-import { useEyesShape } from "@/templates/factory/hooks/useEyesShape";
-import { useForeheadDecoration } from "@/templates/factory/hooks/useForeheadDecoration";
+import { useAnimation, useEyesShape, useForeheadDecoration } from "@/components/templates/factory/hooks";
+
 import { getBgColorString, getColorString } from "@/utils/catsUtils";
 
 const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
@@ -29,25 +28,22 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
               : styles.head
           }
         >
-          <div
+          <section
             className={styles.head_background}
             style={{ backgroundColor: `#${getColorString(dna.headColor)}` }}
-          ></div>
-          <div className={styles.ears}>
+          />
+          <section className={styles.ears}>
             <div className={styles.ear_left} style={{ backgroundColor: `#${getColorString(dna.headColor)}` }}>
-              <div
-                className={styles.inner_ear_left}
-                style={{ backgroundColor: `#${getColorString(dna.pawsColor)}` }}
-              ></div>
+              <div className={styles.inner_ear_left} style={{ backgroundColor: `#${getColorString(dna.pawsColor)}` }} />
             </div>
             <div className={styles.ear_right} style={{ backgroundColor: `#${getColorString(dna.headColor)}` }}>
               <div
                 className={styles.inner_ear_right}
                 style={{ backgroundColor: `#${getColorString(dna.pawsColor)}` }}
-              ></div>
+              />
             </div>
-          </div>
-          <div className={forehead.forehead}>
+          </section>
+          <section className={forehead.forehead}>
             <div
               className={forehead.foreheadLeft}
               style={
@@ -59,11 +55,11 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
                       backgroundColor: "black",
                     }
               }
-            ></div>
+            />
             <div
               className={forehead.foreheadMid}
               style={{ backgroundColor: `#${getColorString(dna.decorationColor)}` }}
-            ></div>
+            />
             <div
               className={forehead.foreheadRight}
               style={
@@ -75,9 +71,9 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
                       backgroundColor: "white",
                     }
               }
-            ></div>
-          </div>
-          <div className={"eyes"}>
+            />
+          </section>
+          <section className={"eyes"}>
             <div className={eyes.eyesLeft}>
               <div
                 className={
@@ -87,21 +83,21 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
                     : eyes.pupilsLeft
                 }
                 style={{ backgroundColor: `#${getColorString(dna.eyesColor)}` }}
-              ></div>
+              />
               <div
                 className={
                   Number(dna.animation) === 5 || Number(dna.animation) === 6
                     ? `${eyes.innerPupilsLeft} ${catAnimation.innerEyes}`
                     : eyes.innerPupilsLeft
                 }
-              ></div>
+              />
               <div
                 className={
                   Number(dna.animation) === 5 || Number(dna.animation) === 6
                     ? `${eyes.smallerInnerPupilsLeft} ${catAnimation.innerEyes}`
                     : eyes.smallerInnerPupilsLeft
                 }
-              ></div>
+              />
             </div>
             <div className={eyes.eyesRight}>
               <div
@@ -112,48 +108,48 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
                     : eyes.pupilsRight
                 }
                 style={{ backgroundColor: `#${getColorString(dna.eyesColor)}` }}
-              ></div>
+              />
               <div
                 className={
                   Number(dna.animation) === 5 || Number(dna.animation) === 6
                     ? `${eyes.innerPupilsRight} ${catAnimation.innerEyes}`
                     : eyes.innerPupilsRight
                 }
-              ></div>
+              />
               <div
                 className={
                   Number(dna.animation) === 5 || Number(dna.animation) === 6
                     ? `${eyes.smallerInnerPupilsRight} ${catAnimation.innerEyes}`
                     : eyes.smallerInnerPupilsRight
                 }
-              ></div>
+              />
             </div>
-          </div>
-          <div className={styles.face_body} style={{ backgroundColor: `#${getColorString(dna.mouthColor)}` }}>
-            <div className={styles.nose}></div>
+          </section>
+          <section className={styles.face_body} style={{ backgroundColor: `#${getColorString(dna.mouthColor)}` }}>
+            <div className={styles.nose} />
             <div className={styles.mouth}>
-              <div className={styles.mouth_upper}></div>
-              <div className={styles.mouth_lower_right}></div>
-              <div className={styles.mouth_lower_left}></div>
+              <div className={styles.mouth_upper} />
+              <div className={styles.mouth_lower_right} />
+              <div className={styles.mouth_lower_left} />
             </div>
 
             <div className={styles.hairs}>
-              <div className={styles.hair_left_top}></div>
-              <div className={styles.hair_left_mid}></div>
-              <div className={styles.hair_left_bottom}></div>
-              <div className={styles.hair_right_top}></div>
-              <div className={styles.hair_right_mid}></div>
-              <div className={styles.hair_right_bottom}></div>
+              <div className={styles.hair_left_top} />
+              <div className={styles.hair_left_mid} />
+              <div className={styles.hair_left_bottom} />
+              <div className={styles.hair_right_top} />
+              <div className={styles.hair_right_mid} />
+              <div className={styles.hair_right_bottom} />
             </div>
-          </div>
+          </section>
         </Box>
 
         <Box className={styles.catBody}>
-          <div className={styles.collar} style={{ backgroundColor: `#${getColorString(dna.collarColor)}` }}></div>
-          <div className={styles.core_body} style={{ backgroundColor: `#${getColorString(dna.headColor)}` }}>
-            <div className={styles.inner_body} style={{ backgroundColor: `#${getColorString(dna.mouthColor)}` }}></div>
-          </div>
-          <div className={styles.foot}>
+          <section className={styles.collar} style={{ backgroundColor: `#${getColorString(dna.collarColor)}` }} />
+          <section className={styles.core_body} style={{ backgroundColor: `#${getColorString(dna.headColor)}` }}>
+            <div className={styles.inner_body} style={{ backgroundColor: `#${getColorString(dna.mouthColor)}` }} />
+          </section>
+          <section className={styles.foot}>
             <div
               className={
                 Number(dna.animation) === 4 || Number(dna.animation) === 6
@@ -161,7 +157,7 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
                   : styles.feet_front_left
               }
               style={{ backgroundColor: `#${getColorString(dna.pawsColor)}` }}
-            ></div>
+            />
             <div
               className={
                 Number(dna.animation) === 4 || Number(dna.animation) === 6
@@ -169,7 +165,7 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
                   : styles.feet_front_right
               }
               style={{ backgroundColor: `#${getColorString(dna.pawsColor)}` }}
-            ></div>
+            />
             <div
               className={
                 Number(dna.animation) === 4 || Number(dna.animation) === 6
@@ -177,7 +173,7 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
                   : styles.feet_back_left
               }
               style={{ backgroundColor: `#${getColorString(dna.pawsColor)}` }}
-            ></div>
+            />
             <div
               className={
                 Number(dna.animation) === 4 || Number(dna.animation) === 6
@@ -185,8 +181,8 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
                   : styles.feet_back_right
               }
               style={{ backgroundColor: `#${getColorString(dna.pawsColor)}` }}
-            ></div>
-          </div>
+            />
+          </section>
           <div
             className={
               Number(dna.animation) === 3 || Number(dna.animation) === 6
@@ -195,7 +191,7 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
             }
             style={{ backgroundColor: `#${getColorString(dna.pawsColor)}` }}
           >
-            <div className={styles.tail_ball} style={{ backgroundColor: `#${getColorString(dna.eyesColor)}` }}></div>
+            <div className={styles.tail_ball} style={{ backgroundColor: `#${getColorString(dna.eyesColor)}` }} />
           </div>
         </Box>
       </Box>

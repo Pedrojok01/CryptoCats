@@ -11,11 +11,14 @@ import {
   MenuItem,
   MenuList,
   Link,
+  Text,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 
 import { ChainVerification, ColorModeButton, ConnectButton, NavBar } from "@/components/elements";
 import { useWindowWidthAndHeight } from "@/hooks/useWindowWidthAndHeight";
+import logo from "public/img/cryptocats_logo_transparent.png";
+import Image from "next/image";
 
 const Header = () => {
   const { isMobile } = useWindowWidthAndHeight();
@@ -26,16 +29,18 @@ const Header = () => {
       <Container maxW="container.xl" p={"10px"}>
         <Flex align="center" justify="space-between">
           <Heading cursor={"default"} size="md">
-            CryptoCats - NFTs
+            <Link as={NextLink} href="/" style={{ textDecoration: "none" }}>
+              <HStack>
+                <Image src={logo.src} alt="logo" width={40} height={40} />
+                {!isMobile && <Text>CryptoCats - NFTs</Text>}
+              </HStack>
+            </Link>
           </Heading>
 
           {isMobile && (
             <Menu>
               <MenuButton as={IconButton} aria-label="Options" icon={<HamburgerIcon />} variant="outline" />
               <MenuList>
-                <Link as={NextLink} href="/">
-                  <MenuItem>Home</MenuItem>
-                </Link>
                 <Link as={NextLink} href="/myCats/show">
                   <MenuItem>My Cats - Show</MenuItem>
                 </Link>

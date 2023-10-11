@@ -737,6 +737,7 @@ a {
 
 .movingTail {
   animation: moveTail 2s infinite;
+  transform-origin: 0% 50%;
 }
 
 @keyframes moveTail {

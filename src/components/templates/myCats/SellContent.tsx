@@ -20,12 +20,13 @@ import {
 import { parseEther } from "viem";
 import { useAccount } from "wagmi";
 
-import CatSelectModal from "./components/CatSelectModal";
-import NoCatFound from "./components/NoCatFound";
 import { Loading, RenderCat } from "@/components/elements";
 import useReadContract from "@/hooks/useReadContract";
 import useWriteContract from "@/hooks/useWriteContract";
 import { useStore } from "@/store/store";
+
+import CatSelectModal from "./components/CatSelectModal";
+import NoCatFound from "./components/NoCatFound";
 
 const SellContent: FC = () => {
   const { address } = useAccount();

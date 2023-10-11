@@ -3,8 +3,9 @@ import { CSSProperties, useEffect, useState } from "react";
 import { CopyIcon } from "@chakra-ui/icons";
 import { Flex, Skeleton, Tooltip } from "@chakra-ui/react";
 
-import Jazzicons from "./Jazzicons";
 import { getEllipsisTxt } from "@/utils/format";
+
+import Jazzicons from "./Jazzicons";
 
 interface AddressProps {
   style: CSSProperties | undefined;

@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { formatEther, getContract } from "viem";
+
 import { useContract } from "./useContract";
 import useNotify from "./useNotify";
 import useReadContract from "./useReadContract";
@@ -7,7 +9,6 @@ import useTransactionReceipt from "./useTransactionReceipt";
 import { ExplorerLink } from "../components/elements/ExplorerLink";
 import { contracts } from "../data/contracts";
 import { logError } from "../utils/errorUtil";
-import { formatEther, getContract } from "viem";
 
 const useWriteContract = () => {
   const { awaitTransactionReceipt } = useTransactionReceipt();

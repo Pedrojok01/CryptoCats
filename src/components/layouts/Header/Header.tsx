@@ -13,12 +13,13 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
+import Image from "next/image";
 import NextLink from "next/link";
+
 
 import { ChainVerification, ColorModeButton, ConnectButton, NavBar } from "@/components/elements";
 import { useWindowWidthAndHeight } from "@/hooks/useWindowWidthAndHeight";
 import logo from "public/img/cryptocats_logo_transparent.png";
-import Image from "next/image";
 
 const Header = () => {
   const { isMobile } = useWindowWidthAndHeight();

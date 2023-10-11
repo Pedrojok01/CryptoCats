@@ -2,8 +2,9 @@ import { FC, useCallback, useState } from "react";
 
 import { HStack, Button, Box } from "@chakra-ui/react";
 
-import Selector from "./Selector";
 import { getAnimBadge, getBgBadge, getEyesBadge, getShapeBadge } from "@/utils/getBadge";
+
+import Selector from "./Selector";
 
 const COLOR_RANGE = { min: "10", max: "98" };
 const SHAPE_RANGE_5 = { min: "1", max: "5" };

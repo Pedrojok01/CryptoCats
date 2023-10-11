@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useAccount } from "wagmi";
 
-import NotConnected from "@/components/elements/";
+import { NotConnected } from "@/components/elements";
 import { Default } from "@/components/layouts";
 import SellContent from "@/components/templates/myCats/SellContent";
 

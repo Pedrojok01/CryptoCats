@@ -3,6 +3,7 @@ import { FC } from "react";
 import { Box, Text, useColorMode, VStack } from "@chakra-ui/react";
 
 import styles from "@/styles/Cat.module.css";
+
 import DnaText from "./DnaText";
 
 const RenderCatInfo: FC<RenderCatInfoProps> = ({ dna, id, generation, isFactory }) => {

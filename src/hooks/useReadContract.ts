@@ -56,7 +56,7 @@ const useReadContract = () => {
       logError(error);
       setMaxGen0Supply(0);
     }
-  }, [catInstance]);
+  }, [catInstance, setMaxGen0Supply]);
 
   /* Check if existing allowance of NFT 1155 :
    ***********************************************/

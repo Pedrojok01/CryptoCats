@@ -3,13 +3,14 @@ import Image from "next/image";
 import NextLink from "next/link";
 import { useAccount } from "wagmi";
 
-import homeCatsGroup from "public/img/homeCatsGroup.png";
 import { ConnectButton } from "@/components/elements";
 import { useWindowWidthAndHeight } from "@/hooks/useWindowWidthAndHeight";
+import homeCatsGroup from "public/img/homeCatsGroup.png";
 
 const Home = () => {
   const { isConnected } = useAccount();
   const { isMobile } = useWindowWidthAndHeight();
+
   return (
     <VStack w={"full"}>
       <Image

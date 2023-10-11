@@ -2,10 +2,11 @@ import { FC } from "react";
 
 import { Box, Heading, Wrap } from "@chakra-ui/react";
 
-import DisplayCat from "./components/DisplayCat";
-import NoCatFound from "./components/NoCatFound";
 import { Loading } from "@/components/elements";
 import useReadContract from "@/hooks/useReadContract";
+
+import DisplayCat from "./components/DisplayCat";
+import NoCatFound from "./components/NoCatFound";
 
 const ShowContent: FC = () => {
   const { userCats } = useReadContract();

@@ -2,11 +2,11 @@ import { FC } from "react";
 
 import { Box, Card } from "@chakra-ui/react";
 
-import RenderCatInfo from "./RenderCatInfo";
-import styles from "@/styles/Cat.module.css";
 import { useAnimation, useEyesShape, useForeheadDecoration } from "@/components/templates/factory/hooks";
-
+import styles from "@/styles/Cat.module.css";
 import { getBgColorString, getColorString } from "@/utils/catsUtils";
+
+import RenderCatInfo from "./RenderCatInfo";
 
 const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
   const { forehead } = useForeheadDecoration(dna.foreheadShape);
@@ -183,7 +183,7 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
               style={{ backgroundColor: `#${getColorString(dna.pawsColor)}` }}
             />
           </section>
-          <div
+          <section
             className={
               Number(dna.animation) === 3 || Number(dna.animation) === 6
                 ? `${styles.tail} ${catAnimation.tail}`
@@ -192,7 +192,7 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
             style={{ backgroundColor: `#${getColorString(dna.pawsColor)}` }}
           >
             <div className={styles.tail_ball} style={{ backgroundColor: `#${getColorString(dna.eyesColor)}` }} />
-          </div>
+          </section>
         </Box>
       </Box>
       <br></br>

@@ -9,7 +9,7 @@
 
 <br></br>
 
-![Preview](./public/img/preview.gif)
+![Preview](./nextjs_frontend/public/img/preview.gif)
 
 </div>
 <br></br>
@@ -50,31 +50,31 @@ Try it yourself: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)
 
 ## Features
 
--   [x] Factory - Design and Create your own Cat for FREE in the Cat Factory! When you're done, just click on the `Create` button to mint your cat! (Limited to 100 Cats)
--   [x] MyCats/Show - Display all the cats present in your collection;
--   [x] MyCats/Breed - Select two parents, breed a seebling out and find out which characteristics you inherited from each!
--   [x] MyCats/Sell - Create a sell offer to list your cat on the marketplace!
--   [x] Marketplace - Buy some cats on the marketplace or simply remove your offers.
+- [x] Factory - Design and Create your own Cat for FREE in the Cat Factory! When you're done, just click on the `Create` button to mint your cat! (Limited to 100 Cats)
+- [x] MyCats/Show - Display all the cats present in your collection;
+- [x] MyCats/Breed - Select two parents, breed a seebling out and find out which characteristics you inherited from each!
+- [x] MyCats/Sell - Create a sell offer to list your cat on the marketplace!
+- [x] Marketplace - Buy some cats on the marketplace or simply remove your offers.
 
 ## Built With
 
--   [![solidity]][solidity-url]
--   [![hardhat]][hardhat-url]
--   [![ethers.js]][ethers-url]
--   [![nextjs]][nextjs-url]
--   [![typescript]][typescript-url]
--   [![chakraUI]][chakraui-url]
--   [![prettier]][prettier-url]
--   [![ESLint]][eslint-url]
+- [![solidity]][solidity-url]
+- [![hardhat]][hardhat-url]
+- [![ethers.js]][ethers-url]
+- [![nextjs]][nextjs-url]
+- [![typescript]][typescript-url]
+- [![chakraUI]][chakraui-url]
+- [![prettier]][prettier-url]
+- [![ESLint]][eslint-url]
 
 ## Getting Started
 
 ### Prerequisites:
 
--   `Node.JS` installed
--   `npm` installed
--   [hardhat](https://hardhat.org/hardhat-runner/docs/getting-started#overview) installed via `yarn add --dev hardhat@esm` (developed on v2.12.0-esm).
--   [MetaMask](https://metamask.io/) installed in your browser
+- `Node.JS` installed
+- `npm` installed
+- [hardhat](https://hardhat.org/hardhat-runner/docs/getting-started#overview) installed via `yarn add --dev hardhat@esm` (developed on v2.12.0-esm).
+- [MetaMask](https://metamask.io/) installed in your browser
 
 ### Installation:
 
@@ -93,24 +93,24 @@ Try it yourself: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)
 
 To deploy your own smart-contracts:
 
--   Remove `.example` from the `.env.example` file and edit the file with your API KEYs for the networks you wish to use and your PRIVATE KEY (<b>Do not paste your private key anywhere else!</b>);
--   Edit the `hardhat.config.tsc` if needed, and the `"deploy"` script in the `package.json` file with the network needed;
--   To deploy your smart-contracts simply run the command below, and wait for the contract addresses and ABI to appear in your console:
+- Remove `.example` from the `.env.example` file and edit the file with your API KEYs for the networks you wish to use and your PRIVATE KEY (<b>Do not paste your private key anywhere else!</b>);
+- Edit the `hardhat.config.tsc` if needed, and the `"deploy"` script in the `package.json` file with the network needed;
+- To deploy your smart-contracts simply run the command below, and wait for the contract addresses and ABI to appear in your console:
 
-    ```sh
-    yarn deploy
-    ```
+  ```sh
+  yarn deploy
+  ```
 
--   Replace the contract addresses (both `CAT_CONTRACT` & `MARKETPLACE_CONTRACT_ADD`) and the corresponding chains infos in the `src/data/constant.ts` file;
--   And don't forget to have some funds ready if you want to buy some CryptoCats on the marketplace! [Faucet for the Goerli network](https://goerlifaucet.com/);
+- Replace the contract addresses (both `CAT_CONTRACT` & `MARKETPLACE_CONTRACT_ADD`) and the corresponding chains infos in the `src/data/constant.ts` file;
+- And don't forget to have some funds ready if you want to buy some CryptoCats on the marketplace! [Faucet for the Goerli network](https://goerlifaucet.com/);
 
 ### Config
 
 On each deploy, make sure to:
 
--   Change the `CAT_CONTRACT_ADD` and the `MARKETPLACE_CONTRACT_ADD` in `src/data/constant.ts` to your deployed contracts address;
--   Edit the ABI files in `src/data/abis/` if you made any changes to the smart-contracts;
--   Enable/disable/update the suitable networks in `hardhat.config.tsc`, `package.json` & `src/data/constant.ts`;
+- Change the `CAT_CONTRACT_ADD` and the `MARKETPLACE_CONTRACT_ADD` in `src/data/constant.ts` to your deployed contracts address;
+- Edit the ABI files in `src/data/abis/` if you made any changes to the smart-contracts;
+- Enable/disable/update the suitable networks in `hardhat.config.tsc`, `package.json` & `src/data/constant.ts`;
 
 ## Use
 

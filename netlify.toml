@@ -1,0 +1,4 @@
+[build]
+  base = "nextjs_frontend/"
+  publish = "nextjs_frontend/.next"
+  command = "next build"

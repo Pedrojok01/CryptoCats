@@ -1,8 +1,8 @@
 import { type FC, useState } from "react";
 
-import { Box, Button, Center, Heading, HStack, VStack, Wrap } from "@chakra-ui/react";
+import { Button, Center, HStack, VStack, Wrap } from "@chakra-ui/react";
 
-import { Loading } from "@/components/elements";
+import { Loading, TabHeader } from "@/components/elements";
 import { useReadContract, useWriteContract } from "@/hooks";
 import { useStore } from "@/store/store";
 
@@ -34,14 +34,7 @@ const BreedContent: FC = () => {
 
   return (
     <>
-      <Box textAlign="center" mb={5}>
-        <Heading as="h1" size="lg" marginBottom={6}>
-          Cats Breeding
-        </Heading>
-        <Heading as="h4" size="sm" fontWeight="normal">
-          Select two parents to breed a seedling.
-        </Heading>
-      </Box>
+      <TabHeader title="Cats Breeding" description="Select two parents to breed a seedling." />
 
       {!userCats && <Loading />}
 

@@ -3,6 +3,7 @@ export * from "./useContract";
 export * from "./useContractInstances";
 export * from "./useSupportedChains";
 export * from "./useWindowWidthAndHeight";
+export * from "./useCatFactory";
 export { default as useNotify } from "./useNotify";
 export { default as useReadContract } from "./useReadContract";
 export { default as useTransactionReceipt } from "./useTransactionReceipt";

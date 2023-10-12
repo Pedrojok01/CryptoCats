@@ -50,7 +50,7 @@ const DisplayCat: FC<DisplayCatProps> = ({
   return (
     <>
       {selectable ? (
-        <Box style={{ cursor: "pointer" }} onClick={selectCat}>
+        <Box cursor="pointer" onClick={selectCat}>
           <RenderCat dna={catDna(dnaBN)} id={id} generation={generation} isFactory={false} />
         </Box>
       ) : (

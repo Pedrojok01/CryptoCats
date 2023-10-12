@@ -10,61 +10,86 @@ const COLOR_RANGE = { min: "10", max: "98" };
 const SHAPE_RANGE_5 = { min: "1", max: "5" };
 const SHAPE_RANGE_6 = { min: "1", max: "6" };
 
-const Attributes: FC<AttributesProps> = ({
-  dna,
-  setHeadColor,
-  setMouthColor,
-  setPawsColor,
-  setEyesColor,
-  setCollarColor,
-  setEyesShape,
-  setForeheadShape,
-  setDecorationColor,
-  setAnimation,
-  setBackgroundColor,
-}) => {
+const Attributes: FC<AttributesProps> = ({ dna, updateDna }) => {
   const [isColorTab, setIsColorTab] = useState(true);
 
   const toogleTab = useCallback(() => {
     setIsColorTab((prev) => !prev);
   }, []);
 
+  const handleColorChange = useCallback(
+    (colorName: keyof DNA, value: number) => {
+      updateDna({ [colorName]: value });
+    },
+    [updateDna]
+  );
+
   const colorSelectors = (
     <>
-      <Selector action={setHeadColor} name="Head and body color" range={COLOR_RANGE} idCode={dna.headColor} />
-      <Selector action={setMouthColor} name="Mouth and belly color" range={COLOR_RANGE} idCode={dna.mouthColor} />
-      <Selector action={setPawsColor} name="Paws, ears and tail color" range={COLOR_RANGE} idCode={dna.pawsColor} />
-      <Selector action={setEyesColor} name="Eyes and tail-ball color" range={COLOR_RANGE} idCode={dna.eyesColor} />
-      <Selector action={setCollarColor} name="Collar color" range={COLOR_RANGE} idCode={dna.collarColor} />
+      <Selector
+        action={(value: number) => handleColorChange("headColor", value)}
+        name="Head and body color"
+        range={COLOR_RANGE}
+        idCode={dna.headColor}
+      />
+      <Selector
+        action={(value: number) => handleColorChange("mouthColor", value)}
+        name="Mouth and belly color"
+        range={COLOR_RANGE}
+        idCode={dna.mouthColor}
+      />
+      <Selector
+        action={(value: number) => handleColorChange("pawsColor", value)}
+        name="Paws, ears and tail color"
+        range={COLOR_RANGE}
+        idCode={dna.pawsColor}
+      />
+      <Selector
+        action={(value: number) => handleColorChange("eyesColor", value)}
+        name="Eyes and tail-ball color"
+        range={COLOR_RANGE}
+        idCode={dna.eyesColor}
+      />
+      <Selector
+        action={(value: number) => handleColorChange("collarColor", value)}
+        name="Collar color"
+        range={COLOR_RANGE}
+        idCode={dna.collarColor}
+      />
     </>
   );
 
   const cattributeSelectors = (
     <>
       <Selector
-        action={setEyesShape}
+        action={(value: number) => handleColorChange("eyesShape", value)}
         name="Eyes shape"
         range={SHAPE_RANGE_6}
         idCode={dna.eyesShape}
         badge={getEyesBadge(dna.eyesShape)}
       />
       <Selector
-        action={setForeheadShape}
+        action={(value: number) => handleColorChange("foreheadShape", value)}
         name="Forehead shape"
         range={SHAPE_RANGE_5}
         idCode={dna.foreheadShape}
         badge={getShapeBadge(dna.foreheadShape)}
       />
-      <Selector action={setDecorationColor} name="Forehead's color" range={COLOR_RANGE} idCode={dna.decorationColor} />
       <Selector
-        action={setAnimation}
+        action={(value: number) => handleColorChange("decorationColor", value)}
+        name="Forehead's color"
+        range={COLOR_RANGE}
+        idCode={dna.decorationColor}
+      />
+      <Selector
+        action={(value: number) => handleColorChange("animation", value)}
         name="Animation"
         range={SHAPE_RANGE_6}
         idCode={dna.animation}
         badge={getAnimBadge(dna.animation)}
       />
       <Selector
-        action={setBackgroundColor}
+        action={(value: number) => handleColorChange("backgroundColor", value)}
         name="Background"
         range={SHAPE_RANGE_5}
         idCode={dna.backgroundColor}

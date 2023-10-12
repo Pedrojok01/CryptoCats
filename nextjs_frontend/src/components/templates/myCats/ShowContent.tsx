@@ -1,8 +1,8 @@
 import type { FC } from "react";
 
-import { Box, Heading, Wrap } from "@chakra-ui/react";
+import { Wrap } from "@chakra-ui/react";
 
-import { Loading } from "@/components/elements";
+import { Loading, TabHeader } from "@/components/elements";
 import { useStore } from "@/store/store";
 
 import DisplayCat from "./components/DisplayCat";
@@ -13,21 +13,14 @@ const ShowContent: FC = () => {
 
   return (
     <>
-      <Box textAlign="center">
-        <Heading as="h1" size="lg" marginBottom={6}>
-          Cats Inventory
-        </Heading>
-        <Heading as="h4" size="sm" fontWeight="normal">
-          Display all the cats NFTs that you own.
-        </Heading>
-      </Box>
+      <TabHeader title="Cats Inventory" description="Display all the cats NFTs that you own." />
 
       {!userCats && <Loading />}
 
       {userCats?.length === 0 ? (
         <NoCatFound />
       ) : (
-        <Wrap w={"80%"} justify="center" m="auto" p={5}>
+        <Wrap w={"80%"} justify="center" m="auto">
           {userCats?.map((cat: Cat, index: number) => {
             return (
               <DisplayCat

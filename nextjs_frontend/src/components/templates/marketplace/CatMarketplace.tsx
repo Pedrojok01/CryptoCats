@@ -1,9 +1,9 @@
 import { type FC, useEffect } from "react";
 
-import { Box, Heading, Wrap } from "@chakra-ui/react";
+import { Wrap } from "@chakra-ui/react";
 import { formatEther } from "viem";
 
-import { Loading } from "@/components/elements";
+import { Loading, TabHeader } from "@/components/elements";
 import { useReadContract, useWriteContract } from "@/hooks";
 import { useStore } from "@/store/store";
 
@@ -21,21 +21,14 @@ const CatMarketplace: FC = () => {
 
   return (
     <>
-      <Box textAlign="center">
-        <Heading as="h1" size="lg" marginBottom={6}>
-          Cats Marketplace
-        </Heading>
-        <Heading as="h4" size="sm" fontWeight="normal">
-          Display all the cats that are currently for sale.
-        </Heading>
-      </Box>
+      <TabHeader title="Cats Marketplace" description="Display all the cats that are currently for sale." />
 
       {!catsOffersForMarket && <Loading />}
 
       {catsOffersForMarket?.length === 0 ? (
         <NoCatFound />
       ) : (
-        <Wrap w={"80%"} justify="center" m="auto" p={5}>
+        <Wrap w={"80%"} justify="center" m="auto">
           {catsOffersForMarket?.map((cat: CatOffersForMarket, index: number) => {
             return (
               <DisplayCat

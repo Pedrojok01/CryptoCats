@@ -17,10 +17,6 @@ const useWriteContract = () => {
   const notify = useNotify();
   const [loading, setLoading] = useState<boolean>(false);
 
-  if (!catInstance.write || !marketplaceInstance.write) {
-    throw Error("Contract instance missing");
-  }
-
   /* Set Token Allowance:
    *************************/
   const approveNft = async () => {

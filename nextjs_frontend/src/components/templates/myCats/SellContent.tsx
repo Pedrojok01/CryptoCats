@@ -5,7 +5,6 @@ import {
   Button,
   Center,
   FormLabel,
-  Heading,
   HStack,
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -20,7 +19,7 @@ import {
 import { parseEther } from "viem";
 import { useAccount } from "wagmi";
 
-import { Loading, RenderCat } from "@/components/elements";
+import { Loading, RenderCat, TabHeader } from "@/components/elements";
 import { useReadContract, useWriteContract } from "@/hooks";
 import { useStore } from "@/store/store";
 
@@ -58,14 +57,10 @@ const SellContent: FC = () => {
 
   return (
     <>
-      <Box textAlign="center" mb={5}>
-        <Heading as="h1" size="lg" marginBottom={6}>
-          Sell your cats
-        </Heading>
-        <Heading as="h4" size="sm" fontWeight="normal">
-          Select a cat and enter a price to add an offer to the marketplace.
-        </Heading>
-      </Box>
+      <TabHeader
+        title="Sell your cats"
+        description="Select a cat and enter a price to add an offer to the marketplace."
+      />
 
       {!catsWithoutOffer && <Loading />}
 

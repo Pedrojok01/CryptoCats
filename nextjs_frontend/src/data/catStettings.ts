@@ -1,6 +1,6 @@
-export const defaultDNA = {
+export const defaultDNA: DNA = {
   //Colors
-  bodyColor: 79,
+  headColor: 79,
   mouthColor: 13,
   pawsColor: 20,
   eyesColor: 31,
@@ -8,10 +8,10 @@ export const defaultDNA = {
 
   //Cattributes
   eyesShape: 1,
-  decorationPattern: 2,
+  foreheadShape: 2,
   decorationColor: 90,
   animation: 1,
-  background: 1,
+  backgroundColor: 1,
 };
 
 // FOREHEAD

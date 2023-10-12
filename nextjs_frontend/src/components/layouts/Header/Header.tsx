@@ -15,17 +15,20 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
+import { useAccount } from "wagmi";
 
 import { ChainVerification, ColorModeButton, ConnectButton, NavBar } from "@/components/elements";
 import { useWindowWidthAndHeight } from "@/hooks/useWindowWidthAndHeight";
 import logo from "public/img/cryptocats_logo_transparent.png";
 
 const Header = () => {
+  const { address } = useAccount();
   const { isMobile } = useWindowWidthAndHeight();
 
   return (
     <Box borderBottom="1px" borderBottomColor="chakra-border-color">
-      <ChainVerification />
+      {address && <ChainVerification />}
+
       <Container maxW="container.xl" p={"10px"}>
         <Flex align="center" justify="space-between">
           <Heading cursor={"default"} size="md">

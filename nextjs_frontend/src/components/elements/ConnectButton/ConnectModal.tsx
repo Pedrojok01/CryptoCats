@@ -35,18 +35,18 @@ const ConnectModal: FC<ConnectModalProps> = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent w={400} p={5}>
+      <ModalContent w={340} p={5}>
         <ModalCloseButton />
         <ModalBody>
-          <Heading size={"lg"} textAlign="center" p={"30px 0px"}>
+          <Heading textAlign="center" p={"15px 0px 40px"} fontSize="1.65rem">
             Connect Your Wallet
           </Heading>
 
           <Flex direction="column">
-            <VStack>
+            <VStack mb={5}>
               {connectors.map((connector) => (
                 <Button
-                  w="75%"
+                  w="93%"
                   justifyContent="space-between"
                   disabled={!connector.ready}
                   key={connector.id}
@@ -63,17 +63,7 @@ const ConnectModal: FC<ConnectModalProps> = ({ isOpen, onClose }) => {
               ))}
             </VStack>
 
-            <Flex
-              direction="column"
-              style={{
-                margin: "auto",
-                fontSize: "15px",
-                marginBottom: "15px",
-                alignItems: "center",
-                letterSpacing: "0.5px",
-                marginTop: "20px",
-              }}
-            >
+            <Flex direction="column" m={[5, "auto", 5]} alignItems="center" fontSize={"15px"}>
               Need help installing a wallet?{" "}
               <Link
                 href="https://metamask.zendesk.com/hc/en-us/articles/360015489471-How-to-Install-MetaMask-Manually"

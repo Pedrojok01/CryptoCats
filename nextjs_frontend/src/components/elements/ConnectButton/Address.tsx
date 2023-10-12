@@ -47,7 +47,7 @@ const Address: React.FC<AddressProps> = (props) => {
   return (
     <Flex
       h={"42px"}
-      pl="15px"
+      pl="10px"
       gap={"15px"}
       bgColor="rgba(255, 255, 255, 0.1)"
       borderRadius={"10px"}

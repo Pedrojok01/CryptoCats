@@ -16,10 +16,6 @@ const useReadContract = () => {
   const { userCats, setGen0Count, setMaxGen0Supply, setUserCats, setCatsWithoutOffer, setCatsOffersForMarket } =
     useStore();
 
-  if (!catInstance.read || !marketplaceInstance.read) {
-    throw Error("Contract instance missing");
-  }
-
   /* Get the name of a specific NFT :
    ************************************/
   const getTokenName = useCallback(async (): Promise<string | undefined> => {

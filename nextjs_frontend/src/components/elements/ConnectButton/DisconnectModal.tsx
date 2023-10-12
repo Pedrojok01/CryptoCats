@@ -28,22 +28,16 @@ const DisconnectModal: FC<DisconnectModalProps> = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent w={340}>
         <ModalCloseButton />
         <ModalBody>
           Account
-          <Card
-            style={{
-              marginTop: "10px",
-              borderRadius: "1rem",
-              padding: "15px",
-            }}
-          >
+          <Card mt={3} p={"15px"} borderRadius="1rem">
             <Address account={address as string} avatar="left" size={6} copyable style={{ fontSize: "20px" }} />
             <div style={{ marginTop: "10px", padding: "0 10px" }}>
               {chain?.id !== undefined && (
                 <a href={`${getExplorer()}/address/${address}`} target="_blank" rel="noreferrer">
-                  <ExternalLinkIcon style={{ marginRight: "5px" }} />
+                  <ExternalLinkIcon mr={"5px"} />
                   View on Explorer
                 </a>
               )}

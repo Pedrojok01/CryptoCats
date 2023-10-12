@@ -69,16 +69,7 @@ type DNA = {
 
 type AttributesProps = {
   dna: DNA;
-  setHeadColor: React.Dispatch<React.SetStateAction<number>>;
-  setMouthColor: React.Dispatch<React.SetStateAction<number>>;
-  setPawsColor: React.Dispatch<React.SetStateAction<number>>;
-  setEyesColor: React.Dispatch<React.SetStateAction<number>>;
-  setCollarColor: React.Dispatch<React.SetStateAction<number>>;
-  setEyesShape: React.Dispatch<React.SetStateAction<number>>;
-  setForeheadShape: React.Dispatch<React.SetStateAction<number>>;
-  setDecorationColor: React.Dispatch<React.SetStateAction<number>>;
-  setAnimation: React.Dispatch<React.SetStateAction<number>>;
-  setBackgroundColor: React.Dispatch<React.SetStateAction<number>>;
+  updateDna: (updatedAttributes: Partial<DNA>) => void;
 };
 
 type SelectorProps = {

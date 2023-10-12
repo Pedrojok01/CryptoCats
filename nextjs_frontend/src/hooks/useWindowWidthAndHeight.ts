@@ -13,7 +13,7 @@ export const useWindowWidthAndHeight = () => {
   }, []);
 
   const isMobile = windowSize[0] ? windowSize[0] <= 768 : false;
-  const isMediumScreen = windowSize[0] ? windowSize[0] <= 1250 : false;
+  const isMediumScreen = windowSize[0] ? windowSize[0] <= 950 : false;
 
   return { windowSize, isMobile, isMediumScreen };
 };

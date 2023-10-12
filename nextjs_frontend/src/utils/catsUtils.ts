@@ -3,7 +3,7 @@ import { allColors } from "./colors";
 const colors = Object.values(allColors());
 
 export const getColorString = (color: number): string => {
-  return colors[color];
+  return colors[color] || "#e2efff";
 };
 
 export const getBgColorString = (color: number): string => {

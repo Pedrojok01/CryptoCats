@@ -1,4 +1,4 @@
-import { ISubNav } from "../SubNav/SubNav";
+import { type ISubNav } from "../SubNav/SubNav";
 
 const NAV_LINKS: ISubNav[] = [
   {

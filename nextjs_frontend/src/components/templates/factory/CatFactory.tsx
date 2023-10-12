@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 
 import { Box, Button, Card, Flex, Heading, useColorMode } from "@chakra-ui/react";
 

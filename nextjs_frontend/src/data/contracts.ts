@@ -1,4 +1,4 @@
-import { Abi } from "viem";
+import { type Abi } from "viem";
 
 import { getContractAddresses } from "./constant";
 import { CAT_ABI } from "../data/abis/catContract_abi";

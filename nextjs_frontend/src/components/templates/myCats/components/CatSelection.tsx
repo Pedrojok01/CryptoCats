@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 
 import { Box, Button, Center, useColorMode, useDisclosure, VStack } from "@chakra-ui/react";
 

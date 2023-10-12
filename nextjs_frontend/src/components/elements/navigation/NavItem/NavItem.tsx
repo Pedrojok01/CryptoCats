@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { Box, Link, Popover, PopoverContent, PopoverTrigger, Stack, useColorModeValue } from "@chakra-ui/react";
@@ -6,7 +6,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 
 import { SubNav } from "../SubNav";
-import { ISubNav } from "../SubNav/SubNav";
+import { type ISubNav } from "../SubNav/SubNav";
 
 const NavItem: FC<ISubNav> = ({ label, children, href }) => {
   const linkColor = useColorModeValue("gray.600", "gray.400");

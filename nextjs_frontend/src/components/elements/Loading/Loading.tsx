@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 
 import { Center, Spinner } from "@chakra-ui/react";
 

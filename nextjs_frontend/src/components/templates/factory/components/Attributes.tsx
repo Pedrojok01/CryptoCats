@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { type FC, useCallback, useState } from "react";
 
 import { HStack, Button, Box } from "@chakra-ui/react";
 

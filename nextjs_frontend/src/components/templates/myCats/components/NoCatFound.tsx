@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Center } from "@chakra-ui/react";
 

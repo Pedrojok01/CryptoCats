@@ -1,5 +1,5 @@
 // useTransactionReceipt.ts
-import { PublicClient } from "viem";
+import { type PublicClient } from "viem";
 import { usePublicClient } from "wagmi";
 
 interface AwaitTransactionReceiptProps {

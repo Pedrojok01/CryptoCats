@@ -1,4 +1,6 @@
-export const MARKET_ABI = [
+import { type Abi } from "viem";
+
+export const MARKET_ABI: Abi = [
   {
     inputs: [{ internalType: "address", name: "_catContractAddress", type: "address" }],
     stateMutability: "nonpayable",

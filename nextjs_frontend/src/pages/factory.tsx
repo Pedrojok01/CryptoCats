@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { type NextPage } from "next";
 
 import { Default } from "../components/layouts";
 import CatFactory from "../components/templates/factory/CatFactory";

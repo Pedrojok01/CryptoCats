@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useEffect } from "react";
+import { type ReactNode, createContext, useContext, useEffect } from "react";
 
 import { useReadContract } from "@/hooks";
 

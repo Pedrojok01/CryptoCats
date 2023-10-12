@@ -10,7 +10,6 @@
         "skipLibCheck": true,
         "target": "es2022",
         "verbatimModuleSyntax": true,
-        "moduleDetection": "force",
         /* Strictness */
         "strict": true,
         "noUncheckedIndexedAccess": true,
@@ -18,8 +17,8 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         /* Not transpiled */
-        "moduleResolution": "Bundler",
         "module": "esnext",
+        "moduleResolution": "node",
         "noEmit": true,
         /* Run in the DOM */
         "lib": [

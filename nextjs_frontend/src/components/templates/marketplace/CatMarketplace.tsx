@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { type FC, useEffect } from "react";
 
 import { Box, Heading, Wrap } from "@chakra-ui/react";
 import { formatEther } from "viem";

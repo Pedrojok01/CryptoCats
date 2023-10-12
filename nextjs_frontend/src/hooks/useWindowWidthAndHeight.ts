@@ -12,8 +12,8 @@ export const useWindowWidthAndHeight = () => {
     return () => window.removeEventListener("resize", changeWindowSize);
   }, []);
 
-  const isMobile = windowSize[0] <= 768;
-  const isMediumScreen = windowSize[0] <= 1250;
+  const isMobile = windowSize[0] ? windowSize[0] <= 768 : false;
+  const isMediumScreen = windowSize[0] ? windowSize[0] <= 1250 : false;
 
   return { windowSize, isMobile, isMediumScreen };
 };

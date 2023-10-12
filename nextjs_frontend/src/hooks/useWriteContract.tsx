@@ -17,9 +17,15 @@ const useWriteContract = () => {
   const notify = useNotify();
   const [loading, setLoading] = useState<boolean>(false);
 
+  if (!catInstance.write || !marketplaceInstance.write) {
+    throw Error("Contract instance missing");
+  }
+
   /* Set Token Allowance:
    *************************/
   const approveNft = async () => {
+    if (!catInstance.write.setApprovalForAll) return;
+
     setLoading(true);
     try {
       const hash: `0x${string}` = await catInstance.write.setApprovalForAll([contracts.marketplace.address, true]);
@@ -44,6 +50,8 @@ const useWriteContract = () => {
   /* Mint a gen0 cat from the factory :
    *************************************/
   const mintCat = async (dna: string): Promise<any> => {
+    if (!catInstance.write.createCatGen0) return;
+
     setLoading(true);
     try {
       const hash: `0x${string}` = await catInstance.write.createCatGen0([dna]);
@@ -74,6 +82,8 @@ const useWriteContract = () => {
   /* Breed a new cat from 2 parents :
    ***********************************/
   const breedCat = async (id1: number, id2: number): Promise<any> => {
+    if (!catInstance.write.breed) return;
+
     setLoading(true);
     try {
       const hash: `0x${string}` = await catInstance.write.breed([id1, id2]);
@@ -104,6 +114,8 @@ const useWriteContract = () => {
   /* Add a cat offer to the marketplace :
    *****************************************/
   const sellCat = async (price: bigint, id: number): Promise<any> => {
+    if (!marketplaceInstance.write.setOffer) return;
+
     setLoading(true);
     try {
       const hash: `0x${string}` = await marketplaceInstance.write.setOffer([price, id]);
@@ -135,6 +147,8 @@ const useWriteContract = () => {
   /* Remove a cat offer from the marketplace :
    *********************************************/
   const cancelOffer = async (id: number): Promise<any> => {
+    if (!marketplaceInstance.write.removeOffer) return;
+
     setLoading(true);
     try {
       const hash: `0x${string}` = await marketplaceInstance.write.removeOffer([id]);
@@ -166,6 +180,8 @@ const useWriteContract = () => {
   /* Remove a cat offer from the marketplace :
    *********************************************/
   const buyOffer = async (id: number, price: number): Promise<any> => {
+    if (!marketplaceInstance.write.buyCat) return;
+
     setLoading(true);
     try {
       const hash: `0x${string}` = await marketplaceInstance.write.buyCat([id], {

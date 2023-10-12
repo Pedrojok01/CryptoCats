@@ -16,9 +16,15 @@ const useReadContract = () => {
   const { userCats, setGen0Count, setMaxGen0Supply, setUserCats, setCatsWithoutOffer, setCatsOffersForMarket } =
     useStore();
 
+  if (!catInstance.read || !marketplaceInstance.read) {
+    throw Error("Contract instance missing");
+  }
+
   /* Get the name of a specific NFT :
    ************************************/
   const getTokenName = useCallback(async (): Promise<string | undefined> => {
+    if (!catInstance.read.symbol) return;
+
     try {
       const symbol = (await catInstance.read.symbol()) as string;
       return symbol;
@@ -31,6 +37,8 @@ const useReadContract = () => {
   /* Get the number of gen0 cats already minted:
    ***********************************************/
   const getGen0Count = useCallback(async () => {
+    if (!catInstance.read.gen0Count) return;
+
     try {
       const count = (await catInstance.read.gen0Count()) as number;
       setGen0Count(count);
@@ -42,6 +50,8 @@ const useReadContract = () => {
   /* Get the max supply number of gen0 cats:
    *******************************************/
   const getMaxGen0Supply = useCallback(async () => {
+    if (!catInstance.read.CREATION_LIMIT_GEN0) return;
+
     try {
       const maxCount = (await catInstance.read.CREATION_LIMIT_GEN0()) as number;
       setMaxGen0Supply(maxCount);
@@ -55,6 +65,8 @@ const useReadContract = () => {
    *********************************************/
   const checkNftAllowance = useCallback(
     async (user: string) => {
+      if (!catInstance.read.isApprovedForAll) return;
+
       try {
         const allowance = await catInstance.read.isApprovedForAll([user, contracts.marketplace.address]);
         return allowance;
@@ -69,14 +81,17 @@ const useReadContract = () => {
   /* Get all cats per user :
    ***************************/
   const getUserCats = useCallback(async () => {
+    if (!catInstance.read.getCatPerOwner) return;
+
     try {
       const amount = (await catInstance.read.getCatPerOwner([address])) as string[];
       const catPromises = amount.map(async (id) => {
+        if (!catInstance.read.getCat) return;
         const array = (await catInstance.read.getCat([Number(id)])) as bigint[];
         return mapArrayToCatObject(array);
       });
 
-      const cats = await Promise.all(catPromises);
+      const cats = (await Promise.all(catPromises)) as Cat[];
       setUserCats(cats);
     } catch (error: unknown) {
       logError(error);
@@ -89,9 +104,11 @@ const useReadContract = () => {
     if (!userCats) return;
 
     try {
-      const offerChecks = userCats?.map((cat) =>
-        marketplaceInstance.read.isOffer([Number(cat.indexId)])
-      ) as Promise<boolean>[];
+      const offerChecks = userCats.map((cat) => {
+        if (!marketplaceInstance.read.isOffer) return null;
+        return marketplaceInstance.read.isOffer([Number(cat.indexId)]) as unknown as Promise<boolean>;
+      });
+
       const offerResults = await Promise.all(offerChecks);
       const noOffer = userCats?.filter((_, index) => !offerResults[index]);
       setCatsWithoutOffer(noOffer);
@@ -104,6 +121,8 @@ const useReadContract = () => {
    ************************************************************/
 
   const getCatsOffersForMarket = useCallback(async () => {
+    if (!marketplaceInstance.read.getAllTokenOnSale) return;
+
     try {
       const offers = (await marketplaceInstance.read.getAllTokenOnSale()) as bigint[];
       const results = await publicClient.multicall({
@@ -114,9 +133,10 @@ const useReadContract = () => {
       });
 
       const catOffers: CatOffersForMarket[] = [];
+
       for (let i = 0; i < results.length; i += 2) {
-        const catData = mapArrayToCatObject(results[i].result as bigint[]);
-        const offerData = mapArrayToOfferObject(results[i + 1].result as OfferAbi);
+        const catData = mapArrayToCatObject(results[i]?.result as bigint[]);
+        const offerData = mapArrayToOfferObject(results[i + 1]?.result as OfferAbi);
         offerData.ownOffer = offerData.seller === address;
         catOffers.push({ catData, marketData: offerData });
       }

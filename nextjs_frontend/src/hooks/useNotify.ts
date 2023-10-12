@@ -1,5 +1,5 @@
 // useNotify.ts
-import { ReactNode, useCallback } from "react";
+import { type ReactNode, useCallback } from "react";
 
 import { useToast } from "@chakra-ui/react";
 

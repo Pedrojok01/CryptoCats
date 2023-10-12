@@ -1,4 +1,4 @@
-import { CSSProperties, useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useState } from "react";
 
 import { CopyIcon } from "@chakra-ui/icons";
 import { Flex, Skeleton, Tooltip } from "@chakra-ui/react";

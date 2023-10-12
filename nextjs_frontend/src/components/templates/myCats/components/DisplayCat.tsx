@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 
 import { Badge, Box, Button, HStack, VStack } from "@chakra-ui/react";
 

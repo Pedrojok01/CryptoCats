@@ -1,4 +1,8 @@
 <div align="center">
+
+<img src="./nextjs_frontend/public/img/cryptocats_logo_transparent.png" width="70px"/>
+<br><br>
+
 <h1><strong>CryptoCats - Create, Breed and Sell some funny lookin' cats!</strong></h1>
 
 [![Stargazers](https://img.shields.io/github/stars/Pedrojok01/CryptoCats)](https://github.com/Pedrojok01/CryptoCats/stargazers)

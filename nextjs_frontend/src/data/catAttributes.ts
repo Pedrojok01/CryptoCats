@@ -17,5 +17,5 @@ export const catAttributes = [
   { colorName: "foreheadShape", name: "Forehead shape", range: SHAPE_RANGE_5, badge: getShapeBadge },
   { colorName: "decorationColor", name: "Forehead's color", range: COLOR_RANGE },
   { colorName: "animation", name: "Animation", range: SHAPE_RANGE_6, badge: getAnimBadge },
-  { colorName: "backgroundColor", name: "Background", range: COLOR_RANGE, badge: getBgBadge },
+  { colorName: "backgroundColor", name: "Background", range: SHAPE_RANGE_5, badge: getBgBadge },
 ];

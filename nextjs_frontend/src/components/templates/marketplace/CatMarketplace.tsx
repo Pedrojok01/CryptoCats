@@ -1,6 +1,6 @@
 import { type FC, useEffect } from "react";
 
-import { Badge, Button, HStack, Text, VStack, Wrap } from "@chakra-ui/react";
+import { Button, HStack, Text, VStack, Wrap } from "@chakra-ui/react";
 import { formatEther } from "viem";
 
 import { Loading, TabHeader } from "@/components/elements";
@@ -42,13 +42,8 @@ const CatMarketplace: FC = () => {
             const price = Number(formatEther(cat.marketData.price));
 
             return (
-              <VStack bg={"white"} className="card">
-                <DisplayCat
-                  key={cat.catData.indexId}
-                  dnaBN={cat.catData.genes}
-                  id={id}
-                  generation={Number(cat.catData.generation)}
-                />
+              <VStack bg={"white"} className="card" key={cat.catData.indexId}>
+                <DisplayCat dnaBN={cat.catData.genes} id={id} generation={Number(cat.catData.generation)} />
 
                 <HStack gap={4}>
                   <Text fontSize="lg" fontWeight={700} color={"black"} className="text-shadow-light">

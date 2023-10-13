@@ -2,10 +2,10 @@ import type { FC } from "react";
 
 import { Badge, Box } from "@chakra-ui/react";
 
-const Selector: FC<SelectorProps> = ({ action, name, range, idCode, badge }) => {
+const Selector: FC<SelectorProps> = ({ colorName, action, name, range, idCode, badge }) => {
   return (
-    <Box className="form-group" style={{ marginBottom: "0.94rem" }}>
-      <label htmlFor="formControlRange" style={{ marginBottom: "0.94rem" }}>
+    <Box className="form-group" mb={"0.94rem"}>
+      <label htmlFor="formControlRange">
         <b>{name}</b>
         <Badge colorScheme="purple" ml={2}>
           Code: {badge ? badge : idCode}
@@ -16,7 +16,7 @@ const Selector: FC<SelectorProps> = ({ action, name, range, idCode, badge }) => 
         min={range.min}
         max={range.max}
         style={{ width: "100%" }}
-        onChange={(e) => action(e.target.value)}
+        onChange={(e) => action(colorName, e.target.value)}
         value={idCode}
       />
     </Box>

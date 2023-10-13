@@ -26,10 +26,10 @@ const Header = () => {
   const { isMobile } = useWindowWidthAndHeight();
 
   return (
-    <Box borderBottom="1px" borderBottomColor="chakra-border-color">
+    <Box>
       {address && <ChainVerification />}
 
-      <Container maxW="container.xl" p={"10px"}>
+      <Container maxW="container.xl" p={2} h={"56px"}>
         <Flex align="center" justify="space-between">
           <Heading cursor={"default"} size="md">
             <Link as={NextLink} href="/" style={{ textDecoration: "none" }}>

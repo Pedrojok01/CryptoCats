@@ -73,6 +73,7 @@ type AttributesProps = {
 };
 
 type SelectorProps = {
+  colorName: string;
   action?: any;
   name: string;
   range: {

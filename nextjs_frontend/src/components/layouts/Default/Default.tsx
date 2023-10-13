@@ -8,7 +8,7 @@ import banner from "public/img/banner.png";
 import { Footer, Header } from "..";
 
 const Default: FC<{ children: ReactNode; pageName: string }> = ({ children, pageName }) => (
-  <Box pos="relative" h={"100vh"} overflow="hidden">
+  <Box h={"100vh"} overflow="hidden">
     <Head>
       <title>{`${pageName} | CryptoCats`}</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -18,13 +18,12 @@ const Default: FC<{ children: ReactNode; pageName: string }> = ({ children, page
     <Container
       bgImage={`url(${banner.src})`}
       bgRepeat="no-repeat"
-      bgSize="100% 70%"
+      bgSize="100% 60%"
       bgPosition="top"
       maxW="container.xlg"
+      h={`calc(100vh - 56px - 56px)`}
+      p={30}
       overflow={"auto"}
-      h={"83%"}
-      pt={30}
-      mb={75}
       as="main"
     >
       {children}

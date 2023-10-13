@@ -6,7 +6,7 @@ import { RenderCat } from "@/components/elements";
 
 import CatSelectModal from "./CatSelectModal";
 
-const CatSelection: FC<CatSelectionProps> = ({ parent, setParent, name, otherParent, loading }) => {
+const CatSelection: FC<CatSelectionProps> = ({ cat, setCat, name, otherParent, loading, isMarket }) => {
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -15,26 +15,26 @@ const CatSelection: FC<CatSelectionProps> = ({ parent, setParent, name, otherPar
       <Box
         bgColor={colorMode === "light" ? "#ededed" : "#4f5050"}
         w={350}
-        h={"fit-content"}
-        paddingBlock={8}
+        m={"auto"}
+        paddingBlock={10}
         borderRadius={10}
       >
         <Center>
           <VStack>
-            {parent && (
+            {cat && (
               <>
-                <RenderCat dna={parent.dna} id={parent.id} generation={parent.generation} isFactory={false} />
+                <RenderCat dna={cat.dna} id={cat.id} generation={cat.generation} isFactory={false} />
                 <br></br>
               </>
             )}
             <Button colorScheme="pink" onClick={onOpen} isLoading={loading}>
-              {!parent ? `Select ${name}` : "Change"}
+              {!cat ? `Select ${name}` : "Change"}
             </Button>
           </VStack>
         </Center>
       </Box>
 
-      <CatSelectModal isOpen={isOpen} onClose={onClose} setParent={setParent} otherParent={otherParent} />
+      <CatSelectModal isOpen={isOpen} onClose={onClose} setCat={setCat} otherParent={otherParent} isMarket={isMarket} />
     </>
   );
 };

@@ -10,7 +10,7 @@ type TabHeaderProps = {
 const TabHeader: FC<TabHeaderProps> = ({ title, description }) => {
   return (
     <Box textAlign="center" mb={5}>
-      <Heading as="h1" size="lg" marginBottom={6}>
+      <Heading as="h1" size="lg" marginBottom={6} className="text-shadow">
         {title}
       </Heading>
       <Heading as="h4" size="sm" fontWeight="normal">

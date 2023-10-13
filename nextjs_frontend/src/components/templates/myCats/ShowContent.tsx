@@ -23,12 +23,7 @@ const ShowContent: FC = () => {
         <Wrap w={"80%"} justify="center" m="auto">
           {userCats?.map((cat: Cat, index: number) => {
             return (
-              <DisplayCat
-                dnaBN={Number(cat.genes)}
-                key={index}
-                id={Number(cat.indexId)}
-                generation={Number(cat.generation)}
-              />
+              <DisplayCat dnaBN={cat.genes} key={index} id={Number(cat.indexId)} generation={Number(cat.generation)} />
             );
           })}
         </Wrap>

@@ -13,8 +13,8 @@ const BreedContent: FC = () => {
   const { getUserCats } = useReadContract();
   const { userCats } = useStore();
   const { breedCat, loading } = useWriteContract();
-  const [mum, setMum] = useState<SelectedParent>();
-  const [dad, setDad] = useState<SelectedParent>();
+  const [mum, setMum] = useState<SelectedCat>();
+  const [dad, setDad] = useState<SelectedCat>();
 
   const isBreedEnable = mum && dad ? true : false;
 
@@ -44,8 +44,8 @@ const BreedContent: FC = () => {
         <Center>
           <VStack>
             <Wrap w={"100%"} m="auto" gap={20} justify="center">
-              <CatSelection parent={mum} setParent={setMum} name="Mummy" otherParent={dad} loading={loading} />
-              <CatSelection parent={dad} setParent={setDad} name="Daddy" otherParent={mum} loading={loading} />
+              <CatSelection cat={mum} setCat={setMum} name="Mummy" otherParent={dad} loading={loading} />
+              <CatSelection cat={dad} setCat={setDad} name="Daddy" otherParent={mum} loading={loading} />
             </Wrap>
 
             <HStack gap={20}>

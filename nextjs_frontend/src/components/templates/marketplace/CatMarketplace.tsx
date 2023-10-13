@@ -30,13 +30,14 @@ const CatMarketplace: FC = () => {
       ) : (
         <Wrap w={"80%"} justify="center" m="auto">
           {catsOffersForMarket?.map((cat: CatOffersForMarket, index: number) => {
+            const price = Number(formatEther(cat.marketData.price));
             return (
               <DisplayCat
-                dnaBN={Number(cat.catData.genes)}
+                dnaBN={cat.catData.genes}
                 key={index}
                 id={Number(cat.catData.indexId)}
                 generation={Number(cat.catData.generation)}
-                price={Number(formatEther(cat.marketData.price))}
+                price={price}
                 ownOffer={cat.marketData.ownOffer}
                 action={cat.marketData.ownOffer ? cancelOffer : buyOffer}
                 loading={loading}

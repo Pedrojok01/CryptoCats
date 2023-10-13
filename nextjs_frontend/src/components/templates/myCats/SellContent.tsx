@@ -1,35 +1,19 @@
 import { type FC, useState } from "react";
 
-import {
-  Box,
-  Button,
-  Center,
-  FormLabel,
-  HStack,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  useColorMode,
-  useDisclosure,
-  VStack,
-  Wrap,
-} from "@chakra-ui/react";
+import { Button, Center, FormLabel, HStack, VStack, Wrap } from "@chakra-ui/react";
 
-import { Loading, RenderCat, TabHeader } from "@/components/elements";
+import { Loading, TabHeader } from "@/components/elements";
 import useSellCat from "@/hooks/useSellCat";
 import { useStore } from "@/store/store";
 
-import CatSelectModal from "./components/CatSelectModal";
+import CatSelection from "./components/CatSelection";
 import NoCatFound from "./components/NoCatFound";
+import PriceInput from "./components/PriceInput";
 
 const SellContent: FC = () => {
   const { catsWithoutOffer } = useStore();
   const { handleSell, loading } = useSellCat();
-  const { colorMode } = useColorMode();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [catToSell, setCatToSell] = useState<SelectedParent>();
+  const [catToSell, setCatToSell] = useState<SelectedCat>();
   const [price, setPrice] = useState<string>("0");
 
   const handleReset = async () => {
@@ -58,44 +42,17 @@ const SellContent: FC = () => {
       {catsWithoutOffer && catsWithoutOffer.length > 0 && (
         <Center>
           <Wrap>
-            <Box
-              bgColor={colorMode === "light" ? "#ededed" : "#4f5050"}
-              w={350}
-              h={"fit-content"}
-              paddingBlock={8}
-              borderRadius={10}
-            >
-              <Center>
-                <VStack>
-                  {catToSell && (
-                    <>
-                      <RenderCat
-                        dna={catToSell.dna}
-                        id={catToSell.id}
-                        generation={catToSell.generation}
-                        isFactory={false}
-                      />
-                      <br></br>
-                    </>
-                  )}
-                  <Button colorScheme="pink" onClick={onOpen} isLoading={loading}>
-                    Select a Cat
-                  </Button>
-                </VStack>
-              </Center>
-            </Box>
-
-            <CatSelectModal isOpen={isOpen} onClose={onClose} setParent={setCatToSell} isMarket={true} />
+            <CatSelection
+              cat={catToSell}
+              setCat={setCatToSell}
+              name="a cat to sell"
+              loading={loading}
+              isMarket={true}
+            />
 
             <VStack w={350} justifyContent="center">
               <FormLabel>Set the price in ETH:</FormLabel>
-              <NumberInput defaultValue={0} min={0} w="80%" value={price} onChange={(value) => setPrice(value)}>
-                <NumberInputField cursor={loading ? "not-allowed" : "auto"} />
-                <NumberInputStepper>
-                  <NumberIncrementStepper cursor={loading ? "not-allowed" : "auto"} />
-                  <NumberDecrementStepper cursor={loading ? "not-allowed" : "auto"} />
-                </NumberInputStepper>
-              </NumberInput>
+              <PriceInput price={price} setPrice={setPrice} loading={loading} />
               <HStack>
                 <Button colorScheme="red" onClick={handleReset} isLoading={loading}>
                   Reset

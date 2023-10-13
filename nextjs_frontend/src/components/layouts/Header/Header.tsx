@@ -35,7 +35,7 @@ const Header = () => {
             <Link as={NextLink} href="/" style={{ textDecoration: "none" }}>
               <HStack>
                 <Image src={logo.src} alt="logo" width={40} height={40} />
-                {!isMobile && <Text>CryptoCats</Text>}
+                {!isMobile && <Text className="text-shadow">CryptoCats</Text>}
               </HStack>
             </Link>
           </Heading>

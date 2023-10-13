@@ -6,7 +6,7 @@ import { useStore } from "@/store/store";
 
 import DisplayCat from "./DisplayCat";
 
-const CatSelectModal: FC<CatSelectModalProps> = ({ isOpen, onClose, setParent, otherParent, isMarket }) => {
+const CatSelectModal: FC<CatSelectModalProps> = ({ isOpen, onClose, setCat, otherParent, isMarket }) => {
   const { userCats, catsWithoutOffer } = useStore();
 
   const catToRender = isMarket ? catsWithoutOffer : userCats;
@@ -23,12 +23,12 @@ const CatSelectModal: FC<CatSelectModalProps> = ({ isOpen, onClose, setParent, o
               if (!otherParent || Number(cat.indexId) !== Number(otherParent.id)) {
                 return (
                   <DisplayCat
-                    dnaBN={Number(cat.genes)}
+                    dnaBN={cat.genes}
                     key={index}
                     id={Number(cat.indexId)}
                     generation={Number(cat.generation)}
                     selectable={true}
-                    setSelected={setParent}
+                    setSelected={setCat}
                     onClose={onClose}
                   />
                 );

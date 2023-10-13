@@ -19,7 +19,7 @@ const useWriteContract = () => {
 
   /* Set Token Allowance:
    *************************/
-  const approveNft = async () => {
+  const approveNft = async (): Promise<void> => {
     if (!catInstance.write.setApprovalForAll) return;
 
     setLoading(true);
@@ -45,7 +45,7 @@ const useWriteContract = () => {
 
   /* Mint a gen0 cat from the factory :
    *************************************/
-  const mintCat = async (dna: string): Promise<any> => {
+  const mintCat = async (dna: string): Promise<void> => {
     if (!catInstance.write.createCatGen0) return;
 
     setLoading(true);
@@ -66,10 +66,9 @@ const useWriteContract = () => {
     } catch (error: any) {
       notify({
         title: "An error occured",
-        message: error.reason ? error.reason : "An unexpected error occured while minting.",
+        message: error.details ? error.details : "An unexpected error occured while minting.",
         status: "error",
       });
-      return error.reason ? error.reason : error.message ? error.message : "Unexpected error";
     } finally {
       setLoading(false);
     }
@@ -77,7 +76,7 @@ const useWriteContract = () => {
 
   /* Breed a new cat from 2 parents :
    ***********************************/
-  const breedCat = async (id1: number, id2: number): Promise<any> => {
+  const breedCat = async (id1: number, id2: number): Promise<void> => {
     if (!catInstance.write.breed) return;
 
     setLoading(true);
@@ -98,10 +97,9 @@ const useWriteContract = () => {
     } catch (error: any) {
       notify({
         title: "An error occured",
-        message: error.reason ? error.reason : "An unexpected error occured while breeding.",
+        message: error.details ? error.details : "An unexpected error occured while breeding.",
         status: "error",
       });
-      return error.reason ? error.reason : error.message ? error.message : "Unexpected error";
     } finally {
       setLoading(false);
     }
@@ -109,7 +107,7 @@ const useWriteContract = () => {
 
   /* Add a cat offer to the marketplace :
    *****************************************/
-  const sellCat = async (price: bigint, id: number): Promise<any> => {
+  const sellCat = async (price: bigint, id: number): Promise<void> => {
     if (!marketplaceInstance.write.setOffer) return;
 
     setLoading(true);
@@ -131,10 +129,9 @@ const useWriteContract = () => {
     } catch (error: any) {
       notify({
         title: "An error occured",
-        message: error.reason ? error.reason : "An unexpected error occured while setting the offer.",
+        message: error.details ? error.details : "An unexpected error occured while setting the offer.",
         status: "error",
       });
-      return error.reason ? error.reason : error.message ? error.message : "Unexpected error";
     } finally {
       setLoading(false);
     }
@@ -142,7 +139,7 @@ const useWriteContract = () => {
 
   /* Remove a cat offer from the marketplace :
    *********************************************/
-  const cancelOffer = async (id: number): Promise<any> => {
+  const cancelOffer = async (id: number): Promise<void> => {
     if (!marketplaceInstance.write.removeOffer) return;
 
     setLoading(true);
@@ -164,10 +161,9 @@ const useWriteContract = () => {
     } catch (error: any) {
       notify({
         title: "An error occured",
-        message: error.reason ? error.reason : "An unexpected error occured while removing the offer.",
+        message: error.details ? error.details : "An unexpected error occured while removing the offer.",
         status: "error",
       });
-      return error.reason ? error.reason : error.message ? error.message : "Unexpected error";
     } finally {
       setLoading(false);
     }
@@ -175,8 +171,9 @@ const useWriteContract = () => {
 
   /* Remove a cat offer from the marketplace :
    *********************************************/
-  const buyOffer = async (id: number, price: number): Promise<any> => {
+  const buyOffer = async (id: number, price?: number): Promise<void> => {
     if (!marketplaceInstance.write.buyCat) return;
+    if (!price) return;
 
     setLoading(true);
     try {
@@ -199,10 +196,9 @@ const useWriteContract = () => {
     } catch (error: any) {
       notify({
         title: "An error occured",
-        message: error.reason ? error.reason : "An unexpected error occured while buying the cat.",
+        message: error.details ? error.details : "An unexpected error occured while buying the cat.",
         status: "error",
       });
-      return error.reason ? error.reason : error.message ? error.message : "Unexpected error";
     } finally {
       setLoading(false);
     }

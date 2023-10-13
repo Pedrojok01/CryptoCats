@@ -28,15 +28,15 @@ type CatAnimation = {
 };
 
 type DisplayCatProps = {
-  dnaBN: any;
+  dnaBN: bigint;
   id: number;
   generation: number;
   selectable?: boolean;
-  setSelected?: Dispatch<SetStateAction<string | undefined>>;
+  setSelected?: Dispatch<SetStateAction<SelectedCat | undefined>>;
   onClose?: () => void;
   price?: number;
   ownOffer?: boolean;
-  action?: any;
+  action?: (id: number, price?: number) => Promise<void>;
   loading?: boolean;
 };
 
@@ -84,25 +84,26 @@ type SelectorProps = {
   badge?: string;
 };
 
-type SelectedParent = {
+type SelectedCat = {
   dna: DNA;
   id: number;
   generation: number;
 };
 
 type CatSelectionProps = {
-  parent: SelectedParent | undefined;
-  setParent: Dispatch<SetStateAction<SelectedParent | undefined>>;
+  cat: SelectedCat | undefined;
+  setCat: Dispatch<SetStateAction<SelectedCat | undefined>>;
   name: string;
-  otherParent?: SelectedParent;
+  otherParent?: SelectedCat;
   loading: boolean;
+  isMarket?: boolean;
 };
 
 type CatSelectModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  setParent: Dispatch<SetStateAction<SelectedParent | undefined>>;
-  otherParent?: SelectedParent;
+  setCat: Dispatch<SetStateAction<SelectedCat | undefined>>;
+  otherParent?: SelectedCat;
   isMarket?: boolean;
 };
 

@@ -19,15 +19,23 @@ const Home = () => {
         height={isMobile ? 350 : 150}
         alt="Cute CryptoCats"
       />
-      <Box bgColor={"rgba(161, 36, 7, 0.8)"} w="55%" minW={280} p={5} borderRadius="10px" textAlign="center">
-        <Heading size="lg" p={3} marginBottom={6} textAlign="center">
+      <Box
+        bgColor={"rgba(161, 36, 7, 0.85)"}
+        w="55%"
+        minW={300}
+        p={5}
+        borderRadius="10px"
+        textAlign="center"
+        className="box-shadow"
+      >
+        <Heading size="lg" p={3} marginBottom={6} textAlign="center" className="text-shadow">
           Collect and breed...
           <br />
           ...some funny looking cats!
         </Heading>
         {isConnected ? (
           <Link as={NextLink} href="/marketplace">
-            <Button>Get Your Own Cat Now</Button>
+            <Button className="box-shadow">Get Your Own Cat Now</Button>
           </Link>
         ) : (
           <ConnectButton />

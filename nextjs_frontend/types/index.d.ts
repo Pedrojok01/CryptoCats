@@ -34,10 +34,6 @@ type DisplayCatProps = {
   selectable?: boolean;
   setSelected?: Dispatch<SetStateAction<SelectedCat | undefined>>;
   onClose?: () => void;
-  price?: number;
-  ownOffer?: boolean;
-  action?: (id: number, price?: number) => Promise<void>;
-  loading?: boolean;
 };
 
 type RenderCatProps = {

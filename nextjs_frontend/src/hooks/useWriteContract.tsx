@@ -171,9 +171,8 @@ const useWriteContract = () => {
 
   /* Remove a cat offer from the marketplace :
    *********************************************/
-  const buyOffer = async (id: number, price?: number): Promise<void> => {
+  const buyOffer = async (id: number, price: number): Promise<void> => {
     if (!marketplaceInstance.write.buyCat) return;
-    if (!price) return;
 
     setLoading(true);
     try {

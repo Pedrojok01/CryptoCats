@@ -38,12 +38,12 @@ const ConnectModal: FC<ConnectModalProps> = ({ isOpen, onClose }) => {
       <ModalContent w={340} p={5}>
         <ModalCloseButton />
         <ModalBody>
-          <Heading textAlign="center" p={"15px 0px 40px"} fontSize="1.65rem">
+          <Heading textAlign="center" p={"15px 0px 40px"} fontSize="1.65rem" className="text-shadow">
             Connect Your Wallet
           </Heading>
 
           <Flex direction="column">
-            <VStack mb={5}>
+            <VStack gap={3} mb={5}>
               {connectors.map((connector) => (
                 <Button
                   w="93%"
@@ -54,6 +54,7 @@ const ConnectModal: FC<ConnectModalProps> = ({ isOpen, onClose }) => {
                     onClose();
                     connect({ connector });
                   }}
+                  className="box-shadow"
                 >
                   <span className="connect-button-text">{connector.name}</span>
                   {!connector.ready && " (unsupported)"}

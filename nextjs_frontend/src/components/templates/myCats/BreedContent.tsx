@@ -49,7 +49,7 @@ const BreedContent: FC = () => {
             </Wrap>
 
             <HStack gap={20}>
-              <Button colorScheme="red" isLoading={loading} onClick={handleReset}>
+              <Button colorScheme="red" isLoading={loading} onClick={handleReset} className="box-shadow">
                 Reset
               </Button>
               <Button
@@ -57,6 +57,7 @@ const BreedContent: FC = () => {
                 isLoading={loading}
                 disabled={!isBreedEnable || loading}
                 onClick={handleBreed}
+                className="box-shadow"
               >
                 Breed
               </Button>

@@ -4,7 +4,7 @@ import { Button, useColorMode } from "@chakra-ui/react";
 const ColorModeButton = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Button size="sm" onClick={toggleColorMode}>
+    <Button size="sm" onClick={toggleColorMode} className="box-shadow">
       {colorMode === "light" ? <SunIcon /> : <MoonIcon />}
     </Button>
   );

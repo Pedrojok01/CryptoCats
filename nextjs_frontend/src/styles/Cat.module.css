@@ -8,11 +8,10 @@
 
 .catShow {
   position: inherit;
-  width: 300px;
-  height: 350px;
-  left: -40px;
+  width: 210px;
+  height: 215px;
+  left: -25px;
   transform: scale(60%);
-  margin: auto;
 }
 
 /*HEAD:

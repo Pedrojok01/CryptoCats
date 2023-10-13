@@ -27,7 +27,7 @@ const CatSelection: FC<CatSelectionProps> = ({ cat, setCat, name, otherParent, l
                 <br></br>
               </>
             )}
-            <Button colorScheme="pink" onClick={onOpen} isLoading={loading}>
+            <Button colorScheme="pink" onClick={onOpen} isLoading={loading} className="box-shadow">
               {!cat ? `Select ${name}` : "Change"}
             </Button>
           </VStack>

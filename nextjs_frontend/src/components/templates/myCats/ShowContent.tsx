@@ -21,9 +21,14 @@ const ShowContent: FC = () => {
         <NoCatFound />
       ) : (
         <Wrap w={"80%"} justify="center" m="auto">
-          {userCats?.map((cat: Cat, index: number) => {
+          {userCats?.map((cat: Cat) => {
             return (
-              <DisplayCat dnaBN={cat.genes} key={index} id={Number(cat.indexId)} generation={Number(cat.generation)} />
+              <DisplayCat
+                key={cat.indexId}
+                dnaBN={cat.genes}
+                id={Number(cat.indexId)}
+                generation={Number(cat.generation)}
+              />
             );
           })}
         </Wrap>

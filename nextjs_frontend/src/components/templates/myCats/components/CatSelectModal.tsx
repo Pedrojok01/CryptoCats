@@ -19,12 +19,12 @@ const CatSelectModal: FC<CatSelectModalProps> = ({ isOpen, onClose, setCat, othe
         <ModalCloseButton />
         <ModalBody>
           <Wrap w={"100%"} justify="center" m="auto" p={5}>
-            {catToRender?.map((cat: Cat, index: number) => {
+            {catToRender?.map((cat: Cat) => {
               if (!otherParent || Number(cat.indexId) !== Number(otherParent.id)) {
                 return (
                   <DisplayCat
+                    key={cat.indexId}
                     dnaBN={cat.genes}
-                    key={index}
                     id={Number(cat.indexId)}
                     generation={Number(cat.generation)}
                     selectable={true}

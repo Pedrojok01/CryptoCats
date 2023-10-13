@@ -19,6 +19,7 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
       borderRadius="10"
       w={!isFactory ? "210px" : undefined}
       h={!isFactory ? "330px" : undefined}
+      className="box-shadow"
     >
       <Box className={isFactory ? styles.cat : styles.catShow} m="auto">
         <Box

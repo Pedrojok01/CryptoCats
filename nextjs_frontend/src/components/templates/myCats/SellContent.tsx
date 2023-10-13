@@ -54,10 +54,16 @@ const SellContent: FC = () => {
               <FormLabel>Set the price in ETH:</FormLabel>
               <PriceInput price={price} setPrice={setPrice} loading={loading} />
               <HStack>
-                <Button colorScheme="red" onClick={handleReset} isLoading={loading}>
+                <Button colorScheme="red" onClick={handleReset} isLoading={loading} className="box-shadow">
                   Reset
                 </Button>
-                <Button colorScheme="green" disabled={!catToSell || loading} onClick={onSell} isLoading={loading}>
+                <Button
+                  colorScheme="green"
+                  disabled={!catToSell || loading}
+                  onClick={onSell}
+                  isLoading={loading}
+                  className="box-shadow"
+                >
                   Sell
                 </Button>
               </HStack>

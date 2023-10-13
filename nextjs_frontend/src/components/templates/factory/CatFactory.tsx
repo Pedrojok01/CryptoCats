@@ -44,20 +44,26 @@ const CatFactory: FC = () => {
         <Box w={isMobile ? 400 : isMediumScreen ? 600 : 350} minW={350}>
           <RenderCat dna={dna} isFactory={true} />
           <Flex gap={2} m={"3"} justify="center">
-            <Button colorScheme="blue" onClick={resetCatToDefault}>
+            <Button colorScheme="blue" onClick={resetCatToDefault} className="box-shadow">
               Default DNA
             </Button>
-            <Button colorScheme="yellow" onClick={generateRandomCat}>
+            <Button colorScheme="yellow" onClick={generateRandomCat} className="box-shadow">
               Random DNA
             </Button>
           </Flex>
         </Box>
         <Box w={isMobile ? 400 : isMediumScreen ? 600 : 500} minW={350}>
-          <Card bgColor={colorMode === "light" ? "#ededed" : "#4f5050"} borderRadius="10" p={5}>
+          <Card bgColor={colorMode === "light" ? "#ededed" : "#4f5050"} borderRadius="10" p={5} className="box-shadow">
             <Attributes dna={dna} updateDna={updateDna} />
           </Card>
           <Flex m={"3"} justify="flex-end">
-            <Button colorScheme="green" onClick={handleMint} isLoading={loading} disabled={loading}>
+            <Button
+              colorScheme="green"
+              onClick={handleMint}
+              isLoading={loading}
+              disabled={loading}
+              className="box-shadow"
+            >
               CREATE
             </Button>
           </Flex>

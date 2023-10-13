@@ -18,18 +18,16 @@ const ConnectButton: FC = () => {
     <>
       {!isConnected ? (
         <>
-          <Button size="sm" className="custom-button" onClick={onOpen}>
+          <Button size="sm" className="box-shadow" onClick={onOpen}>
             Connect Wallet
           </Button>
           <ConnectModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
         </>
       ) : (
         <>
-          <Button size="sm" className="connected-address" onClick={onOpen}>
+          <Button size="sm" className="box-shadow" onClick={onOpen}>
             {address && typeof address === "string" && (
-              <p className="connected-address-text">
-                {isMobile ? getEllipsisTxt(address, 5) : getEllipsisTxt(address, 4)}
-              </p>
+              <p>{isMobile ? getEllipsisTxt(address, 5) : getEllipsisTxt(address, 4)}</p>
             )}
           </Button>
 

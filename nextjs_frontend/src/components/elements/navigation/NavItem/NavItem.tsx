@@ -24,6 +24,7 @@ const NavItem: FC<ISubNav> = ({ label, children, href }) => {
           _hover={{
             textDecoration: "none",
           }}
+          className="text-shadow-light"
         >
           {label}
         </Link>
@@ -38,6 +39,7 @@ const NavItem: FC<ISubNav> = ({ label, children, href }) => {
                   color: linkActiveColor,
                 }}
                 cursor="pointer"
+                className="text-shadow-light"
               >
                 <>
                   {label} <ChevronDownIcon />

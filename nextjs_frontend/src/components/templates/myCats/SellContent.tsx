@@ -1,4 +1,4 @@
-import { type FC, useEffect, useState } from "react";
+import { type FC, useState } from "react";
 
 import {
   Box,
@@ -16,42 +16,31 @@ import {
   VStack,
   Wrap,
 } from "@chakra-ui/react";
-import { parseEther } from "viem";
-import { useAccount } from "wagmi";
 
 import { Loading, RenderCat, TabHeader } from "@/components/elements";
-import { useReadContract, useWriteContract } from "@/hooks";
+import useSellCat from "@/hooks/useSellCat";
 import { useStore } from "@/store/store";
 
 import CatSelectModal from "./components/CatSelectModal";
 import NoCatFound from "./components/NoCatFound";
 
 const SellContent: FC = () => {
-  const { address } = useAccount();
-  const { checkNftAllowance, getCatsWithoutOffer } = useReadContract();
   const { catsWithoutOffer } = useStore();
-  const { approveNft, sellCat, loading } = useWriteContract();
+  const { handleSell, loading } = useSellCat();
   const { colorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [catToSell, setCatToSell] = useState<SelectedParent>();
   const [price, setPrice] = useState<string>("0");
 
-  useEffect(() => {
-    getCatsWithoutOffer();
-  }, [getCatsWithoutOffer]);
-
   const handleReset = async () => {
     setCatToSell(undefined);
-    setPrice("");
+    setPrice("0");
   };
 
-  const handleSell = async () => {
+  const onSell = async () => {
     if (catToSell) {
-      const allowed = await checkNftAllowance(address as string);
-      if (!allowed) await approveNft();
-
-      await sellCat(parseEther(price.toString()), catToSell.id);
-      setCatToSell(undefined);
+      await handleSell(price, catToSell.id);
+      handleReset();
     }
   };
 
@@ -64,9 +53,9 @@ const SellContent: FC = () => {
 
       {!catsWithoutOffer && <Loading />}
 
-      {catsWithoutOffer?.length === 0 ? (
-        <NoCatFound />
-      ) : (
+      {catsWithoutOffer?.length === 0 && <NoCatFound />}
+
+      {catsWithoutOffer && catsWithoutOffer.length > 0 && (
         <Center>
           <Wrap>
             <Box
@@ -111,7 +100,7 @@ const SellContent: FC = () => {
                 <Button colorScheme="red" onClick={handleReset} isLoading={loading}>
                   Reset
                 </Button>
-                <Button colorScheme="green" disabled={!catToSell || loading} onClick={handleSell} isLoading={loading}>
+                <Button colorScheme="green" disabled={!catToSell || loading} onClick={onSell} isLoading={loading}>
                   Sell
                 </Button>
               </HStack>

@@ -38,9 +38,9 @@ const BreedContent: FC = () => {
 
       {!userCats && <Loading />}
 
-      {userCats?.length === 0 ? (
-        <NoCatFound />
-      ) : (
+      {userCats?.length === 0 && <NoCatFound />}
+
+      {userCats && userCats.length > 0 && (
         <Center>
           <VStack>
             <Wrap w={"100%"} m="auto" gap={20} justify="center">

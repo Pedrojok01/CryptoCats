@@ -60,7 +60,7 @@ const useReadContract = () => {
   /* Check if existing allowance of NFT 1155 :
    *********************************************/
   const checkNftAllowance = useCallback(
-    async (user: string) => {
+    async (user: `0x${string}`) => {
       if (!catInstance.read.isApprovedForAll) return;
 
       try {

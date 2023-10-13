@@ -1,6 +1,6 @@
 {
   "name": "cryptocats-nextjs",
-  "version": "2.0.21",
+  "version": "2.1.0",
   "description": "Crypto-Cats - Create, Breed, and Sell your Crypto-Cats!",
   "author": "Pedrojok01 <pedrojok@pm.me>",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-jazzicon": "1.0.4",
-    "viem": "1.16.4",
+    "viem": "1.16.5",
     "wagmi": "1.4.3",
     "zustand": "4.4.3"
   },

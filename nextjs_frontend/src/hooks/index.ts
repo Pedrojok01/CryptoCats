@@ -1,4 +1,3 @@
-export * from "./useAddressOrENS";
 export * from "./useContract";
 export * from "./useContractInstances";
 export * from "./useSupportedChains";

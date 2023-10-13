@@ -1,5 +1,3 @@
-type NotificationType = "info" | "warning" | "success" | "error" | "loading";
-
 type ForeheadShape = {
   forehead: string;
   foreheadMid?: string;
@@ -126,3 +124,9 @@ type CatOffersForMarket = {
   catData: Cat;
   marketData: Offer;
 };
+
+interface ContractCustomError {
+  details?: string;
+  reason?: string;
+  message?: string;
+}

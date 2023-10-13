@@ -13,7 +13,7 @@ const Loading: FC = () => {
         <Center height={"50%"} padding={10}>
           <Spinner size="lg" speed="0.65s" />
         </Center>
-      )}{" "}
+      )}
     </>
   );
 };

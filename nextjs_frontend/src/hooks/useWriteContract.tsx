@@ -63,10 +63,11 @@ const useWriteContract = () => {
         message: msg,
         status: "success",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const msg = logError(error);
       notify({
         title: "An error occured",
-        message: error.details ? error.details : "An unexpected error occured while minting.",
+        message: msg ?? "An unexpected error occured while minting.",
         status: "error",
       });
     } finally {
@@ -94,10 +95,11 @@ const useWriteContract = () => {
         message: msg,
         status: "success",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const msg = logError(error);
       notify({
         title: "An error occured",
-        message: error.details ? error.details : "An unexpected error occured while breeding.",
+        message: msg ?? "An unexpected error occured while breeding.",
         status: "error",
       });
     } finally {
@@ -126,10 +128,11 @@ const useWriteContract = () => {
         status: "success",
       });
       getCatsWithoutOffer();
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const msg = logError(error);
       notify({
         title: "An error occured",
-        message: error.details ? error.details : "An unexpected error occured while setting the offer.",
+        message: msg ?? "An unexpected error occured while setting the offer.",
         status: "error",
       });
     } finally {
@@ -158,10 +161,11 @@ const useWriteContract = () => {
         status: "success",
       });
       getCatsOffersForMarket();
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const msg = logError(error);
       notify({
         title: "An error occured",
-        message: error.details ? error.details : "An unexpected error occured while removing the offer.",
+        message: msg ?? "An unexpected error occured while removing the offer.",
         status: "error",
       });
     } finally {
@@ -192,10 +196,11 @@ const useWriteContract = () => {
         status: "success",
       });
       getCatsOffersForMarket();
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const msg = logError(error);
       notify({
         title: "An error occured",
-        message: error.details ? error.details : "An unexpected error occured while buying the cat.",
+        message: msg ?? "An unexpected error occured while buying the cat.",
         status: "error",
       });
     } finally {

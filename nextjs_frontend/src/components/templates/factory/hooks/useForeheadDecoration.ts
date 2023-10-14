@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { basic, crescendo, none, thirdEyes, wild } from "@/data/catStettings";
 
 export const useForeheadDecoration = (num: number) => {
   const [forehead, setForehead] = useState<ForeheadShape>(basic);
 
-  const handleForeheadShape = () => {
-    switch (parseInt(num.toString())) {
+  const handleForeheadShape = useCallback(() => {
+    switch (num) {
       case 1:
         setForehead(none);
         break;
@@ -23,12 +23,11 @@ export const useForeheadDecoration = (num: number) => {
         setForehead(thirdEyes);
         break;
     }
-  };
+  }, [num]);
 
   useEffect(() => {
     handleForeheadShape();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [num]);
+  }, [num, handleForeheadShape]);
 
   return { forehead };
 };

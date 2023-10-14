@@ -1,4 +1,4 @@
-import { type FC, useCallback, useState } from "react";
+import { type FC, useCallback, useState, memo, useMemo } from "react";
 
 import { HStack, Button, Box } from "@chakra-ui/react";
 
@@ -20,28 +20,36 @@ const Attributes: FC<AttributesProps> = ({ dna, updateDna }) => {
     [updateDna]
   );
 
-  const colorSelectors = colorAttributes.map((attr) => (
-    <Selector
-      key={attr.colorName}
-      colorName={attr.colorName}
-      action={handleColorChange}
-      name={attr.name}
-      range={attr.range}
-      idCode={dna[attr.colorName as keyof DNA]}
-    />
-  ));
+  const colorSelectors = useMemo(
+    () =>
+      colorAttributes.map((attr) => (
+        <Selector
+          key={attr.colorName}
+          colorName={attr.colorName}
+          action={handleColorChange}
+          name={attr.name}
+          range={attr.range}
+          idCode={dna[attr.colorName as keyof DNA]}
+        />
+      )),
+    [dna, handleColorChange]
+  );
 
-  const cattributeSelectors = catAttributes.map((attr) => (
-    <Selector
-      key={attr.colorName}
-      colorName={attr.colorName}
-      action={handleColorChange}
-      name={attr.name}
-      range={attr.range}
-      idCode={dna[attr.colorName as keyof DNA]}
-      badge={attr.badge ? attr.badge(dna[attr.colorName as keyof DNA]) : undefined}
-    />
-  ));
+  const cattributeSelectors = useMemo(
+    () =>
+      catAttributes.map((attr) => (
+        <Selector
+          key={attr.colorName}
+          colorName={attr.colorName}
+          action={handleColorChange}
+          name={attr.name}
+          range={attr.range}
+          idCode={dna[attr.colorName as keyof DNA]}
+          badge={attr.badge ? attr.badge(dna[attr.colorName as keyof DNA]) : undefined}
+        />
+      )),
+    [dna, handleColorChange]
+  );
 
   return (
     <>
@@ -58,4 +66,4 @@ const Attributes: FC<AttributesProps> = ({ dna, updateDna }) => {
   );
 };
 
-export default Attributes;
+export default memo(Attributes);

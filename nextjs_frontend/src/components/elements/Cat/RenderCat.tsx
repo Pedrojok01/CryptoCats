@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import { memo, type FC } from "react";
 
 import { Box, Card } from "@chakra-ui/react";
 
@@ -195,4 +195,4 @@ const RenderCat: FC<RenderCatProps> = ({ dna, id, generation, isFactory }) => {
   );
 };
 
-export default RenderCat;
+export default memo(RenderCat);

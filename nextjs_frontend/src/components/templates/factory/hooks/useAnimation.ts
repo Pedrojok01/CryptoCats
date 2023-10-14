@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { noAnim, movingHead, movingTail, movingPaws, movingEyes, movingAll } from "@/data/catStettings";
 
 export const useAnimation = (num: number) => {
   const [catAnimation, setCatAnimation] = useState<CatAnimation>(noAnim);
 
-  const handleAnimation = () => {
-    switch (parseInt(num.toString())) {
+  const handleAnimation = useCallback(() => {
+    switch (num) {
       case 1:
         setCatAnimation(noAnim);
         break;
@@ -29,12 +29,11 @@ export const useAnimation = (num: number) => {
         setCatAnimation(noAnim);
         break;
     }
-  };
+  }, [num]);
 
   useEffect(() => {
     handleAnimation();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [num]);
+  }, [num, handleAnimation]);
 
   return { catAnimation };
 };

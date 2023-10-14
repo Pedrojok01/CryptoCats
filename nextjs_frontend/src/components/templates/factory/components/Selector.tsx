@@ -16,7 +16,7 @@ const Selector: FC<SelectorProps> = ({ colorName, action, name, range, idCode, b
         min={range.min}
         max={range.max}
         style={{ width: "100%" }}
-        onChange={(e) => action(colorName, e.target.value)}
+        onChange={(e) => action(colorName, Number(e.target.value))}
         value={idCode}
       />
     </Box>

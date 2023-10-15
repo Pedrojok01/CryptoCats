@@ -2,9 +2,12 @@ import type { FC } from "react";
 
 import { Alert, AlertIcon, Box, Center, Text, VStack } from "@chakra-ui/react";
 
+import { useWindowWidthAndHeight } from "@/hooks";
+
 import { ConnectButton } from "../ConnectButton";
 
 const NotConnected: FC = () => {
+  const { isMobile } = useWindowWidthAndHeight();
   return (
     <Box>
       <Center>
@@ -14,8 +17,9 @@ const NotConnected: FC = () => {
           alignItems="center"
           justifyContent="center"
           textAlign="center"
-          height="200px"
-          w={"40%"}
+          height={isMobile ? "260px" : "200px"}
+          w={isMobile ? "95%" : "40%"}
+          borderRadius="10px"
         >
           <VStack>
             <AlertIcon boxSize="40px" />

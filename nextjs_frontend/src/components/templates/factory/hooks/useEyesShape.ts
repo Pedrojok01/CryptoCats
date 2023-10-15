@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { basicEyes, chillEyes, tiredEyes, cyclopeEyes, aseanEyes, surprisedEyes } from "@/data/catStettings";
 
 export const useEyesShape = (num: number) => {
   const [eyes, setEyes] = useState<EyesShape>(basicEyes);
 
-  const handleEyesShape = () => {
-    switch (parseInt(num.toString())) {
+  const handleEyesShape = useCallback(() => {
+    switch (num) {
       case 1:
         setEyes(basicEyes);
         break;
@@ -29,12 +29,11 @@ export const useEyesShape = (num: number) => {
         setEyes(basicEyes);
         break;
     }
-  };
+  }, [num]);
 
   useEffect(() => {
     handleEyesShape();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [num]);
+  }, [num, handleEyesShape]);
 
   return { eyes };
 };

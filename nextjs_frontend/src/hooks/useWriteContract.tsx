@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
 import { getContract, parseEther } from "viem";
-import { useWalletClient } from "wagmi";
+import { useAccount, useWalletClient } from "wagmi";
 
 import useNotify from "./useNotify";
 import useReadContract from "./useReadContract";
@@ -11,8 +11,9 @@ import { contracts } from "../data/contracts";
 import { logError } from "../utils/errorUtil";
 
 const useWriteContract = () => {
+  const { address } = useAccount();
   const client = useWalletClient()?.data;
-  const { getCatsWithoutOffer, getCatsOffersForMarket } = useReadContract();
+  const { getUserCats, getCatsWithoutOffer, getCatsOffersForMarket } = useReadContract();
   const { awaitTransactionReceipt } = useTransactionReceipt();
   const notify = useNotify();
   const [loading, setLoading] = useState<boolean>(false);
@@ -73,6 +74,7 @@ const useWriteContract = () => {
         message: msg,
         status: "success",
       });
+      if (address) getUserCats(address);
     } catch (error: unknown) {
       const msg = logError(error);
       notify({
@@ -170,7 +172,7 @@ const useWriteContract = () => {
         message: msg,
         status: "success",
       });
-      getCatsOffersForMarket();
+      if (address) getCatsOffersForMarket(address);
     } catch (error: unknown) {
       const msg = logError(error);
       notify({
@@ -205,7 +207,7 @@ const useWriteContract = () => {
         message: msg,
         status: "success",
       });
-      getCatsOffersForMarket();
+      if (address) getCatsOffersForMarket(address);
     } catch (error: unknown) {
       const msg = logError(error);
       notify({

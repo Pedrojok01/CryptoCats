@@ -1,5 +1,7 @@
 import { type ReactNode, createContext, useContext, useEffect } from "react";
 
+import { useAccount } from "wagmi";
+
 import { useReadContract } from "@/hooks";
 
 type Props = {
@@ -11,13 +13,16 @@ const UserCatsContext = createContext<null>(null);
 
 // Provider component
 export const UserCatsProvider = ({ children }: Props) => {
+  const { address } = useAccount();
   const { getUserCats, getCatsWithoutOffer } = useReadContract();
 
   useEffect(() => {
-    getUserCats();
+    if (!address) return;
+
+    getUserCats(address);
     getCatsWithoutOffer();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [address]);
 
   return <UserCatsContext.Provider value={null}>{children}</UserCatsContext.Provider>;
 };

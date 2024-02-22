@@ -2,6 +2,7 @@ import { type FC, useEffect } from "react";
 
 import { Button, HStack, Text, VStack, Wrap } from "@chakra-ui/react";
 import { formatEther } from "viem";
+import { useAccount } from "wagmi";
 
 import { Loading, TabHeader } from "@/components/elements";
 import { useReadContract, useWriteContract } from "@/hooks";
@@ -11,13 +12,16 @@ import DisplayCat from "../myCats/components/DisplayCat";
 import NoCatFound from "../myCats/components/NoCatFound";
 
 const CatMarketplace: FC = () => {
-  const { getCatsOffersForMarket } = useReadContract();
+  const { address } = useAccount();
   const { catsOffersForMarket } = useStore();
+  const { getCatsOffersForMarket } = useReadContract();
   const { cancelOffer, buyOffer, loading } = useWriteContract();
 
   useEffect(() => {
-    getCatsOffersForMarket();
-  }, [getCatsOffersForMarket]);
+    if (address) {
+      getCatsOffersForMarket(address);
+    }
+  }, [address, getCatsOffersForMarket]);
 
   const cancel = async (id: number) => {
     await cancelOffer(id);

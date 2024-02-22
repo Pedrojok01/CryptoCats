@@ -16,6 +16,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useConnect, type Connector } from "wagmi";
 
+import { client } from "@/wagmi";
+
 import IMAGES from "./walletIcons";
 
 type ConnectModalProps = {
@@ -25,7 +27,12 @@ type ConnectModalProps = {
 };
 
 const ConnectModal: FC<ConnectModalProps> = ({ isOpen, onClose }) => {
-  const { connect, connectors, status } = useConnect();
+  const { connect, connectors, status } = useConnect({ config: client });
+
+  // Create a new array of unique connectors (Prevent rendering Metamask twice)
+  const uniqueConnectors = Array.from(new Set(connectors.map((connector) => connector.name))).map((name) => {
+    return connectors.find((connector) => connector.name === name)!;
+  });
 
   const getConnectorImage = (connector: Connector) => {
     const data = IMAGES.filter((item) => item.name.toLowerCase() === connector.name.toLowerCase());
@@ -44,7 +51,7 @@ const ConnectModal: FC<ConnectModalProps> = ({ isOpen, onClose }) => {
 
           <Flex direction="column">
             <VStack gap={3} mb={5}>
-              {connectors.map((connector) => (
+              {uniqueConnectors.map((connector) => (
                 <Button
                   w="93%"
                   justifyContent="space-between"
@@ -57,7 +64,12 @@ const ConnectModal: FC<ConnectModalProps> = ({ isOpen, onClose }) => {
                 >
                   <span className="connect-button-text">{connector.name}</span>
                   {status === "pending" && "(connecting)"}
-                  <Image src={getConnectorImage(connector)} width={32} height={32} alt={connector.name} />
+                  <Image
+                    src={connector.icon ?? getConnectorImage(connector)}
+                    width={32}
+                    height={32}
+                    alt={connector.name}
+                  />
                 </Button>
               ))}
             </VStack>

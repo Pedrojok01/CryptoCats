@@ -1,6 +1,7 @@
 import { type FC, useState } from "react";
 
 import { Button, Center, HStack, VStack, Wrap } from "@chakra-ui/react";
+import { useAccount } from "wagmi";
 
 import { Loading, TabHeader } from "@/components/elements";
 import { useReadContract, useWriteContract } from "@/hooks";
@@ -10,8 +11,9 @@ import CatSelection from "./components/CatSelection";
 import NoCatFound from "./components/NoCatFound";
 
 const BreedContent: FC = () => {
-  const { getUserCats } = useReadContract();
+  const { address } = useAccount();
   const { userCats } = useStore();
+  const { getUserCats } = useReadContract();
   const { breedCat, loading } = useWriteContract();
   const [mum, setMum] = useState<SelectedCat>();
   const [dad, setDad] = useState<SelectedCat>();
@@ -24,11 +26,11 @@ const BreedContent: FC = () => {
   };
 
   const handleBreed = async () => {
-    if (mum && dad) {
+    if (mum && dad && address) {
       await breedCat(mum.id, dad.id);
       setMum(undefined);
       setDad(undefined);
-      getUserCats();
+      getUserCats(address);
     }
   };
 

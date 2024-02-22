@@ -1,6 +1,6 @@
 import { createConfig, http } from "wagmi";
 import { goerli, mainnet } from "wagmi/chains";
-import { walletConnect, injected, coinbaseWallet } from "wagmi/connectors";
+import { walletConnect, coinbaseWallet, injected } from "wagmi/connectors";
 
 import { isProdEnv } from "./data/constant";
 

@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Connector, useConnect } from "wagmi";
+import { useConnect, type Connector } from "wagmi";
 
 import IMAGES from "./walletIcons";
 
@@ -25,7 +25,7 @@ type ConnectModalProps = {
 };
 
 const ConnectModal: FC<ConnectModalProps> = ({ isOpen, onClose }) => {
-  const { connect, connectors, isLoading, pendingConnector } = useConnect();
+  const { connect, connectors, status } = useConnect();
 
   const getConnectorImage = (connector: Connector) => {
     const data = IMAGES.filter((item) => item.name.toLowerCase() === connector.name.toLowerCase());
@@ -48,8 +48,7 @@ const ConnectModal: FC<ConnectModalProps> = ({ isOpen, onClose }) => {
                 <Button
                   w="93%"
                   justifyContent="space-between"
-                  disabled={!connector.ready}
-                  key={connector.id}
+                  key={connector.uid}
                   onClick={() => {
                     onClose();
                     connect({ connector });
@@ -57,8 +56,7 @@ const ConnectModal: FC<ConnectModalProps> = ({ isOpen, onClose }) => {
                   className="box-shadow"
                 >
                   <span className="connect-button-text">{connector.name}</span>
-                  {!connector.ready && " (unsupported)"}
-                  {isLoading && connector.id === pendingConnector?.id && " (connecting)"}
+                  {status === "pending" && "(connecting)"}
                   <Image src={getConnectorImage(connector)} width={32} height={32} alt={connector.name} />
                 </Button>
               ))}

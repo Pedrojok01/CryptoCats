@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
-import { parseEther } from "viem";
+import { getContract, parseEther } from "viem";
+import { useWalletClient } from "wagmi";
 
-import { useContractInstances } from "./useContractInstances";
 import useNotify from "./useNotify";
 import useReadContract from "./useReadContract";
 import useTransactionReceipt from "./useTransactionReceipt";
@@ -11,16 +11,26 @@ import { contracts } from "../data/contracts";
 import { logError } from "../utils/errorUtil";
 
 const useWriteContract = () => {
-  const { catInstance, marketplaceInstance } = useContractInstances({ clientType: "wallet" });
+  const client = useWalletClient()?.data;
   const { getCatsWithoutOffer, getCatsOffersForMarket } = useReadContract();
   const { awaitTransactionReceipt } = useTransactionReceipt();
   const notify = useNotify();
   const [loading, setLoading] = useState<boolean>(false);
 
+  const catInstance = useMemo(
+    () => (client ? getContract({ address: contracts.cat.address, abi: contracts.cat.abi, client }) : null),
+    [client]
+  );
+  const marketplaceInstance = useMemo(
+    () =>
+      client ? getContract({ address: contracts.marketplace.address, abi: contracts.marketplace.abi, client }) : null,
+    [client]
+  );
+
   /* Set Token Allowance:
    *************************/
   const approveNft = async (): Promise<void> => {
-    if (!catInstance.write.setApprovalForAll) return;
+    if (!catInstance?.write.setApprovalForAll) return;
 
     setLoading(true);
     try {
@@ -46,7 +56,7 @@ const useWriteContract = () => {
   /* Mint a gen0 cat from the factory :
    *************************************/
   const mintCat = async (dna: string): Promise<void> => {
-    if (!catInstance.write.createCatGen0) return;
+    if (!catInstance?.write.createCatGen0) return;
 
     setLoading(true);
     try {
@@ -78,7 +88,7 @@ const useWriteContract = () => {
   /* Breed a new cat from 2 parents :
    ***********************************/
   const breedCat = async (id1: number, id2: number): Promise<void> => {
-    if (!catInstance.write.breed) return;
+    if (!catInstance?.write.breed) return;
 
     setLoading(true);
     try {
@@ -110,7 +120,7 @@ const useWriteContract = () => {
   /* Add a cat offer to the marketplace :
    *****************************************/
   const sellCat = async (price: bigint, id: number): Promise<void> => {
-    if (!marketplaceInstance.write.setOffer) return;
+    if (!marketplaceInstance?.write.setOffer) return;
 
     setLoading(true);
     try {
@@ -143,7 +153,7 @@ const useWriteContract = () => {
   /* Remove a cat offer from the marketplace :
    *********************************************/
   const cancelOffer = async (id: number): Promise<void> => {
-    if (!marketplaceInstance.write.removeOffer) return;
+    if (!marketplaceInstance?.write.removeOffer) return;
 
     setLoading(true);
     try {
@@ -176,7 +186,7 @@ const useWriteContract = () => {
   /* Remove a cat offer from the marketplace :
    *********************************************/
   const buyOffer = async (id: number, price: number): Promise<void> => {
-    if (!marketplaceInstance.write.buyCat) return;
+    if (!marketplaceInstance?.write.buyCat) return;
 
     setLoading(true);
     try {

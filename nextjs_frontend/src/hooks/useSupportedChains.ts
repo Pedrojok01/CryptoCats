@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 
-import { useNetwork } from "wagmi";
+import { useAccount } from "wagmi";
 
 import { isProdEnv, SUPPORTED_CHAIN } from "../data/constant";
 
 export function useSuportedChains() {
-  const { chain } = useNetwork();
+  const { chain } = useAccount();
 
   return useMemo(() => {
     if (chain) {

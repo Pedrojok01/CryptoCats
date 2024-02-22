@@ -1,5 +1,3 @@
-export * from "./useContract";
-export * from "./useContractInstances";
 export * from "./useSupportedChains";
 export * from "./useWindowWidthAndHeight";
 export * from "./useCatFactory";

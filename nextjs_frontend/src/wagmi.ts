@@ -1,43 +1,35 @@
-import { configureChains, createConfig } from "wagmi";
+import { createConfig, http } from "wagmi";
 import { goerli, mainnet } from "wagmi/chains";
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
-import { alchemyProvider } from "wagmi/providers/alchemy";
-import { publicProvider } from "wagmi/providers/public";
+import { walletConnect, injected, coinbaseWallet } from "wagmi/connectors";
 
 import { isProdEnv } from "./data/constant";
 
-const alchemyApiKey = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY;
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
-
-if (!alchemyApiKey) {
-  throw Error("Alchemy API key missing.");
-}
 
 if (!projectId) {
   throw Error("WalletConnect project ID missing.");
 }
 
-const { chains, publicClient } = configureChains(
-  [goerli, mainnet, ...(isProdEnv ? [goerli] : [mainnet])],
-  [alchemyProvider({ apiKey: alchemyApiKey }), publicProvider()]
-);
-
 export const client = createConfig({
-  autoConnect: true,
+  chains: isProdEnv ? [mainnet] : [goerli],
   connectors: [
-    new MetaMaskConnector({ chains }),
-    new CoinbaseWalletConnector({
-      chains,
-      options: {
-        appName: "CryptoCats",
+    injected({ target: "metaMask" }),
+    coinbaseWallet({
+      appName: "CryptoCats",
+    }),
+    walletConnect({
+      projectId: projectId,
+      metadata: {
+        name: "CryptoCats",
+        description: "Crypto Cats collectible - Create, Breed & Sell your CryptoCats!",
+        url: "https://crypto-cats.netlify.app/",
+        icons: ["https://crypto-cats.netlify.app/favicon.ico"],
       },
     }),
-    new WalletConnectConnector({
-      chains,
-      options: { projectId: projectId },
-    }),
   ],
-  publicClient,
+  transports: {
+    [mainnet.id]: http(),
+    [goerli.id]: http(),
+  },
+  ssr: true,
 });

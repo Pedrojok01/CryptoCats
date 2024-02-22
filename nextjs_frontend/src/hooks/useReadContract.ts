@@ -1,25 +1,34 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 
+import { getContract } from "viem";
 import { useAccount, usePublicClient } from "wagmi";
 
 import { contracts } from "@/data/contracts";
 import { mapArrayToCatObject, mapArrayToOfferObject } from "@/utils/formatArrayToObject";
 
-import { useContractInstances } from "./useContractInstances";
 import { useStore } from "../store/store";
 import { logError } from "../utils/errorUtil";
 
 const useReadContract = () => {
   const { address } = useAccount();
-  const publicClient = usePublicClient();
-  const { catInstance, marketplaceInstance } = useContractInstances({ clientType: "public" });
+  const client = usePublicClient();
   const { userCats, setGen0Count, setMaxGen0Supply, setUserCats, setCatsWithoutOffer, setCatsOffersForMarket } =
     useStore();
+
+  const catInstance = useMemo(
+    () => (client ? getContract({ address: contracts.cat.address, abi: contracts.cat.abi, client }) : null),
+    [client]
+  );
+  const marketplaceInstance = useMemo(
+    () =>
+      client ? getContract({ address: contracts.marketplace.address, abi: contracts.marketplace.abi, client }) : null,
+    [client]
+  );
 
   /* Get the name of a specific NFT :
    ************************************/
   const getTokenName = useCallback(async (): Promise<string | undefined> => {
-    if (!catInstance.read.symbol) return;
+    if (!catInstance?.read.symbol) return;
 
     try {
       const symbol = (await catInstance.read.symbol()) as string;
@@ -33,7 +42,7 @@ const useReadContract = () => {
   /* Get the number of gen0 cats already minted:
    ***********************************************/
   const getGen0Count = useCallback(async () => {
-    if (!catInstance.read.gen0Count) return;
+    if (!catInstance?.read.gen0Count) return;
 
     try {
       const count = (await catInstance.read.gen0Count()) as number;
@@ -46,7 +55,7 @@ const useReadContract = () => {
   /* Get the max supply number of gen0 cats:
    *******************************************/
   const getMaxGen0Supply = useCallback(async () => {
-    if (!catInstance.read.CREATION_LIMIT_GEN0) return;
+    if (!catInstance?.read.CREATION_LIMIT_GEN0) return;
 
     try {
       const maxCount = (await catInstance.read.CREATION_LIMIT_GEN0()) as number;
@@ -61,7 +70,7 @@ const useReadContract = () => {
    *********************************************/
   const checkNftAllowance = useCallback(
     async (user: `0x${string}`) => {
-      if (!catInstance.read.isApprovedForAll) return;
+      if (!catInstance?.read.isApprovedForAll) return;
 
       try {
         const allowance = await catInstance.read.isApprovedForAll([user, contracts.marketplace.address]);
@@ -77,13 +86,13 @@ const useReadContract = () => {
   /* Get all cats per user :
    ***************************/
   const getUserCats = useCallback(async () => {
-    if (!catInstance.read.getCatPerOwner) return;
+    if (!catInstance?.read?.getCatPerOwner) return;
 
     try {
       const amount = (await catInstance.read.getCatPerOwner([address])) as string[];
       const catPromises = amount.map(async (id) => {
         if (!catInstance.read.getCat) return;
-        const array = (await catInstance.read.getCat([Number(id)])) as bigint[];
+        const array = (await catInstance.read.getCat?.([Number(id)])) as bigint[];
         return mapArrayToCatObject(array);
       });
 
@@ -97,7 +106,7 @@ const useReadContract = () => {
   /* Get all cats without offer on the marketplace per user :
    ************************************************************/
   const getCatsWithoutOffer = useCallback(async () => {
-    if (!userCats) return;
+    if (!userCats || !marketplaceInstance) return;
 
     try {
       const offerChecks = userCats.map((cat) => {
@@ -117,11 +126,11 @@ const useReadContract = () => {
    ************************************************************/
 
   const getCatsOffersForMarket = useCallback(async () => {
-    if (!marketplaceInstance.read.getAllTokenOnSale) return;
+    if (!marketplaceInstance?.read.getAllTokenOnSale || !client) return;
 
     try {
       const offers = (await marketplaceInstance.read.getAllTokenOnSale()) as bigint[];
-      const results = await publicClient.multicall({
+      const results = await client.multicall({
         contracts: offers.flatMap((id) => [
           { ...contracts.cat, functionName: "getCat", args: [Number(id)] },
           { ...contracts.marketplace, functionName: "getOffer", args: [Number(id)] },
@@ -140,7 +149,7 @@ const useReadContract = () => {
     } catch (error: unknown) {
       logError(error);
     }
-  }, [address, marketplaceInstance.read, publicClient, setCatsOffersForMarket]);
+  }, [address, marketplaceInstance?.read, client, setCatsOffersForMarket]);
 
   return {
     getTokenName,

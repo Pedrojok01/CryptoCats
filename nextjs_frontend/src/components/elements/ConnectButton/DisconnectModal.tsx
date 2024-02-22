@@ -2,7 +2,7 @@ import type { FC } from "react";
 
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Button, Card, Modal, ModalBody, ModalCloseButton, ModalContent, ModalOverlay } from "@chakra-ui/react";
-import { useAccount, useDisconnect, useNetwork } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 
 import { getExplorer } from "@/utils/getExplorerByChain";
 
@@ -14,8 +14,7 @@ type DisconnectModalProps = {
 };
 
 const DisconnectModal: FC<DisconnectModalProps> = ({ isOpen, onClose }) => {
-  const { chain } = useNetwork();
-  const { address } = useAccount();
+  const { address, chain } = useAccount();
   const { disconnect } = useDisconnect();
 
   const disconnectWallet = async () => {

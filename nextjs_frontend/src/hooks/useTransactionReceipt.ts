@@ -1,5 +1,4 @@
 // useTransactionReceipt.ts
-import { type PublicClient } from "viem";
 import { usePublicClient } from "wagmi";
 
 interface AwaitTransactionReceiptProps {
@@ -8,7 +7,7 @@ interface AwaitTransactionReceiptProps {
 }
 
 const useTransactionReceipt = () => {
-  const publicClient: PublicClient = usePublicClient();
+  const publicClient = usePublicClient();
 
   const awaitTransactionReceipt = async ({ confirmations = 2, hash }: AwaitTransactionReceiptProps) => {
     if (!publicClient) {

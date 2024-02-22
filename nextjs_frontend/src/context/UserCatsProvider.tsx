@@ -16,7 +16,8 @@ export const UserCatsProvider = ({ children }: Props) => {
   useEffect(() => {
     getUserCats();
     getCatsWithoutOffer();
-  }, [getUserCats, getCatsWithoutOffer]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <UserCatsContext.Provider value={null}>{children}</UserCatsContext.Provider>;
 };

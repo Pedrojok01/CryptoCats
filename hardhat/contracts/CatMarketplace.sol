@@ -4,10 +4,10 @@ pragma solidity 0.8.20;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {ICatMarketplace} from "./interface/ICatMarketplace.sol";
-import {Catcontract} from "./Catcontract.sol";
+import {CatContract} from "./CatContract.sol";
 
 contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
-    Catcontract private _catContract;
+    CatContract private _catContract;
 
     /*Storage:
      **********/
@@ -22,20 +22,37 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     uint256[] private offersIds;
     mapping(uint256 => Offer) public tokenIdToOffer; // Map from cat Id to offer struct
 
+    /* Errors:
+     **********/
+
+    error CatMarketplace__CatNotOwned(uint256 catId);
+    error CatMarketplace__CatAlreadyOwned(uint256 catId);
+    error CatMarketplace__AlreadyOnSale(uint256 catId);
+    error CatMarketplace__NotOnSale(uint256 catId);
+    error CatMarketplace__NoOfferForThisCat(uint256 catId);
+    error CatMarketplace__InvalidPrice(uint256 sent, uint256 wanted);
+
     /*Constructor:
      **************/
 
     constructor(address _catContractAddress) Ownable(_msgSender()) {
-        _catContract = Catcontract(_catContractAddress);
+        _catContract = CatContract(_catContractAddress);
     }
 
     /*Functions:
      ************/
 
     /// @notice Creates a new offer for _tokenId for the price _price.
-    function setOffer(uint256 _price, uint256 _tokenId) external override nonReentrant {
-        require(_msgSender() == _catContract.ownerOf(_tokenId), "Market: not owned");
-        require(!this.isOffer(_tokenId), "Market: Already on sale");
+    function setOffer(
+        uint256 _price,
+        uint256 _tokenId
+    ) external override nonReentrant {
+        if (_msgSender() != _catContract.ownerOf(_tokenId)) {
+            revert CatMarketplace__CatNotOwned({catId: _tokenId});
+        }
+        if (this.isOffer(_tokenId)) {
+            revert CatMarketplace__AlreadyOnSale({catId: _tokenId});
+        }
 
         _catContract.approve(address(this), _tokenId);
 
@@ -54,8 +71,12 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
 
     /// @notice Removes an existing offer.
     function removeOffer(uint256 _tokenId) external override {
-        require(this.isOffer(_tokenId), "Market: No offer for this cat!");
-        require(_msgSender() == tokenIdToOffer[_tokenId].seller, "Market: cat not owned");
+        if (!this.isOffer(_tokenId)) {
+            revert CatMarketplace__NoOfferForThisCat({catId: _tokenId});
+        }
+        if (_msgSender() != tokenIdToOffer[_tokenId].seller) {
+            revert CatMarketplace__CatNotOwned({catId: _tokenId});
+        }
 
         _removeOffer(_tokenId);
 
@@ -65,9 +86,19 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     /// @notice Executes the purchase of _tokenId.
     function buyCat(uint256 _tokenId) external payable override nonReentrant {
         Offer memory offer = tokenIdToOffer[_tokenId];
-        require(this.isOffer(_tokenId), "Market: Not on sale");
-        require(_msgSender() != offer.seller, "Market: Already owned");
-        require(msg.value == offer.price, "Market: Invalid price");
+
+        if (!this.isOffer(_tokenId)) {
+            revert CatMarketplace__NotOnSale({catId: _tokenId});
+        }
+        if (_msgSender() == offer.seller) {
+            revert CatMarketplace__CatAlreadyOwned({catId: _tokenId});
+        }
+        if (msg.value != offer.price) {
+            revert CatMarketplace__InvalidPrice({
+                sent: msg.value,
+                wanted: offer.price
+            });
+        }
 
         _removeOffer(_tokenId);
 
@@ -83,14 +114,24 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     /// @notice Get the details about a offer for _tokenId.
     function getOffer(
         uint256 _tokenId
-    ) external view override returns (address seller, uint256 price, uint256 index, uint256 tokenId) {
+    )
+        external
+        view
+        override
+        returns (address seller, uint256 price, uint256 index, uint256 tokenId)
+    {
         Offer memory offer = tokenIdToOffer[_tokenId];
 
         return (offer.seller, offer.price, offer.index, offer.tokenId);
     }
 
     /// @notice Get all tokenId's that are currently for sale. Returns an empty array if none exist.
-    function getAllTokenOnSale() external view override returns (uint256[] memory listOfOffers) {
+    function getAllTokenOnSale()
+        external
+        view
+        override
+        returns (uint256[] memory listOfOffers)
+    {
         listOfOffers = offersIds;
     }
 
@@ -102,9 +143,11 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     /* Restricted:
      ***************/
 
-    /// @notice Set the current Catcontract address and initialize the instance of Catcontract:
-    function setCatContract(address _catContractAddress) external override onlyOwner {
-        _catContract = Catcontract(_catContractAddress);
+    /// @notice Set the current CatContract address and initialize the instance of CatContract:
+    function setCatContract(
+        address _catContractAddress
+    ) external override onlyOwner {
+        _catContract = CatContract(_catContractAddress);
     }
 
     /* Private:

@@ -5,42 +5,50 @@ const MAX_CAT_SUPPLY = 100_000;
 const MAX_GEN_ZERO = 100;
 
 async function main() {
-  const Catcontract = await ethers.getContractFactory("Catcontract");
-  const catcontract = await Catcontract.deploy(MAX_CAT_SUPPLY, MAX_GEN_ZERO);
-  await catcontract.deployed();
+  const CatContract = await ethers.getContractFactory("CatContract");
+  const catContract = await CatContract.deploy(MAX_CAT_SUPPLY, MAX_GEN_ZERO);
+  await catContract.waitForDeployment();
+  const catAddress = await catContract.getAddress();
 
   console.log("\n");
-  console.log("Catcontract deployed to: ", catcontract.address);
+  console.log("CatContract deployed to: ", catAddress);
   console.log("\n");
 
   /** WAITING:
    ************/
-  await catcontract.deployTransaction.wait(2);
+  await catContract.deploymentTransaction()?.wait(2);
 
   const Marketplace = await ethers.getContractFactory("CatMarketplace");
-  const marketplace = await Marketplace.deploy(catcontract.address);
-  await marketplace.deployed();
+  const marketplace = await Marketplace.deploy(catAddress);
+  await marketplace.waitForDeployment();
+  const marketAddress = await marketplace.getAddress();
 
   console.log("\n");
-  console.log("Marketplace deployed to: ", marketplace.address);
+  console.log("Marketplace deployed to: ", marketAddress);
   console.log("\n");
 
-  // Get SkinsNFT ABI
-  const abiFile1 = JSON.parse(
-    fs.readFileSync("./hardhat/artifacts/contracts/Catcontract.sol/Catcontract.json", "utf8")
+  // Get CatContract ABI
+  const catABI = JSON.parse(
+    fs.readFileSync(
+      "./hardhat/artifacts/contracts/CatContract.sol/CatContract.json",
+      "utf8"
+    )
   );
-  const abi1 = JSON.stringify(abiFile1.abi);
+  const abi1 = JSON.stringify(catABI.abi);
 
-  console.log("Catcontract ABI:");
+  console.log("CatContract ABI:");
   console.log("\n");
   console.log(abi1);
   console.log("\n");
 
-  // Get GamifyStaking ABI
-  const abiFile2 = JSON.parse(
-    fs.readFileSync("./hardhat/artifacts/contracts/CatMarketplace.sol/CatMarketplace.json", "utf8")
+  // Get CatMarketplace ABI
+  const marketABI = JSON.parse(
+    fs.readFileSync(
+      "./hardhat/artifacts/contracts/CatMarketplace.sol/CatMarketplace.json",
+      "utf8"
+    )
   );
-  const abi2 = JSON.stringify(abiFile2.abi);
+  const abi2 = JSON.stringify(marketABI.abi);
 
   console.log("Marketplace ABI:");
   console.log("\n");
@@ -49,18 +57,18 @@ async function main() {
 
   /** WAITING:
    ************/
-  await marketplace.deployTransaction.wait(7);
+  await marketplace.deploymentTransaction()?.wait(5);
 
   /** VERIFICATION:
    *****************/
   await hre.run("verify:verify", {
-    address: catcontract.address,
+    address: catAddress,
     constructorArguments: [MAX_CAT_SUPPLY, MAX_GEN_ZERO],
   });
 
   await hre.run("verify:verify", {
-    address: marketplace.address,
-    constructorArguments: [catcontract.address],
+    address: marketAddress,
+    constructorArguments: [catAddress],
   });
 }
 

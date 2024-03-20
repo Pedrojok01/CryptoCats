@@ -11,7 +11,7 @@ interface ICatMarketplace {
     event MarketTransaction(string TxType, address owner, uint256 tokenId);
 
     /**
-     * Set the current CatContract address and initialize the instance of Catcontract.
+     * Set the current CatContract address and initialize the instance of CatContract.
      * Requirement: Only the contract owner can call.
      */
     function setCatContract(address _catContractAddress) external;
@@ -21,12 +21,18 @@ interface ICatMarketplace {
      */
     function getOffer(
         uint256 _tokenId
-    ) external view returns (address seller, uint256 price, uint256 index, uint256 tokenId);
+    )
+        external
+        view
+        returns (address seller, uint256 price, uint256 index, uint256 tokenId);
 
     /**
      * Get all tokenId's that are currently for sale. Returns an empty arror if none exist.
      */
-    function getAllTokenOnSale() external view returns (uint256[] memory listOfOffers);
+    function getAllTokenOnSale()
+        external
+        view
+        returns (uint256[] memory listOfOffers);
 
     /**
      * Creates a new offer for _tokenId for the price _price.
@@ -46,7 +52,7 @@ interface ICatMarketplace {
 
     /**
      * Executes the purchase of _tokenId.
-     * Sends the funds to the seller and transfers the token using transferFrom in Catcontract.
+     * Sends the funds to the seller and transfers the token using transferFrom in CatContract.
      * Emits the MarketTransaction event with txType "Buy".
      * Requirement: The msg.value needs to equal the price of _tokenId
      * Requirement: There must be an active offer for _tokenId

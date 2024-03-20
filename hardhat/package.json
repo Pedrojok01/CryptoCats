@@ -1,6 +1,6 @@
 {
   "name": "hardhat",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Crypto-Cats - Smart-Contracts",
   "author": "Pedrojok01 <pedrojok@pm.me>",
   "main": "index.js",
@@ -8,7 +8,7 @@
   "scripts": {
     "prettier": "prettier --write \"**/*.sol\" --plugin=\"prettier-plugin-solidity\"",
     "compile": "hardhat compile --show-stack-traces",
-    "deploy": "hardhat run --network goerli hardhat/scripts/deploy.cts",
+    "deploy": "hardhat run --network sepolia hardhat/scripts/deploy.cts",
     "size": "hardhat size-contracts",
     "doc": "hardhat docgen",
     "cover": "hardhat coverage",
@@ -23,6 +23,7 @@
     "@nomicfoundation/hardhat-toolbox": "3.0.0",
     "@nomicfoundation/hardhat-verify": "^1.0.0",
     "@nomiclabs/hardhat-ethers": "2.2.3",
+    "@openzeppelin/contracts": "^5.0.2",
     "@typechain/ethers-v6": "^0.5.0",
     "@typechain/hardhat": "^8.0.0",
     "@types/chai": "4.3.7",
@@ -41,6 +42,7 @@
     "solhint-plugin-prettier": "0.0.5",
     "solidity-coverage": "^0.8.1",
     "ts-node": "10.9.1",
-    "typechain": "8.3.1"
+    "typechain": "8.3.1",
+    "typescript": "^5.4.2"
   }
 }

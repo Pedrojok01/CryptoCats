@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
+pragma solidity 0.8.20;
 
 /*
  * Market place to trade cats (should **in theory** be used for any ERC721 token)

@@ -7,7 +7,7 @@ const privateKey: string | undefined = process.env.PRIVATE_KEY;
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.19",
+    version: "0.8.20",
     settings: {
       optimizer: {
         enabled: true,
@@ -21,8 +21,8 @@ const config: HardhatUserConfig = {
       accounts: privateKey !== undefined ? [privateKey] : [],
       chainId: 1,
     },
-    goerli: {
-      url: `${process.env.API_NODE_GOERLI}`,
+    sepolia: {
+      url: `${process.env.API_NODE_SEPOLIA}`,
       accounts: privateKey !== undefined ? [privateKey] : [],
       chainId: 5,
     },

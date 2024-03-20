@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.19;
+pragma solidity 0.8.20;
 
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {ICatMarketplace} from "./interface/ICatMarketplace.sol";
 import {Catcontract} from "./Catcontract.sol";
-import {Ownable} from "./security/Ownable.sol";
-import {ReentrancyGuard} from "./security/ReentrancyGuard.sol";
 
 contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     Catcontract private _catContract;
@@ -25,7 +25,7 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     /*Constructor:
      **************/
 
-    constructor(address _catContractAddress) {
+    constructor(address _catContractAddress) Ownable(_msgSender()) {
         _catContract = Catcontract(_catContractAddress);
     }
 

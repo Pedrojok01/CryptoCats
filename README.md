@@ -44,9 +44,9 @@
 
 ## UPDATES:
 
-#### Dec 2022
+#### Mars 2024
 
-CryptoCats Revisited. No more vanilla JS (which, despite being a huge mess, was quite an achievment in itself none the less), but a fast & modern app built with Hardhat (smart-contracts) / Next.js (front-end) / ChakhraUI (components) / Wagmi (Web3) instead.
+- Migrate to Sepolia testnet after Goerli deprecation (Dencun fork);
 
 #### Oct 2023
 
@@ -54,13 +54,17 @@ CryptoCats Revisited. No more vanilla JS (which, despite being a huge mess, was 
 - Removed ethers.js in favor of Viem to follow Wagmi's updates;
 - Refactored many components with new customs hooks;
 - Moved the frontend app into its own folder for better readability and easier deployment;
-- Removed all deps related to hardhat / contracts development and moved them to the hardhat folder;
-- Upgrade all deps to latest versions;
+- Removed all dependencies related to hardhat/contracts development and moved them to the hardhat folder;
+- Upgrade all dependencies to the latest versions;
 - Add favicons;
+
+#### Dec 2022
+
+CryptoCats Revisited. No more vanilla JS (which, despite being a huge mess, was quite an achievement in itself nonetheless), but a fast & modern app built with Hardhat (smart contracts) / Next.js (front-end) / ChakhraUI (components) / Wagmi (Web3) instead.
 
 ## Description
 
-Decentralized application (Dapp) deployed on Goerli, but compatible with all EVM networks. Initially built as a part of the programming course: Ethereum Dapp Programming on [academy.moralis.io](https://academy.moralis.io/courses/ethereum-dapp-programming).
+Decentralized application (Dapp) deployed on Sepolia, but compatible with all EVM networks. Initially built as a part of the programming course: Ethereum Dapp Programming on [academy.moralis.io](https://academy.moralis.io/courses/ethereum-dapp-programming).
 
 Try it yourself: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)
 
@@ -68,7 +72,7 @@ Try it yourself: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)
 
 - [x] Factory - Design and Create your own Cat for FREE in the Cat Factory! When you're done, just click on the `Create` button to mint your cat! (Limited to 100 Cats)
 - [x] MyCats/Show - Display all the cats present in your collection;
-- [x] MyCats/Breed - Select two parents, breed a seebling out and find out which characteristics you inherited from each!
+- [x] MyCats/Breed - Select two parents, breed a seebling out, and find out which characteristics you inherited from each!
 - [x] MyCats/Sell - Create a sell offer to list your cat on the marketplace!
 - [x] Marketplace - Buy some cats on the marketplace or simply remove your offers.
 
@@ -114,23 +118,23 @@ cd hardhat
 yarn install
 ```
 
-#### To deploy your own smart-contracts:
+#### To deploy your own smart contracts:
 
 - Remove `.example` from the `.env.example` file and edit the file with your API KEYs for the networks you wish to use and your PRIVATE KEY (<b>Do not paste your private key anywhere else!</b>);
 - Edit the `hardhat.config.ts` if needed, and the `"deploy"` script in the `package.json` file with the network needed;
-- To deploy your smart-contracts simply run the command below, and wait for the contract addresses and ABI to appear in your console:
+- To deploy your smart contracts simply run the command below, and wait for the contract addresses and ABI to appear in your console:
 
   ```sh
   yarn deploy
   ```
 
 - Replace the contract addresses (both `CAT_CONTRACT` & `MARKETPLACE_CONTRACT_ADD`) and the corresponding chains infos in the `src/data/constant.ts` file;
-- And don't forget to have some funds ready if you want to buy some CryptoCats on the marketplace! [Faucet for the Goerli network](https://goerlifaucet.com/);
+- And don't forget to have some funds ready if you want to buy some CryptoCats on the marketplace! [Faucet for the Sepolia network](https://sepolia-faucet.pk910.de/);
 
 #### On each deploy, make sure to:
 
 - Change the `CAT_CONTRACT_ADD` and the `MARKETPLACE_CONTRACT_ADD` in `src/data/constant.ts` to your deployed contracts address;
-- Edit the ABI files in `src/data/abis/` if you made any changes to the smart-contracts;
+- Edit the ABI files in `src/data/abis/` if you made any changes to the smart contracts;
 - Enable/disable/update the suitable networks in `hardhat.config.ts`, `package.json` & `src/data/constant.ts`;
 
 ### Front-end deployment
@@ -155,7 +159,7 @@ cd nextjs_frontend
 yarn install
 ```
 
-#### To deploy your front-end locally:
+#### To deploy your frontend locally:
 
 Remove `.example` from the `.env.example` file and edit the file with your own API KEYs;
 

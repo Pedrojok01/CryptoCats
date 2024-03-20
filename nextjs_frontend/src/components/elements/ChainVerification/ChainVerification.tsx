@@ -27,7 +27,7 @@ const ChainVerification: FC = () => {
         <Box w={"100%"} p={"8px 0px"} bg="rgb(255, 127, 105) none repeat scroll 0% 0%">
           <Flex direction="row" alignItems={"center"} justify="space-evenly">
             <Text paddingInline="15px" fontWeight="550" fontSize="16px">
-              Wrong network. Please switch to {isProdEnv ? "Ethereum Mainnet" : "Goerli Testnet"}.
+              Wrong network. Please switch to {isProdEnv ? "Ethereum Mainnet" : "Sepolia Testnet"}.
             </Text>
             <Button onClick={() => handleSwitch()}>Switch Network</Button>
           </Flex>

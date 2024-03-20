@@ -1,5 +1,5 @@
 import { createConfig, http } from "wagmi";
-import { goerli, mainnet } from "wagmi/chains";
+import { sepolia, mainnet } from "wagmi/chains";
 import { walletConnect, coinbaseWallet, injected } from "wagmi/connectors";
 
 import { isProdEnv } from "./data/constant";
@@ -11,7 +11,7 @@ if (!projectId) {
 }
 
 export const client = createConfig({
-  chains: isProdEnv ? [mainnet] : [goerli],
+  chains: isProdEnv ? [mainnet] : [sepolia],
   connectors: [
     injected({ target: "metaMask" }),
     coinbaseWallet({
@@ -29,7 +29,7 @@ export const client = createConfig({
   ],
   transports: {
     [mainnet.id]: http(),
-    [goerli.id]: http(),
+    [sepolia.id]: http(),
   },
   ssr: true,
 });

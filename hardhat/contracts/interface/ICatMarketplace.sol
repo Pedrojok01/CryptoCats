@@ -9,6 +9,7 @@ pragma solidity 0.8.20;
  */
 interface ICatMarketplace {
     event MarketTransaction(string TxType, address owner, uint256 tokenId);
+    event CatAddressUpdated(address oldCatAddress, address newCatAddress);
 
     /**
      * Set the current CatContract address and initialize the instance of CatContract.

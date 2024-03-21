@@ -147,7 +147,9 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     function setCatContract(
         address _catContractAddress
     ) external override onlyOwner {
+        address oldAddress = address(_catContract);
         _catContract = CatContract(_catContractAddress);
+        emit CatAddressUpdated(oldAddress, _catContractAddress);
     }
 
     /* Private:

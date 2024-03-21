@@ -3,9 +3,8 @@ pragma solidity 0.8.20;
 
 import {ERC721Enumerable} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract CatContract is ERC721Enumerable, Ownable {
+contract CatContract is ERC721Enumerable {
     /* Storage:
      ***********/
 
@@ -42,7 +41,6 @@ contract CatContract is ERC721Enumerable, Ownable {
     error CatContract__NoMoreGen0Available();
     error CatContract__NonExistentCat();
     error CatContract__SameCatSelected();
-    error CatContract__BalanceIsZero();
     error CatContract__NotOwned();
 
     /* Constructor:
@@ -51,7 +49,7 @@ contract CatContract is ERC721Enumerable, Ownable {
     constructor(
         uint256 _MAX_CAT_SUPPLY,
         uint8 _CREATION_LIMIT_GEN0
-    ) ERC721("CryptoCats", "CTC") Ownable(_msgSender()) {
+    ) ERC721("CryptoCats", "CTC") {
         MAX_CAT_SUPPLY = _MAX_CAT_SUPPLY;
         CREATION_LIMIT_GEN0 = _CREATION_LIMIT_GEN0;
     }
@@ -128,25 +126,6 @@ contract CatContract is ERC721Enumerable, Ownable {
         mumId = cat.mumId;
         birthTime = cat.birthTime;
         genes = cat.genes;
-    }
-
-    /// @notice Display all cats per generation:
-    function getCatPerGeneration(
-        uint16 _generation
-    ) external view returns (uint256[] memory catsPerGen) {
-        uint256 supply = totalSupply();
-
-        for (uint256 tokenId = 1; tokenId <= supply; ) {
-            if (cats[tokenId].generation == _generation) {
-                uint256 index = 0;
-                catsPerGen[index] = tokenId;
-                index++;
-            }
-            unchecked {
-                ++tokenId;
-            }
-        }
-        return catsPerGen;
     }
 
     /// @notice Get all cats per owner:
@@ -268,18 +247,6 @@ contract CatContract is ERC721Enumerable, Ownable {
         }
 
         return newGene;
-    }
-
-    /*//////////////////////////////////////////////////////
-                       RESTRICTED FUNCTIONS
-    //////////////////////////////////////////////////////*/
-
-    /// @notice Withdraws ETH from this contract
-    function withdrawBalance() external onlyOwner {
-        if (address(this).balance == 0) {
-            revert CatContract__BalanceIsZero();
-        }
-        payable(_msgSender()).transfer(address(this).balance);
     }
 
     /*//////////////////////////////////////////////////////

@@ -1,18 +1,15 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { anyUint } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
-import { ethers } from "hardhat";
 import { expect } from "chai";
+import { ZeroAddress } from "ethers";
 
 import { deploy } from "./deploy";
 import { dna } from "./constants";
-import { ZeroAddress } from "ethers";
 
 async function deployFixture() {
   const {
     owner,
     user1,
     user2,
-    user3,
     catContract,
     catMarketplace,
     catAddress,
@@ -37,7 +34,6 @@ async function deployFixture() {
     owner,
     user1,
     user2,
-    user3,
     catContract,
     catMarketplace,
     catAddress,

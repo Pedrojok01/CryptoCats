@@ -20,7 +20,7 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     }
 
     uint256[] private offersIds;
-    mapping(uint256 => Offer) public tokenIdToOffer; // Map from cat Id to offer struct
+    mapping(uint256 => Offer) public tokenIdToOffer; // Map cat Id to Offer struct
 
     /* Errors:
      **********/
@@ -42,7 +42,11 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     /*Functions:
      ************/
 
-    /// @notice Creates a new offer for _tokenId for the price _price.
+    /**
+     * @notice Creates a new offer for _tokenId for the price _price.
+     * @param _price - Price for the token being put up for sale.
+     * @param _tokenId - ID of the token to put up for sale.
+     */
     function setOffer(
         uint256 _price,
         uint256 _tokenId
@@ -69,7 +73,10 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
         emit MarketTransaction("Create offer", _msgSender(), _tokenId);
     }
 
-    /// @notice Removes an existing offer.
+    /**
+     * @notice Removes an existing offer.
+     * @param _tokenId - ID of the token to remove the offer for.
+     */
     function removeOffer(uint256 _tokenId) external override {
         if (!this.isOffer(_tokenId)) {
             revert CatMarketplace__NoOfferForThisCat({catId: _tokenId});
@@ -83,7 +90,10 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
         emit MarketTransaction("Cancel offer", _msgSender(), _tokenId);
     }
 
-    /// @notice Executes the purchase of _tokenId.
+    /**
+     * @notice Executes the purchase of _tokenId.
+     * @param _tokenId - ID of the token to buy.
+     */
     function buyCat(uint256 _tokenId) external payable override nonReentrant {
         Offer memory offer = tokenIdToOffer[_tokenId];
 
@@ -111,7 +121,10 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     /* View:
      *********/
 
-    /// @notice Get the details about a offer for _tokenId.
+    /**
+     * @notice Get the details about a offer for _tokenId.
+     * @param _tokenId - ID of the token to get the offer for.
+     */
     function getOffer(
         uint256 _tokenId
     )
@@ -125,7 +138,10 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
         return (offer.seller, offer.price, offer.index, offer.tokenId);
     }
 
-    /// @notice Get all tokenId's that are currently for sale. Returns an empty array if none exist.
+    /**
+     * @notice Get all tokenId's that are currently for sale. Returns an empty array if none exist.
+     * @return listOfOffers - Array of tokenId's that are currently for sale.
+     */
     function getAllTokenOnSale()
         external
         view
@@ -143,7 +159,9 @@ contract CatMarketplace is ICatMarketplace, Ownable, ReentrancyGuard {
     /* Restricted:
      ***************/
 
-    /// @notice Set the current CatContract address and initialize the instance of CatContract:
+    /**
+     * @notice Set the current CatContract address and initialize the instance of CatContract
+     */
     function setCatContract(
         address _catContractAddress
     ) external override onlyOwner {

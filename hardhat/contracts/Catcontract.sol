@@ -58,7 +58,10 @@ contract CatContract is ERC721Enumerable {
                         MINT CAT FUNCTION
     //////////////////////////////////////////////////////*/
 
-    /// @notice Create Gen0 cats
+    /**
+     * @notice Create Gen0 cats
+     * @param _genes - Genes of the cat
+     */
     function createCatGen0(uint256 _genes) public {
         if (gen0Count >= CREATION_LIMIT_GEN0) {
             revert CatContract__NoMoreGen0Available();
@@ -100,7 +103,10 @@ contract CatContract is ERC721Enumerable {
                         VIEW CAT FUNCTIONS
     //////////////////////////////////////////////////////*/
 
-    /// @notice Get cat genes per cat id:
+    /**
+     * @notice Get cat genes per cat id.
+     * @param _tokenId - Cat id
+     */
     function getCat(
         uint256 _tokenId
     )
@@ -128,7 +134,10 @@ contract CatContract is ERC721Enumerable {
         genes = cat.genes;
     }
 
-    /// @notice Get all cats per owner:
+    /**
+     * @notice Get all cats per owner.
+     * @param _owner - Owner address
+     */
     function getCatPerOwner(
         address _owner
     ) external view returns (uint256[] memory tokensOwned) {
@@ -157,7 +166,11 @@ contract CatContract is ERC721Enumerable {
                         BREED CAT FUNCTIONS
     //////////////////////////////////////////////////////*/
 
-    /// @notice Create a new seebling from two existing parents
+    /**
+     * @notice Create a new seebling from two existing parents
+     * @param _dadId - Dad id
+     * @param _mumId - Mum id
+     */
     function breed(uint256 _dadId, uint256 _mumId) external returns (uint256) {
         if (
             ownerOf(_dadId) != _msgSender() && ownerOf(_mumId) != _msgSender()

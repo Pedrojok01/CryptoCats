@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import "@nomicfoundation/hardhat-toolbox";
 import { HardhatUserConfig } from "hardhat/config";
 import "hardhat-contract-sizer";
@@ -17,36 +19,25 @@ const config: HardhatUserConfig = {
   },
   networks: {
     main: {
-      url: `${process.env.API_NODE_ETH}`,
+      url: `${process.env.PRC_URL_ETH}`,
       accounts: privateKey !== undefined ? [privateKey] : [],
       chainId: 1,
     },
     sepolia: {
-      url: `${process.env.API_NODE_SEPOLIA}`,
+      url: `${process.env.PRC_URL_SEPOLIA}`,
       accounts: privateKey !== undefined ? [privateKey] : [],
-      chainId: 5,
+      chainId: 11155111,
     },
     // Polygon networks
     polygon: {
-      url: `${process.env.API_NODE_POLYGON}`,
+      url: `${process.env.PRC_URL_POLYGON}`,
       accounts: privateKey !== undefined ? [privateKey] : [],
       chainId: 137,
     },
     mumbai: {
-      url: `${process.env.API_NODE_POLYGON_MUMBAI}`,
+      url: `${process.env.PRC_URL_POLYGON_MUMBAI}`,
       accounts: privateKey !== undefined ? [privateKey] : [],
       chainId: 80001,
-    },
-    // BNB Chain networks
-    bnb_chain: {
-      url: `${process.env.API_NODE_BSC}`,
-      accounts: privateKey !== undefined ? [privateKey] : [],
-      chainId: 56,
-    },
-    bnb_testnet: {
-      url: `${process.env.API_NODE_BSC_TEST}`,
-      accounts: privateKey !== undefined ? [privateKey] : [],
-      chainId: 97,
     },
   },
   gasReporter: {

@@ -30,7 +30,7 @@ async function main() {
   // Get CatContract ABI
   const catABI = JSON.parse(
     fs.readFileSync(
-      "./hardhat/artifacts/contracts/CatContract.sol/CatContract.json",
+      "./artifacts/contracts/CatContract.sol/CatContract.json",
       "utf8"
     )
   );
@@ -44,7 +44,7 @@ async function main() {
   // Get CatMarketplace ABI
   const marketABI = JSON.parse(
     fs.readFileSync(
-      "./hardhat/artifacts/contracts/CatMarketplace.sol/CatMarketplace.json",
+      "./artifacts/contracts/CatMarketplace.sol/CatMarketplace.json",
       "utf8"
     )
   );

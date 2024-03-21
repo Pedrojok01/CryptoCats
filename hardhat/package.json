@@ -1,6 +1,6 @@
 {
   "name": "crypto-cats-contracts",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Crypto-Cats - Smart-Contracts",
   "author": "Pedrojok01 <pedrojok@pm.me>",
   "main": "index.js",
@@ -10,7 +10,7 @@
     "lint": "solhint \"contracts/**/*.sol\"",
     "compile": "hardhat compile --show-stack-traces",
     "test": "hardhat test --show-stack-traces",
-    "deploy": "hardhat run --network sepolia hardhat/scripts/deploy.cts",
+    "deploy": "hardhat run --network sepolia scripts/deploy.ts",
     "size": "hardhat size-contracts",
     "doc": "hardhat docgen",
     "cover": "hardhat coverage",

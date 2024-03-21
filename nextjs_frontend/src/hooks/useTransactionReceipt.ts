@@ -9,7 +9,7 @@ interface AwaitTransactionReceiptProps {
 const useTransactionReceipt = () => {
   const publicClient = usePublicClient();
 
-  const awaitTransactionReceipt = async ({ confirmations = 2, hash }: AwaitTransactionReceiptProps) => {
+  const awaitTransactionReceipt = async ({ confirmations = 1, hash }: AwaitTransactionReceiptProps) => {
     if (!publicClient) {
       throw new Error("PublicClientContext is undefined");
     }

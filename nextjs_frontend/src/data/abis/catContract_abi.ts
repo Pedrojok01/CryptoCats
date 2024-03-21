@@ -3,11 +3,67 @@ import { type Abi } from "viem";
 export const CAT_ABI: Abi = [
   {
     inputs: [
-      { internalType: "uint256", name: "_maxCatsSupply", type: "uint256" },
+      { internalType: "uint256", name: "_MAX_CAT_SUPPLY", type: "uint256" },
       { internalType: "uint8", name: "_CREATION_LIMIT_GEN0", type: "uint8" },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
+  },
+  { inputs: [], name: "CatContract__NoMoreGen0Available", type: "error" },
+  { inputs: [], name: "CatContract__NonExistentCat", type: "error" },
+  { inputs: [], name: "CatContract__NotOwned", type: "error" },
+  { inputs: [], name: "CatContract__SameCatSelected", type: "error" },
+  { inputs: [], name: "ERC721EnumerableForbiddenBatchMint", type: "error" },
+  {
+    inputs: [
+      { internalType: "address", name: "sender", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+      { internalType: "address", name: "owner", type: "address" },
+    ],
+    name: "ERC721IncorrectOwner",
+    type: "error",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "operator", type: "address" },
+      { internalType: "uint256", name: "tokenId", type: "uint256" },
+    ],
+    name: "ERC721InsufficientApproval",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "approver", type: "address" }],
+    name: "ERC721InvalidApprover",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "operator", type: "address" }],
+    name: "ERC721InvalidOperator",
+    type: "error",
+  },
+  { inputs: [{ internalType: "address", name: "owner", type: "address" }], name: "ERC721InvalidOwner", type: "error" },
+  {
+    inputs: [{ internalType: "address", name: "receiver", type: "address" }],
+    name: "ERC721InvalidReceiver",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "address", name: "sender", type: "address" }],
+    name: "ERC721InvalidSender",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
+    name: "ERC721NonexistentToken",
+    type: "error",
+  },
+  {
+    inputs: [
+      { internalType: "address", name: "owner", type: "address" },
+      { internalType: "uint256", name: "index", type: "uint256" },
+    ],
+    name: "ERC721OutOfBoundsIndex",
+    type: "error",
   },
   {
     anonymous: false,
@@ -44,15 +100,6 @@ export const CAT_ABI: Abi = [
   {
     anonymous: false,
     inputs: [
-      { indexed: true, internalType: "address", name: "previousOwner", type: "address" },
-      { indexed: true, internalType: "address", name: "newOwner", type: "address" },
-    ],
-    name: "OwnershipTransferred",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
       { indexed: true, internalType: "address", name: "from", type: "address" },
       { indexed: true, internalType: "address", name: "to", type: "address" },
       { indexed: true, internalType: "uint256", name: "tokenId", type: "uint256" },
@@ -64,6 +111,13 @@ export const CAT_ABI: Abi = [
     inputs: [],
     name: "CREATION_LIMIT_GEN0",
     outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "MAX_CAT_SUPPLY",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -151,13 +205,6 @@ export const CAT_ABI: Abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint16", name: "_generation", type: "uint16" }],
-    name: "getCatPerGeneration",
-    outputs: [{ internalType: "uint256[]", name: "catsPerGen", type: "uint256[]" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [{ internalType: "address", name: "_owner", type: "address" }],
     name: "getCatPerOwner",
     outputs: [{ internalType: "uint256[]", name: "tokensOwned", type: "uint256[]" }],
@@ -176,22 +223,8 @@ export const CAT_ABI: Abi = [
   },
   {
     inputs: [],
-    name: "maxCatsSupply",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "name",
     outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "owner",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
     stateMutability: "view",
     type: "function",
   },
@@ -202,7 +235,6 @@ export const CAT_ABI: Abi = [
     stateMutability: "view",
     type: "function",
   },
-  { inputs: [], name: "renounceOwnership", outputs: [], stateMutability: "nonpayable", type: "function" },
   {
     inputs: [
       { internalType: "address", name: "from", type: "address" },
@@ -292,12 +324,4 @@ export const CAT_ABI: Abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-  {
-    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
-    name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  { inputs: [], name: "withdrawBalance", outputs: [], stateMutability: "nonpayable", type: "function" },
 ];

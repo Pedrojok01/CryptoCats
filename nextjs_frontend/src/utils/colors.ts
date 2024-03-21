@@ -26,7 +26,7 @@ export const colors = {
   24: "adeacc",
   25: "cf2b03",
   26: "b3c459",
-  27: "353f9",
+  27: "353f90",
   28: "5d4993",
   29: "ba8d15",
   30: "da2457",
@@ -49,7 +49,7 @@ export const colors = {
   47: "8342ff",
   48: "2b4ab4",
   49: "ad4595",
-  50: "bae4f",
+  50: "bae4ff",
   51: "b76d01",
   52: "8e8207",
   53: "285b9f",
@@ -87,7 +87,7 @@ export const colors = {
   85: "86be6c",
   86: "e62102",
   87: "5471fc",
-  88: "5c089",
+  88: "5c0899",
   89: "703c75",
   90: "9a8e8f",
   91: "8b9307",
@@ -106,7 +106,9 @@ export const allColors = () => {
 
 //Random color
 export const getColor = () => {
-  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  const randomColor = Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, "0");
   return randomColor;
 };
 
@@ -118,3 +120,7 @@ export const genColors = () => {
   }
   return colors;
 };
+
+const randomColor = Math.floor(Math.random() * 16777215)
+  .toString(16)
+  .padStart(6, "0");

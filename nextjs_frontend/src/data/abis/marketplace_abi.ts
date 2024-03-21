@@ -7,6 +7,55 @@ export const MARKET_ABI: Abi = [
     type: "constructor",
   },
   {
+    inputs: [{ internalType: "uint256", name: "catId", type: "uint256" }],
+    name: "CatMarketplace__AlreadyOnSale",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "catId", type: "uint256" }],
+    name: "CatMarketplace__CatAlreadyOwned",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "catId", type: "uint256" }],
+    name: "CatMarketplace__CatNotOwned",
+    type: "error",
+  },
+  {
+    inputs: [
+      { internalType: "uint256", name: "sent", type: "uint256" },
+      { internalType: "uint256", name: "wanted", type: "uint256" },
+    ],
+    name: "CatMarketplace__InvalidPrice",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "catId", type: "uint256" }],
+    name: "CatMarketplace__NoOfferForThisCat",
+    type: "error",
+  },
+  {
+    inputs: [{ internalType: "uint256", name: "catId", type: "uint256" }],
+    name: "CatMarketplace__NotOnSale",
+    type: "error",
+  },
+  { inputs: [{ internalType: "address", name: "owner", type: "address" }], name: "OwnableInvalidOwner", type: "error" },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "OwnableUnauthorizedAccount",
+    type: "error",
+  },
+  { inputs: [], name: "ReentrancyGuardReentrantCall", type: "error" },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: false, internalType: "address", name: "oldCatAddress", type: "address" },
+      { indexed: false, internalType: "address", name: "newCatAddress", type: "address" },
+    ],
+    name: "CatAddressUpdated",
+    type: "event",
+  },
+  {
     anonymous: false,
     inputs: [
       { indexed: false, internalType: "string", name: "TxType", type: "string" },

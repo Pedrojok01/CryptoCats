@@ -62,6 +62,7 @@ const useWriteContract = () => {
     setLoading(true);
     try {
       const hash: `0x${string}` = await catInstance.write.createCatGen0([dna]);
+
       await awaitTransactionReceipt({ hash });
       const msg = (
         <>

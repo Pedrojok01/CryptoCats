@@ -14,10 +14,13 @@ const useTransactionReceipt = () => {
       throw new Error("PublicClientContext is undefined");
     }
 
-    return await publicClient.waitForTransactionReceipt({
+    const receipt = await publicClient.waitForTransactionReceipt({
       confirmations,
       hash,
+      retryCount: 2,
     });
+
+    return receipt;
   };
 
   return {

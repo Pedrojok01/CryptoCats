@@ -3,12 +3,12 @@ export const isProdEnv = false; // Bypass Netlify prod deployment
 
 export const SUPPORTED_CHAIN = {
   mainnet: 1,
-  testnet: 5,
+  testnet: 11155111,
 };
 
 // Sepolia Testnet
-export const CAT_CONTRACT_ADD_TEST: `0x${string}` = "0x1755308f558C1ec14d54Fd12D0588E626148a679";
-export const MARKETPLACE_CONTRACT_ADD_TEST: `0x${string}` = "0x3ed18F523e16888eC4D44F6fa25ccD12137605Fa";
+export const CAT_CONTRACT_ADD_TEST: `0x${string}` = "0x95F232Dd2E26EAaf6A48c7f95b9D5cc43ea1Da7F";
+export const MARKETPLACE_CONTRACT_ADD_TEST: `0x${string}` = "0x8D4A7E6425FC02a0e62534d412BBe7A91B251d65";
 
 // Ethereum Mainnet
 export const CAT_CONTRACT_ADD: `0x${string}` = "0x";

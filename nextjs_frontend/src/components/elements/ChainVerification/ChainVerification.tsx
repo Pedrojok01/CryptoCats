@@ -13,7 +13,7 @@ const ChainVerification: FC = () => {
       if (window.ethereum) {
         await window.ethereum.request({
           method: "wallet_switchEthereumChain",
-          params: isProdEnv ? [{ chainId: "0x1" }] : [{ chainId: "0x5" }],
+          params: isProdEnv ? [{ chainId: "0x1" }] : [{ chainId: "0xaa36a7" }],
         });
       }
     } catch (e) {

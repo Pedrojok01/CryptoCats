@@ -8,7 +8,7 @@
 [![Stargazers](https://img.shields.io/github/stars/Pedrojok01/CryptoCats)](https://github.com/Pedrojok01/CryptoCats/stargazers)
 [![Issues](https://img.shields.io/github/issues/Pedrojok01/CryptoCats)](https://github.com/Pedrojok01/CryptoCats/issues)
 [![MIT License](https://img.shields.io/github/license/Pedrojok01/CryptoCats)](https://github.com/Pedrojok01/CryptoCats/blob/main/License)
-[![codecov](https://codecov.io/github/Pedrojok01/CryptoCats/branch/main/graph/badge.svg?token=XBKTMGRQ5S)](https://codecov.io/github/Pedrojok01/CryptoCats)
+[![codecov](https://codecov.io/gh/Pedrojok01/CryptoCats/graph/badge.svg?token=YKHE5UFGKU)](https://codecov.io/gh/Pedrojok01/CryptoCats)
 [![LinkedIn](https://img.shields.io/badge/-LinkedIn-blue)](https://www.linkedin.com/in/pierre-e/)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/561688bc-a876-45d2-b65b-77fdc4f1cf17/deploy-status)](https://app.netlify.com/sites/crypto-cats/deploys)
 

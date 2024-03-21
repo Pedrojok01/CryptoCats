@@ -1,9 +1,9 @@
 name: Codecov
 on:
   push:
-    branches: [main]
+    branches: [nextJS]
   pull_request:
-    branches: [main]
+    branches: [nextJS]
 
 jobs:
   build:

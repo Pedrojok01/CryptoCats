@@ -8,7 +8,7 @@ const Selector: FC<SelectorProps> = ({ colorName, action, name, range, idCode, b
       <label htmlFor="formControlRange">
         <b>{name}</b>
         <Badge colorScheme="purple" ml={2}>
-          Code: {badge ? badge : idCode}
+          Code: {badge ?? idCode}
         </Badge>
       </label>
       <input

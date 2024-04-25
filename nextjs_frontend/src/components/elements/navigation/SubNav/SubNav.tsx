@@ -14,7 +14,7 @@ const SubNav = ({ label, href, subLabel }: ISubNav) => {
   return (
     <Link
       as={NextLink}
-      href={href || "#"}
+      href={href ?? "#"}
       role={"group"}
       display={"block"}
       p={2}

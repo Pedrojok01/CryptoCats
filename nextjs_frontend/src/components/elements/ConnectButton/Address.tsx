@@ -1,4 +1,4 @@
-import { type CSSProperties, useEffect, useState } from "react";
+import { type CSSProperties, useEffect, useState, type FC } from "react";
 
 import { CopyIcon } from "@chakra-ui/icons";
 import { Flex, Skeleton, Tooltip } from "@chakra-ui/react";
@@ -32,18 +32,6 @@ const Address: React.FC<AddressProps> = (props) => {
 
   if (address === undefined) return <Skeleton noOfLines={1} width="100%" />;
 
-  const Copy = () => (
-    <Tooltip title="Copy Address">
-      <CopyIcon
-        style={{ cursor: "pointer" }}
-        onClick={() => {
-          navigator.clipboard.writeText(address);
-          setIsClicked(true);
-        }}
-      />
-    </Tooltip>
-  );
-
   return (
     <Flex
       h={"42px"}
@@ -57,12 +45,29 @@ const Address: React.FC<AddressProps> = (props) => {
       {props.avatar === "left" && <Jazzicons seed={address} />}
       <p>{props.size ? getEllipsisTxt(address, props.size) : address}</p>
       {props.avatar === "right" && <Jazzicons seed={address} />}
-      {props.copyable && (isClicked ? <Check /> : <Copy />)}
+      {props.copyable && (isClicked ? <Check /> : <Copy address={address} setIsClicked={setIsClicked} />)}
     </Flex>
   );
 };
 
 export default Address;
+
+interface CopyProps {
+  address: string;
+  setIsClicked: (value: boolean) => void;
+}
+
+const Copy: FC<CopyProps> = ({ address, setIsClicked }) => (
+  <Tooltip title="Copy Address">
+    <CopyIcon
+      style={{ cursor: "pointer" }}
+      onClick={() => {
+        navigator.clipboard.writeText(address);
+        setIsClicked(true);
+      }}
+    />
+  </Tooltip>
+);
 
 const Check = () => (
   <Tooltip title="Copied!">

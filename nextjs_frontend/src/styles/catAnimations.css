@@ -152,7 +152,6 @@
                               EYES: 
   /////////////////////////////////////////////////////////*/
 
-/* BASIC EYES */
 .eyes {
   position: absolute;
   top: 30px;
@@ -161,6 +160,7 @@
   z-index: 10;
 }
 
+/* BASIC EYES */
 .eyes_left {
   position: relative;
   background-color: white;
@@ -238,14 +238,6 @@
 }
 
 /* CHILL EYES */
-.eyes {
-  position: absolute;
-  top: 30px;
-  left: 4px;
-  display: flex;
-  z-index: 10;
-}
-
 .eyes_left_chill {
   position: relative;
   background-color: white;
@@ -327,14 +319,6 @@
 }
 
 /* TIRED EYES */
-.eyes {
-  position: absolute;
-  top: 30px;
-  left: 4px;
-  display: flex;
-  z-index: 10;
-}
-
 .eyes_left_tired {
   position: relative;
   background-color: white;
@@ -420,14 +404,6 @@
 }
 
 /* CYCLOPE EYES */
-.eyes {
-  position: absolute;
-  top: 30px;
-  left: 4px;
-  display: flex;
-  z-index: 10;
-}
-
 .eyes_left_cyclope {
   position: relative;
   background-color: white;
@@ -485,14 +461,6 @@
 }
 
 /* ASEAN EYES */
-.eyes {
-  position: absolute;
-  top: 30px;
-  left: 4px;
-  display: flex;
-  z-index: 10;
-}
-
 .eyes_left_asean {
   position: relative;
   transform: rotate(15deg);
@@ -574,14 +542,6 @@
 }
 
 /* SURPRISED EYES */
-.eyes {
-  position: absolute;
-  top: 30px;
-  left: 4px;
-  display: flex;
-  z-index: 10;
-}
-
 .eyes_left_surprised {
   position: relative;
   background-color: white;

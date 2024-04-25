@@ -1,5 +1,3 @@
-import { type Abi } from "viem";
-
 import { getContractAddresses } from "./constant";
 import { CAT_ABI } from "../data/abis/catContract_abi";
 import { MARKET_ABI } from "../data/abis/marketplace_abi";
@@ -9,10 +7,10 @@ const { catAddress, marketplaceAddress } = getContractAddresses();
 export const contracts = {
   cat: {
     address: catAddress,
-    abi: CAT_ABI as Abi,
+    abi: CAT_ABI,
   },
   marketplace: {
     address: marketplaceAddress,
-    abi: MARKET_ABI as Abi,
+    abi: MARKET_ABI,
   },
 };

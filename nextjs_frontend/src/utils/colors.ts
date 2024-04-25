@@ -120,5 +120,3 @@ export const genColors = () => {
   }
   return colors;
 };
-
-

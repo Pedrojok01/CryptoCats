@@ -18,7 +18,7 @@ const BreedContent: FC = () => {
   const [mum, setMum] = useState<SelectedCat>();
   const [dad, setDad] = useState<SelectedCat>();
 
-  const isBreedEnable = mum && dad ? true : false;
+  const isBreedEnable = !!(mum && dad);
 
   const handleReset = async () => {
     setMum(undefined);

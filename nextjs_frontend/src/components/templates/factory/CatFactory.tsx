@@ -36,12 +36,15 @@ const CatFactory: FC = () => {
     [gen0Count, maxGen0Supply]
   );
 
+  const boxWidth1 = isMobile ? 400 : isMediumScreen ? 600 : 350;
+  const boxWidth2 = isMobile ? 400 : isMediumScreen ? 600 : 500;
+
   return (
     <>
       <TabHeader title="Cats Factory" description={headerDescription} />
 
       <Flex justify="center" m="auto" wrap={"wrap"} gap={5}>
-        <Box w={isMobile ? 400 : isMediumScreen ? 600 : 350} minW={350}>
+        <Box w={boxWidth1} minW={350}>
           <RenderCat dna={dna} isFactory={true} />
           <Flex gap={2} m={"3"} justify="center">
             <Button colorScheme="blue" onClick={resetCatToDefault} className="box-shadow">
@@ -52,7 +55,7 @@ const CatFactory: FC = () => {
             </Button>
           </Flex>
         </Box>
-        <Box w={isMobile ? 400 : isMediumScreen ? 600 : 500} minW={350}>
+        <Box w={boxWidth2} minW={350}>
           <Card bgColor={colorMode === "light" ? "#ededed" : "#4f5050"} borderRadius="10" p={5} className="box-shadow">
             <Attributes dna={dna} updateDna={updateDna} />
           </Card>

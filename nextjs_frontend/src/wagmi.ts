@@ -22,8 +22,8 @@ export const client = createConfig({
       metadata: {
         name: "CryptoCats",
         description: "Crypto Cats collectible - Create, Breed & Sell your CryptoCats!",
-        url: "https://crypto-cats.netlify.app/",
-        icons: ["https://crypto-cats.netlify.app/favicon.ico"],
+        url: "https://cryptocats.pedrojok.com/",
+        icons: ["https://cryptocats.pedrojok.com/favicon.ico"],
       },
     }),
   ],

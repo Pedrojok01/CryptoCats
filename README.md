@@ -67,7 +67,7 @@ CryptoCats Revisited. No more vanilla JS (which, despite being a huge mess, was 
 
 Decentralized application (Dapp) deployed on Sepolia, but compatible with all EVM networks. Initially built as a part of the programming course: Ethereum Dapp Programming on [academy.moralis.io](https://academy.moralis.io/courses/ethereum-dapp-programming).
 
-Try it yourself: [crypto-cats.netlify.app/](https://crypto-cats.netlify.app/)
+Try it yourself: [cryptocats.pedrojok.com](https://cryptocats.pedrojok.com/)
 
 ## Features
 

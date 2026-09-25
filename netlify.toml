@@ -2,3 +2,9 @@
   base = "nextjs_frontend/"
   publish = ".next"
   command = "next build"
+
+[[redirects]]
+  from = "https://crypto-cats.netlify.app/*"
+  to = "https://cryptocats.pedrojok.com/:splat"
+  status = 301
+  force = true

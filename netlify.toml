@@ -1,7 +1,11 @@
 [build]
   base = "nextjs_frontend/"
-  publish = ".next"
+  publish = "out"
   command = "next build"
+
+# Static export: no Next.js server function needed.
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
 [[redirects]]
   from = "https://crypto-cats.netlify.app/*"
